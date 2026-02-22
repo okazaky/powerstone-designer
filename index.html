@@ -1,0 +1,3897 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ordermade Power Stone | あなただけのオーダーメイドパワーストーン</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--primary:#5ba4d9;--primary-light:#7ec0ec;--primary-dark:#3a80b8;
+--gold:#5ba4d9;--gold-light:#7ec0ec;--gold-dark:#3a80b8;
+--bg:transparent;--bg-warm:rgba(255,255,255,.35);--bg-card:rgba(255,255,255,.75);
+--text:#2a4060;--text-light:#5a7898;--text-lighter:#8aa8c0;
+--shadow:0 2px 16px rgba(90,160,220,.08);
+--shadow-lg:0 8px 32px rgba(90,160,220,.12);
+--radius:16px;--radius-sm:10px;
+--transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+font-family:'Noto Sans JP',sans-serif;color:var(--text);
+line-height:1.7;min-height:100vh;overflow-x:hidden;
+background:#d4ecf8;
+background-image:
+  linear-gradient(180deg,
+    #78bce8 0%,
+    #8cc8f0 6%,
+    #a0d4f6 12%,
+    #b4defa 18%,
+    #c8e8fc 24%,
+    #d8f0fe 30%,
+    #e8f6ff 36%,
+    #f4fbff 42%,
+    #ffffff 46%,
+    #f4fbff 50%,
+    #e8f6ff 54%,
+    #d8f0fe 60%,
+    #c8e8fc 66%,
+    #b4defa 72%,
+    #a0d4f6 78%,
+    #8cc8f0 84%,
+    #78bce8 90%,
+    #6ab0e0 100%
+  );
+background-attachment:fixed;
+}
+/* Sky-water scene */
+body::before{
+content:'';position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;
+background:
+  radial-gradient(ellipse 120% 40% at 50% 48%, rgba(255,255,255,.6) 0%, transparent 70%),
+  radial-gradient(ellipse 80% 20% at 30% 20%, rgba(255,255,255,.5) 0%, transparent 60%),
+  radial-gradient(ellipse 60% 15% at 70% 15%, rgba(255,255,255,.4) 0%, transparent 50%),
+  radial-gradient(ellipse 40% 10% at 20% 35%, rgba(255,255,255,.35) 0%, transparent 50%),
+  radial-gradient(ellipse 50% 12% at 80% 30%, rgba(255,255,255,.3) 0%, transparent 50%),
+  radial-gradient(ellipse 100% 30% at 50% 75%, rgba(135,200,240,.15) 0%, transparent 60%);
+}
+body::after{
+content:'';position:fixed;top:45.5%;left:0;right:0;height:6px;pointer-events:none;z-index:0;
+background:linear-gradient(90deg,transparent 2%,rgba(255,255,255,.6) 20%,rgba(255,255,255,.95) 50%,rgba(255,255,255,.6) 80%,transparent 98%);
+box-shadow:0 0 20px rgba(255,255,255,.8),0 0 60px rgba(200,230,255,.4);
+}
+body>*{position:relative;z-index:1}
+/* === Scrollbar === */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:rgba(200,230,248,.3)}
+::-webkit-scrollbar-thumb{background:rgba(90,164,217,.4);border-radius:3px}
+/* === Header === */
+.header{
+background:linear-gradient(180deg,#6ab0e0 0%,#88c8ee 20%,#a8dcf6 40%,#c8ecfc 60%,#e8f6ff 80%,#ffffff 100%);
+color:#2a5580;text-align:center;padding:3rem 1rem 2rem;position:relative;overflow:hidden;
+}
+.header::before{
+content:'';position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+background:
+  radial-gradient(ellipse 90% 25% at 25% 30%,rgba(255,255,255,.55) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 15% at 75% 20%,rgba(255,255,255,.4) 0%,transparent 50%),
+  radial-gradient(ellipse 40% 10% at 50% 50%,rgba(255,255,255,.3) 0%,transparent 50%);
+}
+.header::after{
+content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+background:linear-gradient(90deg,transparent 5%,rgba(255,255,255,.6) 30%,rgba(255,255,255,.9) 50%,rgba(255,255,255,.6) 70%,transparent 95%);
+}
+.header h1{
+font-family:'Meiryo','メイリオ',sans-serif;
+font-size:clamp(1.5rem,4vw,2.4rem);font-weight:900;letter-spacing:.15em;
+text-shadow:0 1px 12px rgba(255,255,255,.8),0 0 30px rgba(100,180,230,.3);position:relative;
+}
+.header h1 span{color:inherit;font-weight:inherit;font-size:inherit;font-family:inherit}
+.header p{
+font-size:clamp(.8rem,2vw,1rem);font-weight:300;letter-spacing:.2em;
+margin-top:.5rem;opacity:.85;position:relative;
+}
+/* === Layout === */
+.app-container{
+max-width:1400px;margin:0 auto;padding:1rem;
+display:grid;grid-template-columns:1fr 320px;gap:1.5rem;
+}
+@media(max-width:1024px){
+.app-container{grid-template-columns:1fr;max-width:800px}
+}
+.main-area{display:flex;flex-direction:column;gap:1.5rem}
+/* === Panel === */
+.panel{
+background:rgba(255,255,255,.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+border-radius:var(--radius);border:1px solid rgba(255,255,255,.5);
+box-shadow:0 4px 24px rgba(90,160,220,.08),inset 0 1px 0 rgba(255,255,255,.6);
+padding:1.5rem;position:relative;overflow:hidden;
+}
+.panel::before{
+content:'';position:absolute;top:0;left:0;right:0;height:2px;
+background:linear-gradient(90deg,transparent,rgba(120,192,236,.5),rgba(255,255,255,.8),rgba(120,192,236,.5),transparent);
+}
+.panel-title{
+font-size:1.1rem;font-weight:700;color:var(--primary);
+margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;
+}
+.panel-title::before{
+content:'✦';color:var(--primary-light);font-size:.6rem;
+}
+/* === Bracelet Preview === */
+.bracelet-section{text-align:center;padding:2rem 1rem}
+.bracelet-wrapper{
+position:relative;display:inline-block;margin:1rem auto;
+}
+#bracelet-svg{
+max-width:100%;height:auto;filter:drop-shadow(0 4px 20px rgba(74,14,78,.1));
+cursor:pointer;
+}
+.bracelet-center-info{
+font-size:.85rem;color:var(--text-light);margin-top:.5rem;
+}
+.bracelet-actions{
+display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem;
+}
+.btn{
+display:inline-flex;align-items:center;gap:.4rem;
+padding:.6rem 1.2rem;border-radius:var(--radius-sm);
+font-family:inherit;font-size:.85rem;font-weight:500;
+cursor:pointer;transition:var(--transition);border:none;
+}
+.btn-primary{
+background:rgba(90,164,217,.2);backdrop-filter:blur(8px);
+border:1px solid rgba(90,164,217,.3);color:#3a80b8;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(90,164,217,.2);background:rgba(90,164,217,.35)}
+.btn-gold{
+background:rgba(120,192,236,.2);backdrop-filter:blur(8px);
+border:1px solid rgba(120,192,236,.4);color:#3a80b8;
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(120,192,236,.25);background:rgba(120,192,236,.35)}
+.btn-outline{
+background:transparent;border:1px solid rgba(90,164,217,.3);color:var(--primary);
+}
+.btn-outline:hover{background:rgba(90,164,217,.15)}
+.btn-danger{background:transparent;border:1px solid rgba(90,164,217,.25);color:#5a8ab0}
+.btn-danger:hover{background:rgba(90,164,217,.1);transform:translateY(-2px)}
+.btn-sm{padding:.4rem .8rem;font-size:.78rem}
+.btn:active{transform:translateY(0) scale(.98)}
+/* === Size Selector === */
+.size-selector{
+display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
+@media(max-width:480px){.size-selector{grid-template-columns:1fr}}
+.size-group label{
+display:block;font-size:.8rem;font-weight:500;color:var(--text-light);margin-bottom:.5rem;
+}
+.size-options{display:flex;gap:.5rem;flex-wrap:wrap}
+.size-option{
+padding:.5rem 1rem;border-radius:var(--radius-sm);
+border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.4);cursor:pointer;
+font-family:inherit;font-size:.82rem;font-weight:500;
+transition:var(--transition);color:var(--text);
+}
+.size-option:hover{border-color:rgba(120,192,236,.5);color:var(--primary)}
+.size-option.active{
+border-color:rgba(90,164,217,.5);background:rgba(90,164,217,.2);color:var(--primary);font-weight:700;
+}
+/* === Tabs === */
+.tabs{display:flex;gap:0;margin-bottom:1rem;border-bottom:1px solid rgba(120,192,236,.2)}
+.tab-btn{
+flex:1;padding:.7rem .5rem;text-align:center;
+font-family:inherit;font-size:.8rem;font-weight:500;
+background:none;border:none;color:var(--text-light);
+cursor:pointer;transition:var(--transition);
+border-bottom:3px solid transparent;margin-bottom:-2px;
+}
+.tab-btn:hover{color:var(--primary)}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--gold);font-weight:700}
+.tab-content{display:none}
+.tab-content.active{display:block}
+/* === Wish Categories === */
+.wish-categories{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.wish-btn{
+padding:.4rem .8rem;border-radius:20px;
+font-family:inherit;font-size:.75rem;font-weight:500;
+border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.4);color:var(--text);
+cursor:pointer;transition:var(--transition);
+}
+.wish-btn:hover{border-color:rgba(120,192,236,.5);color:var(--primary);background:rgba(255,255,255,.6)}
+.wish-btn.active{
+background:rgba(90,164,217,.2);
+color:var(--primary);border-color:rgba(90,164,217,.4);font-weight:700;
+}
+/* === Color Filter === */
+.color-filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+.color-filter-btn{
+width:36px;height:36px;border-radius:50%;cursor:pointer;
+border:3px solid transparent;transition:var(--transition);
+position:relative;
+}
+.color-filter-btn:hover{transform:scale(1.15)}
+.color-filter-btn.active{border-color:var(--primary);box-shadow:0 0 0 2px var(--gold)}
+.color-filter-btn .color-label{
+position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+font-size:.6rem;white-space:nowrap;color:var(--text-light);
+}
+/* === Stone Grid === */
+.stone-grid{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:.8rem;max-height:500px;overflow-y:auto;padding:.5rem .25rem;
+}
+@media(max-width:480px){
+.stone-grid{grid-template-columns:repeat(2,1fr)}
+}
+.stone-card{
+background:rgba(255,255,255,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+border-radius:var(--radius-sm);padding:.8rem;
+border:1px solid rgba(255,255,255,.5);cursor:pointer;
+transition:var(--transition);text-align:center;position:relative;
+}
+.stone-card:hover{
+transform:translateY(-4px);box-shadow:0 8px 24px rgba(90,160,220,.15);
+border-color:rgba(120,192,236,.6);background:rgba(255,255,255,.8);
+}
+.stone-card.selected{border-color:var(--primary);background:rgba(200,230,250,.3)}
+.stone-card[draggable="true"]{cursor:grab}
+.stone-card[draggable="true"]:active{cursor:grabbing}
+.stone-preview{
+width:50px;height:50px;border-radius:50%;margin:0 auto .5rem;
+box-shadow:inset 0 -3px 6px rgba(0,0,0,.2),inset 0 3px 6px rgba(255,255,255,.3),0 2px 6px rgba(0,0,0,.15);
+position:relative;overflow:hidden;
+}
+.stone-preview::after{
+content:'';position:absolute;top:15%;left:20%;width:30%;height:20%;
+background:radial-gradient(ellipse,rgba(255,255,255,.5),transparent);
+border-radius:50%;transform:rotate(-30deg);
+}
+.stone-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.3}
+.stone-name-en{font-size:.65rem;color:var(--text-lighter);margin-top:.1rem}
+.stone-desc{font-size:.65rem;color:var(--text-light);margin-top:.3rem;line-height:1.4}
+.stone-price{
+font-size:.75rem;font-weight:700;color:var(--gold-dark);margin-top:.3rem;
+}
+.stone-select-btn{
+margin-top:.4rem;padding:.3rem .8rem;border-radius:20px;
+font-family:inherit;font-size:.7rem;font-weight:500;
+background:linear-gradient(135deg,var(--primary),var(--primary-light));
+color:#fff;border:none;cursor:pointer;transition:var(--transition);
+}
+.stone-select-btn:hover{box-shadow:0 2px 8px rgba(74,14,78,.3)}
+/* === Preset Patterns === */
+.preset-grid{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem;
+}
+.preset-card{
+background:rgba(255,255,255,.5);backdrop-filter:blur(8px);
+border-radius:var(--radius-sm);padding:.8rem;text-align:center;
+border:1px solid rgba(255,255,255,.5);cursor:pointer;
+transition:var(--transition);
+}
+.preset-card:hover{
+transform:translateY(-4px);box-shadow:0 8px 24px rgba(90,160,220,.15);
+border-color:rgba(120,192,236,.6);background:rgba(255,255,255,.8);
+}
+.preset-icon{font-size:1.5rem;margin-bottom:.3rem}
+.preset-name{font-size:.85rem;font-weight:700;color:var(--text)}
+.preset-desc{font-size:.7rem;color:var(--text-light);margin-top:.2rem;line-height:1.3}
+/* === Order Summary === */
+.order-panel{
+position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;
+}
+@media(max-width:1024px){
+.order-panel{position:static;max-height:none}
+}
+.order-list{list-style:none;margin:.5rem 0}
+.order-item{
+display:flex;justify-content:space-between;align-items:center;
+padding:.4rem 0;border-bottom:1px solid #f0ece6;font-size:.82rem;
+}
+.order-item .stone-dot{
+width:14px;height:14px;border-radius:50%;margin-right:.5rem;flex-shrink:0;
+box-shadow:inset 0 -1px 3px rgba(0,0,0,.2);
+}
+.order-item-name{flex:1;display:flex;align-items:center}
+.order-item-detail{text-align:right;white-space:nowrap;font-weight:500}
+.order-total{
+margin-top:1rem;padding-top:1rem;border-top:2px solid var(--gold);
+}
+.order-total-row{
+display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.3rem;
+}
+.order-total-row.grand-total{
+font-size:1.2rem;font-weight:900;color:var(--primary);margin-top:.5rem;
+}
+.order-actions{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem}
+/* === Saved Designs === */
+.saved-designs{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+gap:.8rem;
+}
+.saved-design-card{
+background:#fff;border-radius:var(--radius-sm);padding:.5rem;
+border:2px solid var(--bg-warm);cursor:pointer;text-align:center;
+transition:var(--transition);position:relative;
+}
+.saved-design-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.saved-design-card svg{width:100%;height:auto;max-width:100px;margin:0 auto;display:block}
+.saved-design-name{font-size:.7rem;color:var(--text-light);margin-top:.3rem}
+.saved-design-delete{
+position:absolute;top:4px;right:4px;width:20px;height:20px;
+border-radius:50%;background:#c44;color:#fff;border:none;
+font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+opacity:0;transition:var(--transition);
+}
+.saved-design-card:hover .saved-design-delete{opacity:1}
+/* === Tooltip === */
+.tooltip{
+position:absolute;background:var(--primary-dark);color:#fff;
+padding:.4rem .7rem;border-radius:6px;font-size:.72rem;
+pointer-events:none;z-index:100;white-space:nowrap;
+opacity:0;transition:opacity .2s;
+}
+.tooltip.show{opacity:1}
+.tooltip::after{
+content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+border:5px solid transparent;border-top-color:var(--primary-dark);
+}
+/* === Context Menu === */
+.context-menu{
+position:absolute;background:#fff;border-radius:var(--radius-sm);
+box-shadow:var(--shadow-lg);overflow:hidden;z-index:200;
+min-width:140px;display:none;
+}
+.context-menu.show{display:block}
+.context-menu-item{
+padding:.6rem 1rem;font-size:.8rem;cursor:pointer;
+transition:background .2s;border:none;background:none;
+width:100%;text-align:left;font-family:inherit;
+}
+.context-menu-item:hover{background:rgba(74,14,78,.05)}
+.context-menu-item.danger{color:#c44}
+/* === Sparkle Effect === */
+.sparkle{
+position:absolute;pointer-events:none;z-index:300;
+}
+.sparkle-particle{
+position:absolute;width:6px;height:6px;border-radius:50%;
+animation:sparkle-fly 1s ease-out forwards;
+}
+@keyframes sparkle-fly{
+0%{opacity:1;transform:translate(0,0) scale(1)}
+100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}
+}
+/* === Completion Banner === */
+.completion-banner{
+position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+background:linear-gradient(135deg,var(--primary),var(--primary-light));
+color:#fff;padding:2rem 3rem;border-radius:var(--radius);
+text-align:center;z-index:500;box-shadow:var(--shadow-lg);
+transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.completion-banner.show{transform:translate(-50%,-50%) scale(1)}
+.completion-banner h3{font-size:1.3rem;margin-bottom:.5rem}
+.completion-banner p{font-size:.85rem;opacity:.85}
+.overlay{
+position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:400;
+opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.overlay.show{opacity:1;pointer-events:auto}
+/* === Pulse Animation === */
+@keyframes pulse-glow{
+0%,100%{filter:drop-shadow(0 0 4px rgba(27,42,74,.4))}
+50%{filter:drop-shadow(0 0 12px rgba(27,42,74,.8))}
+}
+.slot-selected{animation:pulse-glow 1.5s ease-in-out infinite}
+/* === Footer === */
+.footer{
+background:rgba(255,255,255,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+color:#5a8ab0;border-top:1px solid rgba(255,255,255,.5);
+text-align:center;padding:2rem 1rem;margin-top:2rem;
+font-size:.75rem;line-height:2;
+}
+.footer a{color:var(--primary);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+/* === Print === */
+@media print{
+.header,.stone-selection,.footer,.bracelet-actions,.order-actions,.saved-section,.size-panel,.tabs{display:none!important}
+.app-container{display:block!important}
+.panel{box-shadow:none!important;border:1px solid #ccc}
+}
+/* === Mobile Adjustments === */
+@media(max-width:600px){
+.stone-grid{grid-template-columns:repeat(2,1fr);max-height:400px}
+.bracelet-section{padding:1rem .5rem}
+.panel{padding:1rem}
+.size-options{gap:.3rem}
+.size-option{padding:.4rem .6rem;font-size:.75rem}
+.wish-categories{gap:.3rem}
+.wish-btn{font-size:.7rem;padding:.3rem .6rem}
+}
+/* === Drag Over State === */
+.slot-drag-over circle{stroke:var(--gold)!important;stroke-width:3!important}
+/* === Empty State === */
+.empty-state{
+text-align:center;padding:2rem;color:var(--text-lighter);font-size:.85rem;
+}
+/* === Notification Toast === */
+.toast{
+position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);
+background:var(--primary);color:#fff;padding:.8rem 1.5rem;
+border-radius:var(--radius-sm);font-size:.85rem;z-index:600;
+transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+box-shadow:var(--shadow-lg);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+/* === Magic Circle Decoration === */
+.magic-circle{
+position:absolute;pointer-events:none;opacity:.06;z-index:0;
+animation:spin-slow 40s linear infinite;
+}
+.magic-circle svg{width:100%;height:100%}
+@keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spin-reverse{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+.magic-circle.reverse{animation-name:spin-reverse}
+.header .magic-circle{opacity:.08}
+.bracelet-section{position:relative;overflow:hidden}
+.bracelet-section .magic-bg{
+position:absolute;top:50%;left:50%;width:420px;height:420px;
+transform:translate(-50%,-50%);pointer-events:none;opacity:.05;z-index:0;
+animation:spin-slow 60s linear infinite;
+}
+/* Stars sparkle */
+@keyframes twinkle{
+0%,100%{opacity:.3;transform:scale(.8)}
+50%{opacity:1;transform:scale(1.2)}
+}
+.star-decoration{
+position:absolute;width:6px;height:6px;
+background:var(--primary-light);border-radius:50%;
+pointer-events:none;
+animation:twinkle 2s ease-in-out infinite;
+}
+/* === 3D Scroll Animations === */
+.scroll-reveal{
+opacity:0;transform:perspective(1200px) rotateX(8deg) translateY(60px) scale(.96);
+transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
+will-change:opacity,transform;
+}
+.scroll-reveal.visible{
+opacity:1;transform:perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+}
+.scroll-reveal:nth-child(odd){transform-origin:center top}
+.scroll-reveal:nth-child(even){transform-origin:center bottom}
+.header{
+transform:translateZ(0);transition:box-shadow .3s;
+}
+.header.scrolled{
+box-shadow:0 4px 30px rgba(27,42,74,.15);
+}
+/* Stagger delay for cards */
+.stone-card{
+opacity:0;transform:perspective(800px) rotateY(-8deg) translateX(-30px) scale(.95);
+transition:opacity .5s ease,transform .5s ease,box-shadow .3s ease,border-color .3s ease;
+}
+.stone-card.card-visible{
+opacity:1;transform:perspective(800px) rotateY(0deg) translateX(0) scale(1);
+}
+/* Bracelet float effect */
+@keyframes float-3d{
+0%,100%{transform:perspective(600px) rotateX(2deg) rotateY(-1deg) translateY(0)}
+50%{transform:perspective(600px) rotateX(-2deg) rotateY(1deg) translateY(-8px)}
+}
+.bracelet-wrapper{
+animation:float-3d 6s ease-in-out infinite;
+}
+/* Parallax subtle bg */
+.app-container{
+transform-style:preserve-3d;
+}
+/* === Parallax Cloud & Water Reflection === */
+.cloud-scene{
+position:fixed;top:0;left:0;right:0;bottom:0;
+pointer-events:none;z-index:0;overflow:hidden;
+}
+.pcloud{
+position:absolute;
+border-radius:100px;
+will-change:transform,opacity;
+transition:none;
+}
+.pcloud-sky{
+background:rgba(255,255,255,.55);
+}
+.pcloud-ref{
+background:rgba(200,225,248,.18);
+filter:blur(8px);
+}
+/* Water surface shimmer */
+.water-surface{
+position:fixed;top:46%;left:0;right:0;bottom:0;
+pointer-events:none;z-index:0;
+background:
+  repeating-linear-gradient(90deg,transparent,rgba(255,255,255,.03) 2px,transparent 4px),
+  repeating-linear-gradient(180deg,transparent,rgba(200,230,250,.02) 3px,transparent 6px);
+animation:water-shimmer 8s ease-in-out infinite alternate;
+}
+@keyframes water-shimmer{
+0%{opacity:.6;background-position:0 0,0 0}
+50%{opacity:.9;background-position:20px 0,0 3px}
+100%{opacity:.6;background-position:-10px 0,0 -2px}
+}
+/* Water sparkles */
+.water-sparkle{
+position:absolute;width:3px;height:3px;border-radius:50%;
+background:rgba(255,255,255,.9);
+pointer-events:none;
+animation:sparkle-pulse var(--dur) ease-in-out infinite;
+animation-delay:var(--delay);
+}
+@keyframes sparkle-pulse{
+0%,100%{opacity:0;transform:scale(0)}
+30%{opacity:1;transform:scale(1.5)}
+50%{opacity:.8;transform:scale(1)}
+70%{opacity:1;transform:scale(1.3)}
+}
+/* Horizon glow pulse */
+.horizon-glow{
+position:fixed;top:44.5%;left:0;right:0;height:3vh;
+pointer-events:none;z-index:0;
+background:radial-gradient(ellipse 80% 100% at 50% 50%,rgba(255,255,255,.5),transparent);
+animation:horizon-pulse 6s ease-in-out infinite alternate;
+}
+@keyframes horizon-pulse{
+0%{opacity:.4;transform:scaleY(.8)}
+100%{opacity:.7;transform:scaleY(1.2)}
+}
+/* ===== Horoscope Diagnosis Section ===== */
+.horoscope-section{
+  position:relative;overflow:hidden;
+}
+.horoscope-section::after{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(100,120,200,.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 80% 90%, rgba(120,140,220,.04) 0%, transparent 60%);
+  z-index:0;
+}
+.horoscope-section>*{position:relative;z-index:1}
+
+/* --- Input Grid --- */
+.horoscope-input-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  margin-top:.5rem;
+}
+@media(max-width:768px){
+  .horoscope-input-grid{grid-template-columns:1fr}
+}
+
+/* --- Input Group --- */
+.horoscope-input-group{
+  display:flex;flex-direction:column;gap:.35rem;
+}
+.horoscope-input-group label{
+  font-size:.75rem;font-weight:500;color:var(--text-light);
+  letter-spacing:.05em;
+}
+.horoscope-input-group input,
+.horoscope-input-group select{
+  padding:.6rem .8rem;
+  border-radius:var(--radius-sm);
+  border:1px solid rgba(255,255,255,.5);
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-family:inherit;font-size:.85rem;color:var(--text);
+  transition:var(--transition);
+  outline:none;
+  box-shadow:inset 0 1px 2px rgba(90,160,220,.06);
+}
+.horoscope-input-group input:focus,
+.horoscope-input-group select:focus{
+  border-color:rgba(90,164,217,.5);
+  background:rgba(255,255,255,.6);
+  box-shadow:0 0 0 3px rgba(90,164,217,.12),inset 0 1px 2px rgba(90,160,220,.06);
+}
+
+/* --- Mystical Button --- */
+.horoscope-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.75rem 2.2rem;
+  border:none;border-radius:28px;
+  font-family:inherit;font-size:.92rem;font-weight:600;
+  letter-spacing:.12em;
+  color:#fff;
+  background:linear-gradient(135deg,#4a6fa5 0%,#5b8cc9 30%,#7b68ae 60%,#6a5acd 100%);
+  box-shadow:
+    0 4px 20px rgba(106,90,205,.25),
+    0 0 30px rgba(106,90,205,.1),
+    inset 0 1px 0 rgba(255,255,255,.2);
+  cursor:pointer;
+  transition:all .35s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  overflow:hidden;
+}
+.horoscope-btn::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transition:left .6s ease;
+}
+.horoscope-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 6px 28px rgba(106,90,205,.35),
+    0 0 40px rgba(106,90,205,.15),
+    inset 0 1px 0 rgba(255,255,255,.25);
+}
+.horoscope-btn:hover::before{
+  left:100%;
+}
+.horoscope-btn:active{
+  transform:translateY(0) scale(.97);
+  box-shadow:
+    0 2px 12px rgba(106,90,205,.2),
+    inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+/* --- Results Container --- */
+.horoscope-results{
+  display:none;
+  margin-top:1.5rem;
+  opacity:0;
+  transform:translateY(16px);
+}
+.horoscope-results.show{
+  display:block;
+  animation:horoscopeFadeIn .6s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes horoscopeFadeIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* --- Zodiac Chart --- */
+.horoscope-chart{
+  display:flex;justify-content:center;align-items:center;
+  margin:1.2rem auto;
+  width:180px;height:180px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(106,90,205,.06) 0%, transparent 70%),
+    rgba(255,255,255,.3);
+  border:1px solid rgba(106,90,205,.12);
+  box-shadow:
+    0 0 24px rgba(106,90,205,.06),
+    inset 0 0 20px rgba(255,255,255,.4);
+}
+
+/* --- Kundali Chart (South Indian Style) --- */
+.kundali-chart{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(4,1fr);
+  width:360px;
+  max-width:100%;
+  margin:1rem auto;
+  border:2px solid rgba(90,164,217,.3);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.4);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  overflow:hidden;
+}
+.kundali-cell{
+  position:relative;
+  padding:.4rem;
+  border:1px solid rgba(90,164,217,.15);
+  min-height:80px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+.kundali-cell.center-cell{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(90,164,217,.05);
+  border:1px solid rgba(90,164,217,.1);
+}
+.kundali-cell .rashi-name{
+  font-size:.6rem;
+  color:var(--text-lighter);
+  letter-spacing:.04em;
+}
+.kundali-cell .planet-list{
+  font-size:.75rem;
+  font-weight:600;
+  color:var(--text);
+  margin-top:.2rem;
+  line-height:1.4;
+}
+.kundali-cell .lagna-mark{
+  position:absolute;
+  top:0;
+  right:0;
+  width:0;
+  height:0;
+  border-top:16px solid rgba(90,164,217,.4);
+  border-left:16px solid transparent;
+}
+.kundali-center-info{
+  text-align:center;
+  font-size:.7rem;
+  color:var(--text-light);
+  line-height:1.5;
+}
+.kundali-center-info .center-title{
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:.3rem;
+}
+
+/* --- Planet Position Table --- */
+.planet-table{
+  width:100%;
+  max-width:500px;
+  margin:1rem auto;
+  border-collapse:collapse;
+  font-size:.78rem;
+}
+.planet-table th{
+  padding:.4rem .6rem;
+  text-align:left;
+  font-weight:600;
+  color:var(--text-light);
+  border-bottom:2px solid rgba(90,164,217,.2);
+  font-size:.7rem;
+  letter-spacing:.05em;
+}
+.planet-table td{
+  padding:.35rem .6rem;
+  border-bottom:1px solid rgba(90,164,217,.08);
+  color:var(--text);
+}
+.planet-table tr:hover td{
+  background:rgba(90,164,217,.04);
+}
+
+/* --- Zodiac Badges Container --- */
+.zodiac-badges{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  margin:1.2rem 0;
+}
+
+/* --- Sign Badge --- */
+.horoscope-sign-badge{
+  display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  padding:.8rem 1.2rem;
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(106,90,205,.12);
+  box-shadow:0 2px 12px rgba(106,90,205,.06),inset 0 1px 0 rgba(255,255,255,.5);
+  min-width:100px;
+  transition:var(--transition);
+}
+.horoscope-sign-badge:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 18px rgba(106,90,205,.1);
+}
+.horoscope-sign-badge .sign-label{
+  font-size:.65rem;font-weight:500;color:var(--text-lighter);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.horoscope-sign-badge .sign-symbol{
+  font-size:1.8rem;line-height:1;
+  filter:drop-shadow(0 1px 3px rgba(106,90,205,.15));
+}
+.horoscope-sign-badge .sign-name{
+  font-size:.8rem;font-weight:600;color:var(--text);
+  letter-spacing:.05em;
+}
+.horoscope-sign-badge .sign-element{
+  font-size:.65rem;color:var(--text-lighter);
+  letter-spacing:.06em;margin-top:.15rem;
+}
+
+/* --- Mystical Divider --- */
+.horoscope-divider{
+  display:flex;align-items:center;gap:.8rem;
+  margin:1.4rem 0;
+}
+.horoscope-divider::before,
+.horoscope-divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(106,90,205,.15),transparent);
+}
+.horoscope-divider::before{
+  background:linear-gradient(90deg,transparent,rgba(106,90,205,.15));
+}
+.horoscope-divider::after{
+  background:linear-gradient(90deg,rgba(106,90,205,.15),transparent);
+}
+
+/* --- Reading Section --- */
+.horoscope-reading-section{
+  padding:.4rem 0;
+}
+.horoscope-reading-title{
+  font-size:.88rem;font-weight:700;
+  color:#5a6aad;
+  letter-spacing:.08em;
+  margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.horoscope-reading-title::before{
+  content:'';display:inline-block;width:4px;height:1em;
+  background:linear-gradient(180deg,#7b68ae,#5b8cc9);
+  border-radius:2px;
+}
+.horoscope-reading-text{
+  font-size:.92rem;
+  line-height:2;
+  color:var(--text);
+  font-feature-settings:'palt' 1;
+  letter-spacing:.02em;
+}
+
+/* --- Recommended Stones Section --- */
+.horoscope-stones-section{
+  margin-top:.5rem;
+}
+.horoscope-stones-section .stones-section-title{
+  font-size:.95rem;font-weight:700;color:#5a6aad;
+  letter-spacing:.08em;margin-bottom:1rem;
+  text-align:center;
+}
+
+/* --- Pattern Cards Grid --- */
+.horoscope-pattern-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+}
+@media(max-width:768px){
+  .horoscope-pattern-cards{grid-template-columns:1fr}
+}
+
+.horoscope-pattern-card{
+  padding:1rem;
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.4);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(106,90,205,.1);
+  box-shadow:0 2px 12px rgba(90,160,220,.06),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:var(--transition);
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.horoscope-pattern-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(106,90,205,.1),inset 0 1px 0 rgba(255,255,255,.6);
+  border-color:rgba(106,90,205,.18);
+}
+.horoscope-pattern-card .pattern-title{
+  font-size:.85rem;font-weight:700;color:var(--text);
+  letter-spacing:.05em;
+  display:flex;align-items:center;gap:.4rem;
+}
+.horoscope-pattern-card .pattern-desc{
+  font-size:.78rem;color:var(--text-light);
+  line-height:1.6;
+}
+.horoscope-pattern-card .pattern-stones{
+  display:flex;flex-wrap:wrap;gap:.35rem;
+  margin:.2rem 0;
+}
+.horoscope-pattern-card .pattern-stones .stone-tag{
+  display:inline-flex;align-items:center;gap:.25rem;
+  padding:.25rem .6rem;
+  border-radius:16px;
+  font-size:.72rem;font-weight:500;
+  background:rgba(90,164,217,.1);
+  border:1px solid rgba(90,164,217,.15);
+  color:#3a80b8;
+}
+.horoscope-pattern-card .pattern-btn{
+  margin-top:auto;
+  padding:.5rem .8rem;
+  border:1px solid rgba(90,164,217,.3);
+  border-radius:var(--radius-sm);
+  background:rgba(90,164,217,.12);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  font-family:inherit;font-size:.78rem;font-weight:600;
+  color:#3a80b8;
+  cursor:pointer;
+  transition:var(--transition);
+  text-align:center;
+}
+.horoscope-pattern-card .pattern-btn:hover{
+  background:rgba(90,164,217,.25);
+  transform:translateY(-1px);
+  box-shadow:0 3px 12px rgba(90,164,217,.15);
+}
+.horoscope-pattern-card .pattern-btn:active{
+  transform:translateY(0) scale(.97);
+}
+/* ===== Order Modal ===== */
+.order-modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:700;display:none;align-items:center;justify-content:center;
+  padding:1rem;
+  opacity:0;transition:opacity .3s ease;
+}
+.order-modal-overlay.show{display:flex;opacity:1}
+.order-modal{
+  background:var(--bg-card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-radius:var(--radius);border:1px solid rgba(255,255,255,.6);
+  box-shadow:0 12px 48px rgba(90,160,220,.2),inset 0 1px 0 rgba(255,255,255,.6);
+  width:100%;max-width:640px;max-height:90vh;overflow-y:auto;
+  padding:2rem;position:relative;
+  transform:translateY(20px) scale(.97);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.order-modal-overlay.show .order-modal{
+  transform:translateY(0) scale(1);
+}
+.order-modal-close{
+  position:absolute;top:1rem;right:1rem;width:32px;height:32px;
+  border-radius:50%;border:1px solid rgba(90,164,217,.2);background:rgba(255,255,255,.5);
+  font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--text-light);transition:var(--transition);
+}
+.order-modal-close:hover{background:rgba(90,164,217,.15);color:var(--primary)}
+.order-modal h2{
+  font-size:1.2rem;font-weight:700;color:var(--primary);
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;
+}
+.order-modal h2::before{content:'✦';color:var(--primary-light);font-size:.6rem}
+.order-modal h3{
+  font-size:.95rem;font-weight:600;color:var(--primary);
+  margin:1.2rem 0 .8rem;padding-bottom:.4rem;
+  border-bottom:1px solid rgba(120,192,236,.2);
+}
+.order-form-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:.8rem;
+}
+@media(max-width:480px){.order-form-grid{grid-template-columns:1fr}}
+.order-form-group{display:flex;flex-direction:column;gap:.3rem}
+.order-form-group.full-width{grid-column:1/-1}
+.order-form-group label{
+  font-size:.75rem;font-weight:500;color:var(--text-light);letter-spacing:.05em;
+}
+.order-form-group label .required{color:#c44;margin-left:.2rem}
+.order-form-group input,
+.order-form-group select{
+  padding:.6rem .8rem;border-radius:var(--radius-sm);
+  border:1px solid rgba(255,255,255,.5);
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-family:inherit;font-size:.85rem;color:var(--text);
+  transition:var(--transition);outline:none;
+  box-shadow:inset 0 1px 2px rgba(90,160,220,.06);
+}
+.order-form-group input:focus,
+.order-form-group select:focus{
+  border-color:rgba(90,164,217,.5);background:rgba(255,255,255,.6);
+  box-shadow:0 0 0 3px rgba(90,164,217,.12),inset 0 1px 2px rgba(90,160,220,.06);
+}
+.order-form-group input.invalid{
+  border-color:rgba(200,60,60,.5);
+  box-shadow:0 0 0 3px rgba(200,60,60,.1);
+}
+.order-summary-box{
+  background:rgba(255,255,255,.4);border-radius:var(--radius-sm);
+  border:1px solid rgba(120,192,236,.2);padding:1rem;
+  margin-top:.5rem;
+}
+.order-summary-row{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.82rem;padding:.3rem 0;
+  border-bottom:1px solid rgba(120,192,236,.1);
+}
+.order-summary-row:last-child{border-bottom:none}
+.order-summary-row .slot-label{color:var(--text-light);min-width:50px}
+.order-summary-row .stone-label{
+  flex:1;display:flex;align-items:center;gap:.4rem;
+}
+.order-summary-row .stone-label .dot{
+  width:12px;height:12px;border-radius:50%;flex-shrink:0;
+  box-shadow:inset 0 -1px 3px rgba(0,0,0,.2);
+}
+.order-summary-row .stone-label .empty-slot{color:var(--text-lighter);font-style:italic}
+.order-summary-row .price-label{font-weight:500;white-space:nowrap}
+.order-summary-total{
+  margin-top:.8rem;padding-top:.8rem;border-top:2px solid var(--primary);
+  display:flex;justify-content:space-between;
+  font-size:1.1rem;font-weight:900;color:var(--primary);
+}
+.order-summary-specs{
+  display:flex;gap:1.5rem;font-size:.82rem;color:var(--text-light);
+  margin-bottom:.8rem;flex-wrap:wrap;
+}
+.order-summary-specs span{display:flex;align-items:center;gap:.3rem}
+.order-modal-actions{
+  display:flex;gap:.8rem;justify-content:flex-end;margin-top:1.5rem;
+}
+.order-modal-actions .btn{padding:.7rem 2rem;font-size:.9rem}
+.btn-submit{
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:#fff;border:none;font-weight:600;
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(90,164,217,.3)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-cancel{
+  background:transparent;border:1px solid rgba(90,164,217,.3);color:var(--primary);
+}
+.btn-cancel:hover{background:rgba(90,164,217,.1)}
+.order-success-msg{
+  text-align:center;padding:2rem 1rem;
+}
+.order-success-msg .success-icon{
+  font-size:3rem;margin-bottom:1rem;display:block;
+}
+.order-success-msg h3{
+  font-size:1.2rem;font-weight:700;color:var(--primary);
+  margin-bottom:.5rem;border:none;padding:0;
+}
+.order-success-msg p{
+  font-size:.85rem;color:var(--text-light);line-height:1.6;
+}
+.order-error-msg{
+  background:rgba(200,60,60,.08);border:1px solid rgba(200,60,60,.2);
+  border-radius:var(--radius-sm);padding:.8rem 1rem;
+  font-size:.8rem;color:#a03030;margin-top:.8rem;display:none;
+}
+.order-error-msg.show{display:block}
+/* Scrollbar for modal */
+.order-modal::-webkit-scrollbar{width:4px}
+.order-modal::-webkit-scrollbar-thumb{background:rgba(90,164,217,.3);border-radius:2px}
+</style>
+</head>
+<body>
+<!-- Parallax Cloud Scene -->
+<div class="cloud-scene" id="cloud-scene" aria-hidden="true"></div>
+<div class="water-surface" aria-hidden="true"></div>
+<div class="horizon-glow" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+<!-- Magic circles - water blue -->
+<div class="magic-circle" style="top:-60px;left:-60px;width:260px;height:260px;opacity:.1">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="none" stroke="#4a98c8" stroke-width=".5"/><circle cx="100" cy="100" r="80" fill="none" stroke="#fff" stroke-width=".3"/><circle cx="100" cy="100" r="65" fill="none" stroke="#4a98c8" stroke-width=".3" stroke-dasharray="4,3"/><polygon points="100,8 130,78 198,78 142,122 165,192 100,150 35,192 58,122 2,78 70,78" fill="none" stroke="#fff" stroke-width=".4"/><polygon points="100,192 70,122 2,122 58,78 35,8 100,50 165,8 142,78 198,122 130,122" fill="none" stroke="#4a98c8" stroke-width=".3"/></svg>
+</div>
+<div class="magic-circle reverse" style="bottom:-70px;right:-70px;width:280px;height:280px;opacity:.08">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="none" stroke="#fff" stroke-width=".3"/><circle cx="100" cy="100" r="75" fill="none" stroke="#4a98c8" stroke-width=".3"/><polygon points="100,10 148,68 194,100 148,132 100,190 52,132 6,100 52,68" fill="none" stroke="#fff" stroke-width=".4"/><circle cx="100" cy="100" r="50" fill="none" stroke="#4a98c8" stroke-width=".2" stroke-dasharray="5,4"/></svg>
+</div>
+<!-- Keyhole SVG -->
+<svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.06;pointer-events:none" width="180" height="180" viewBox="0 0 100 100">
+<circle cx="50" cy="35" r="18" fill="none" stroke="#3a80b0" stroke-width="1.5"/>
+<path d="M42 48 L42 80 Q42 85 46 85 L54 85 Q58 85 58 80 L58 48" fill="none" stroke="#3a80b0" stroke-width="1.5"/>
+<circle cx="50" cy="35" r="6" fill="none" stroke="#3a80b0" stroke-width="1"/>
+<circle cx="50" cy="35" r="25" fill="none" stroke="#3a80b0" stroke-width=".5" stroke-dasharray="3,3"/>
+</svg>
+<h1>Ordermade <span>Power Stone</span></h1>
+<p>あなただけのオーダーメイドパワーストーン</p>
+</header>
+
+<div class="app-container">
+<div class="main-area">
+
+<!-- Bracelet Preview -->
+<section class="panel bracelet-section" aria-label="ブレスレットプレビュー">
+<svg class="magic-bg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<circle cx="200" cy="200" r="190" fill="none" stroke="#5ba4d9" stroke-width=".6"/>
+<circle cx="200" cy="200" r="170" fill="none" stroke="#5ba4d9" stroke-width=".4"/>
+<circle cx="200" cy="200" r="150" fill="none" stroke="#5ba4d9" stroke-width=".3" stroke-dasharray="6,3"/>
+<circle cx="200" cy="200" r="130" fill="none" stroke="#5ba4d9" stroke-width=".3"/>
+<polygon points="200,15 260,85 370,85 285,135 310,245 200,180 90,245 115,135 30,85 140,85" fill="none" stroke="#5ba4d9" stroke-width=".5"/>
+<polygon points="200,385 140,315 30,315 115,265 90,155 200,220 310,155 285,265 370,315 260,315" fill="none" stroke="#5ba4d9" stroke-width=".4"/>
+<line x1="200" y1="5" x2="200" y2="395" stroke="#5ba4d9" stroke-width=".2" opacity=".4"/>
+<line x1="5" y1="200" x2="395" y2="200" stroke="#5ba4d9" stroke-width=".2" opacity=".4"/>
+<line x1="55" y1="55" x2="345" y2="345" stroke="#5ba4d9" stroke-width=".2" opacity=".3"/>
+<line x1="345" y1="55" x2="55" y2="345" stroke="#5ba4d9" stroke-width=".2" opacity=".3"/>
+<text x="200" y="50" text-anchor="middle" font-size="10" fill="#5ba4d9" opacity=".3" font-family="serif">&#x2605;</text>
+<text x="200" y="360" text-anchor="middle" font-size="10" fill="#5ba4d9" opacity=".3" font-family="serif">&#x2605;</text>
+<text x="50" y="205" text-anchor="middle" font-size="10" fill="#5ba4d9" opacity=".3" font-family="serif">&#x2605;</text>
+<text x="350" y="205" text-anchor="middle" font-size="10" fill="#5ba4d9" opacity=".3" font-family="serif">&#x2605;</text>
+</svg>
+<div class="panel-title">ブレスレットプレビュー</div>
+<div class="bracelet-wrapper" id="bracelet-wrapper">
+<svg id="bracelet-svg" width="360" height="360" viewBox="0 0 360 360" aria-label="ブレスレットデザイン"></svg>
+</div>
+<div class="bracelet-center-info" id="bracelet-info"></div>
+<div class="bracelet-actions">
+<button class="btn btn-gold" id="btn-auto-fill" aria-label="おまかせデザイン">✦ おまかせデザイン</button>
+<button class="btn btn-primary" id="btn-fill-same" aria-label="全て同じ石で埋める">全て同じ石で埋める</button>
+<button class="btn btn-danger btn-sm" id="btn-reset" aria-label="リセット">リセット</button>
+</div>
+</section>
+
+<!-- Size Selector -->
+<section class="panel size-panel" aria-label="サイズ選択" style="position:relative;overflow:hidden">
+<div class="magic-circle" style="top:-30px;right:-30px;width:120px;height:120px;opacity:.04">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="#7ec0ec" stroke-width=".8"/><circle cx="100" cy="100" r="70" fill="none" stroke="#7ec0ec" stroke-width=".4"/><polygon points="100,15 145,72 190,100 145,128 100,190 55,128 10,100 55,72" fill="none" stroke="#7ec0ec" stroke-width=".5"/></svg>
+</div>
+<div class="panel-title">サイズ選択</div>
+<div class="size-selector">
+<div class="size-group">
+<label>ブレスレットサイズ</label>
+<div class="size-options" id="bracelet-sizes" role="radiogroup" aria-label="ブレスレットサイズ">
+<button class="size-option" data-size="14" role="radio" aria-checked="false">S (14cm)</button>
+<button class="size-option active" data-size="16" role="radio" aria-checked="true">M (16cm)</button>
+<button class="size-option" data-size="18" role="radio" aria-checked="false">L (18cm)</button>
+<button class="size-option" data-size="20" role="radio" aria-checked="false">LL (20cm)</button>
+</div>
+</div>
+<div class="size-group">
+<label>玉のサイズ</label>
+<div class="size-options" id="bead-sizes" role="radiogroup" aria-label="玉のサイズ">
+<button class="size-option" data-bead="6" role="radio" aria-checked="false">6mm</button>
+<button class="size-option active" data-bead="8" role="radio" aria-checked="true">8mm</button>
+<button class="size-option" data-bead="10" role="radio" aria-checked="false">10mm</button>
+<button class="size-option" data-bead="12" role="radio" aria-checked="false">12mm</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Horoscope Diagnosis -->
+<section class="panel horoscope-section" aria-label="ホロスコープ診断" style="position:relative;overflow:hidden">
+  <!-- Decorative SVG background -->
+  <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.04;pointer-events:none;z-index:0" width="360" height="360" viewBox="0 0 360 360">
+    <circle cx="180" cy="180" r="160" fill="none" stroke="#6a5acd" stroke-width=".8"/>
+    <circle cx="180" cy="180" r="130" fill="none" stroke="#6a5acd" stroke-width=".5"/>
+    <circle cx="180" cy="180" r="100" fill="none" stroke="#6a5acd" stroke-width=".4"/>
+    <!-- 12 division lines -->
+    <g stroke="#6a5acd" stroke-width=".4">
+      <line x1="180" y1="20" x2="180" y2="50"/>
+      <line x1="260" y1="40" x2="245" y2="66"/>
+      <line x1="320" y1="100" x2="294" y2="115"/>
+      <line x1="340" y1="180" x2="310" y2="180"/>
+      <line x1="320" y1="260" x2="294" y2="245"/>
+      <line x1="260" y1="320" x2="245" y2="294"/>
+      <line x1="180" y1="340" x2="180" y2="310"/>
+      <line x1="100" y1="320" x2="115" y2="294"/>
+      <line x1="40" y1="260" x2="66" y2="245"/>
+      <line x1="20" y1="180" x2="50" y2="180"/>
+      <line x1="40" y1="100" x2="66" y2="115"/>
+      <line x1="100" y1="40" x2="115" y2="66"/>
+    </g>
+    <!-- Zodiac symbols around the circle -->
+    <text font-size="14" fill="#6a5acd" text-anchor="middle">
+      <tspan x="180" y="18">&#9800;</tspan>
+      <tspan x="262" y="42">&#9801;</tspan>
+      <tspan x="322" y="104">&#9802;</tspan>
+      <tspan x="346" y="184">&#9803;</tspan>
+      <tspan x="322" y="264">&#9804;</tspan>
+      <tspan x="262" y="326">&#9805;</tspan>
+      <tspan x="180" y="350">&#9806;</tspan>
+      <tspan x="98" y="326">&#9807;</tspan>
+      <tspan x="38" y="264">&#9808;</tspan>
+      <tspan x="14" y="184">&#9809;</tspan>
+      <tspan x="38" y="104">&#9810;</tspan>
+      <tspan x="98" y="42">&#9811;</tspan>
+    </text>
+  </svg>
+
+  <div class="panel-title" style="justify-content:center">&#10023; ホロスコープ診断 &#10023;</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:1rem;text-align:center">
+    生年月日・時間・場所から、あなたの運命の石を導き出します
+  </p>
+
+  <div class="horoscope-input-grid">
+    <div class="horoscope-input-group">
+      <label for="horoscope-date">生年月日</label>
+      <input type="date" id="horoscope-date" value="1990-01-01">
+    </div>
+    <div class="horoscope-input-group">
+      <label for="horoscope-time">生まれた時間</label>
+      <input type="time" id="horoscope-time" value="12:00">
+    </div>
+    <div class="horoscope-input-group">
+      <label for="horoscope-place">生まれた場所</label>
+      <select id="horoscope-place">
+        <option value="43.06,141.35">北海道</option>
+        <option value="40.82,140.74">青森県</option>
+        <option value="39.70,141.15">岩手県</option>
+        <option value="38.27,140.87">宮城県</option>
+        <option value="39.72,140.10">秋田県</option>
+        <option value="38.24,140.33">山形県</option>
+        <option value="37.75,140.47">福島県</option>
+        <option value="36.34,140.45">茨城県</option>
+        <option value="36.57,139.88">栃木県</option>
+        <option value="36.39,139.06">群馬県</option>
+        <option value="35.86,139.65">埼玉県</option>
+        <option value="35.61,140.12">千葉県</option>
+        <option value="35.68,139.69" selected>東京都</option>
+        <option value="35.45,139.64">神奈川県</option>
+        <option value="37.90,139.02">新潟県</option>
+        <option value="36.70,137.21">富山県</option>
+        <option value="36.59,136.63">石川県</option>
+        <option value="36.07,136.22">福井県</option>
+        <option value="35.66,138.57">山梨県</option>
+        <option value="36.65,138.18">長野県</option>
+        <option value="35.39,136.72">岐阜県</option>
+        <option value="34.98,138.38">静岡県</option>
+        <option value="35.18,136.91">愛知県</option>
+        <option value="34.73,136.51">三重県</option>
+        <option value="35.00,135.87">滋賀県</option>
+        <option value="35.02,135.76">京都府</option>
+        <option value="34.69,135.52">大阪府</option>
+        <option value="34.69,135.18">兵庫県</option>
+        <option value="34.69,135.83">奈良県</option>
+        <option value="34.23,135.17">和歌山県</option>
+        <option value="35.50,134.24">鳥取県</option>
+        <option value="35.47,133.05">島根県</option>
+        <option value="34.66,133.93">岡山県</option>
+        <option value="34.40,132.46">広島県</option>
+        <option value="34.19,131.47">山口県</option>
+        <option value="34.07,134.56">徳島県</option>
+        <option value="34.34,134.04">香川県</option>
+        <option value="33.84,132.77">愛媛県</option>
+        <option value="33.56,133.53">高知県</option>
+        <option value="33.59,130.42">福岡県</option>
+        <option value="33.25,130.30">佐賀県</option>
+        <option value="32.74,129.87">長崎県</option>
+        <option value="32.79,130.74">熊本県</option>
+        <option value="33.24,131.61">大分県</option>
+        <option value="31.91,131.42">宮崎県</option>
+        <option value="31.56,130.56">鹿児島県</option>
+        <option value="26.21,127.68">沖縄県</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.2rem">
+    <button class="horoscope-btn" id="horoscope-btn">&#10023; 運命を読み解く &#10023;</button>
+  </div>
+
+  <!-- Results (hidden initially) -->
+  <div class="horoscope-results" id="horoscope-results">
+    <!-- Kundali Chart (South Indian Style) -->
+    <div id="kundali-chart" class="kundali-chart">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Zodiac badges (Sun / Moon / Ascendant) -->
+    <div class="zodiac-badges" id="zodiac-badges">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Planet Position Table -->
+    <div id="planet-table-container">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="horoscope-divider"></div>
+
+    <!-- Lifetime Reading -->
+    <div class="horoscope-reading-section" id="reading-lifetime">
+      <!-- Populated by JS, example structure:
+      <div class="horoscope-reading-title">生涯の運命</div>
+      <div class="horoscope-reading-text">...</div>
+      -->
+    </div>
+
+    <div class="horoscope-divider"></div>
+
+    <!-- Today's Reading -->
+    <div class="horoscope-reading-section" id="reading-today">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="horoscope-divider"></div>
+
+    <!-- Future Reading -->
+    <div class="horoscope-reading-section" id="reading-future">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="horoscope-divider"></div>
+
+    <!-- Recommended Bracelet Patterns -->
+    <div class="horoscope-stones-section" id="horoscope-stones">
+      <!-- Populated by JS, example structure:
+      <div class="stones-section-title">&#10023; あなたの運命石ブレスレット &#10023;</div>
+      <div class="horoscope-pattern-cards">
+        <div class="horoscope-pattern-card">
+          <div class="pattern-title">&#9734; 守護のブレスレット</div>
+          <div class="pattern-desc">太陽星座に基づく守護石の組み合わせ</div>
+          <div class="pattern-stones">
+            <span class="stone-tag">&#9679; アメジスト</span>
+            <span class="stone-tag">&#9679; ローズクォーツ</span>
+          </div>
+          <button class="pattern-btn">このパターンを適用</button>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- Preset Patterns -->
+<section class="panel preset-panel" aria-label="おすすめパターン">
+<div class="panel-title">おすすめパターン</div>
+<div class="preset-grid" id="preset-grid"></div>
+</section>
+
+<!-- Stone Selection -->
+<section class="panel stone-selection" aria-label="天然石選択" style="position:relative;overflow:hidden">
+<div class="magic-circle reverse" style="bottom:-40px;left:-40px;width:160px;height:160px;opacity:.035">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="none" stroke="#7ec0ec" stroke-width=".6"/><circle cx="100" cy="100" r="60" fill="none" stroke="#5ba4d9" stroke-width=".4"/><polygon points="100,10 130,80 195,80 142,120 162,185 100,148 38,185 58,120 5,80 70,80" fill="none" stroke="#7ec0ec" stroke-width=".5"/><circle cx="100" cy="100" r="40" fill="none" stroke="#5ba4d9" stroke-width=".3" stroke-dasharray="3,3"/></svg>
+</div>
+<div class="magic-circle" style="top:-25px;right:-25px;width:100px;height:100px;opacity:.03">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="85" fill="none" stroke="#5ba4d9" stroke-width=".6"/><polygon points="100,20 140,75 185,100 140,125 100,180 60,125 15,100 60,75" fill="none" stroke="#7ec0ec" stroke-width=".4"/></svg>
+</div>
+<div class="panel-title">天然石を選ぶ</div>
+<div class="tabs" role="tablist">
+<button class="tab-btn active" data-tab="wish" role="tab" aria-selected="true">願い事から選ぶ</button>
+<button class="tab-btn" data-tab="type" role="tab" aria-selected="false">石の種類から選ぶ</button>
+<button class="tab-btn" data-tab="color" role="tab" aria-selected="false">色から選ぶ</button>
+</div>
+
+<!-- Tab: By Wish -->
+<div class="tab-content active" id="tab-wish" role="tabpanel">
+<div class="wish-categories" id="wish-categories" role="radiogroup" aria-label="願い事カテゴリ"></div>
+<div class="stone-grid" id="wish-stones"></div>
+</div>
+
+<!-- Tab: By Type (All Stones) -->
+<div class="tab-content" id="tab-type" role="tabpanel">
+<div class="stone-grid" id="type-stones"></div>
+</div>
+
+<!-- Tab: By Color -->
+<div class="tab-content" id="tab-color" role="tabpanel">
+<div class="color-filters" id="color-filters" role="radiogroup" aria-label="色カテゴリ"></div>
+<div class="stone-grid" id="color-stones"></div>
+</div>
+</section>
+
+<!-- Saved Designs -->
+<section class="panel saved-section" aria-label="保存したデザイン" style="position:relative;overflow:hidden">
+<div class="magic-circle" style="top:50%;left:-20px;width:90px;height:90px;transform:translateY(-50%);opacity:.04">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" fill="none" stroke="#7ec0ec" stroke-width=".7"/><polygon points="100,15 130,80 195,80 142,120 162,185 100,148 38,185 58,120 5,80 70,80" fill="none" stroke="#5ba4d9" stroke-width=".5"/></svg>
+</div>
+<div class="panel-title">保存したデザイン</div>
+<div class="saved-designs" id="saved-designs">
+<div class="empty-state">保存されたデザインはありません</div>
+</div>
+</section>
+
+</div>
+
+<!-- Order Summary Sidebar -->
+<aside class="panel order-panel" aria-label="注文内容" style="position:relative;overflow:hidden">
+<div class="magic-circle reverse" style="bottom:-35px;right:-35px;width:130px;height:130px;opacity:.035">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="#7ec0ec" stroke-width=".6"/><circle cx="100" cy="100" r="65" fill="none" stroke="#5ba4d9" stroke-width=".3" stroke-dasharray="5,3"/><polygon points="100,12 145,72 190,100 145,128 100,188 55,128 10,100 55,72" fill="none" stroke="#7ec0ec" stroke-width=".4"/></svg>
+</div>
+<div class="panel-title">注文内容</div>
+<div id="order-size-info" style="font-size:.82rem;color:var(--text-light);margin-bottom:.8rem"></div>
+<ul class="order-list" id="order-list">
+<li class="empty-state">石が選択されていません</li>
+</ul>
+<div class="order-total" id="order-total" style="display:none">
+<div class="order-total-row">
+<span>使用玉数</span><span id="total-beads">0 / 0</span>
+</div>
+<div class="order-total-row grand-total">
+<span>合計金額</span><span id="total-price">¥0</span>
+</div>
+</div>
+<div class="order-actions">
+<button class="btn btn-gold" id="btn-save" style="width:100%;justify-content:center">デザインを保存</button>
+<button class="btn btn-primary" id="btn-order" style="width:100%;justify-content:center">注文する</button>
+<button class="btn btn-outline btn-sm" id="btn-reset-order" style="width:100%;justify-content:center">デザインをリセット</button>
+</div>
+</aside>
+</div>
+
+<!-- Tooltip -->
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+<!-- Context Menu -->
+<div class="context-menu" id="context-menu">
+<button class="context-menu-item" id="ctx-change">石を変更</button>
+<button class="context-menu-item danger" id="ctx-remove">石を取り除く</button>
+</div>
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+<!-- Completion Banner -->
+<div class="completion-banner" id="completion-banner">
+<h3>✨ デザイン完成！ ✨</h3>
+<p>素敵なブレスレットが出来上がりました</p>
+</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Order Modal -->
+<div class="order-modal-overlay" id="order-modal-overlay">
+<div class="order-modal" id="order-modal">
+<button class="order-modal-close" id="order-modal-close" aria-label="閉じる">&times;</button>
+<h2>注文内容の確認</h2>
+
+<!-- Order Summary -->
+<h3>ブレスレット情報</h3>
+<div class="order-summary-specs" id="order-modal-specs"></div>
+<div class="order-summary-box" id="order-modal-stones"></div>
+
+<!-- Shipping Address Form -->
+<h3>配送先情報</h3>
+<div id="order-form-section">
+<div class="order-form-grid">
+  <div class="order-form-group full-width">
+    <label>お名前<span class="required">*</span></label>
+    <input type="text" id="order-name" placeholder="山田 太郎" required>
+  </div>
+  <div class="order-form-group">
+    <label>郵便番号<span class="required">*</span></label>
+    <input type="text" id="order-postal" placeholder="000-0000" maxlength="8" required>
+  </div>
+  <div class="order-form-group">
+    <label>都道府県<span class="required">*</span></label>
+    <select id="order-prefecture" required>
+      <option value="">選択してください</option>
+      <option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option>
+      <option>秋田県</option><option>山形県</option><option>福島県</option><option>茨城県</option>
+      <option>栃木県</option><option>群馬県</option><option>埼玉県</option><option>千葉県</option>
+      <option>東京都</option><option>神奈川県</option><option>新潟県</option><option>富山県</option>
+      <option>石川県</option><option>福井県</option><option>山梨県</option><option>長野県</option>
+      <option>岐阜県</option><option>静岡県</option><option>愛知県</option><option>三重県</option>
+      <option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option>
+      <option>奈良県</option><option>和歌山県</option><option>鳥取県</option><option>島根県</option>
+      <option>岡山県</option><option>広島県</option><option>山口県</option><option>徳島県</option>
+      <option>香川県</option><option>愛媛県</option><option>高知県</option><option>福岡県</option>
+      <option>佐賀県</option><option>長崎県</option><option>熊本県</option><option>大分県</option>
+      <option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option>
+    </select>
+  </div>
+  <div class="order-form-group full-width">
+    <label>住所<span class="required">*</span></label>
+    <input type="text" id="order-address" placeholder="市区町村 番地 建物名" required>
+  </div>
+  <div class="order-form-group">
+    <label>電話番号<span class="required">*</span></label>
+    <input type="tel" id="order-phone" placeholder="090-0000-0000" required>
+  </div>
+  <div class="order-form-group">
+    <label>メールアドレス<span class="required">*</span></label>
+    <input type="email" id="order-email" placeholder="example@mail.com" required>
+  </div>
+</div>
+<div class="order-error-msg" id="order-error"></div>
+<div class="order-modal-actions">
+  <button class="btn btn-cancel" id="order-cancel-btn">キャンセル</button>
+  <button class="btn btn-submit" id="order-submit-btn">送信</button>
+</div>
+</div>
+
+<!-- Success message (shown after submit) -->
+<div id="order-success-section" class="order-success-msg" style="display:none">
+  <span class="success-icon">&#10004;&#65039;</span>
+  <h3>ご注文ありがとうございます</h3>
+  <p>ご注文内容をメールでお送りしました。<br>確認メールが届かない場合は、お手数ですが<br><strong>ozeight@gmail.com</strong> までご連絡ください。</p>
+  <div class="order-modal-actions" style="justify-content:center;margin-top:1.5rem">
+    <button class="btn btn-primary" id="order-close-success-btn">閉じる</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+<footer class="footer" role="contentinfo" style="position:relative;overflow:hidden">
+<div class="magic-circle" style="top:-40px;left:10%;width:140px;height:140px;opacity:.06">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="#7ec0ec" stroke-width=".5"/><polygon points="100,15 130,80 195,80 142,120 162,185 100,148 38,185 58,120 5,80 70,80" fill="none" stroke="#7ec0ec" stroke-width=".4"/><circle cx="100" cy="100" r="55" fill="none" stroke="#7ec0ec" stroke-width=".3"/></svg>
+</div>
+<div class="magic-circle reverse" style="bottom:-30px;right:15%;width:110px;height:110px;opacity:.05">
+<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="85" fill="none" stroke="#a0d4f0" stroke-width=".5"/><polygon points="100,20 140,75 185,100 140,125 100,180 60,125 15,100 60,75" fill="none" stroke="#a0d4f0" stroke-width=".4"/></svg>
+</div>
+<div class="footer-links">
+<a href="#">特定商取引法に基づく表記</a>
+<a href="#">プライバシーポリシー</a>
+<a href="#">配送について</a>
+<a href="#">返品・交換について</a>
+<a href="#">お問い合わせ</a>
+</div>
+<p>© 2026 Ordermade Power Stone All Rights Reserved.</p>
+<p>※ 天然石の色味は実物と若干異なる場合がございます。</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+/* ============================================================
+   DATA - Stone Database
+   ============================================================ */
+const STONES = [
+  {id:'rose_quartz',ja:'ローズクォーツ',en:'Rose Quartz',color:'#f0a0b0',grad:['#f4b8c4','#d4808e'],desc:'愛と優しさを象徴する石。恋愛運を高めます',price:300,wishes:['love'],colors:['pink']},
+  {id:'rhodonite',ja:'ロードナイト',en:'Rhodonite',color:'#c46080',grad:['#d4708a','#a04060'],desc:'深い愛情と思いやりを育む石',price:350,wishes:['love'],colors:['pink']},
+  {id:'garnet',ja:'ガーネット',en:'Garnet',color:'#8b1a1a',grad:['#a02020','#601010'],desc:'情熱と活力の石。実りをもたらします',price:450,wishes:['love'],colors:['red']},
+  {id:'moonstone',ja:'ムーンストーン',en:'Moonstone',color:'#d0d8e8',grad:['#e8eef8','#b0b8d0'],desc:'月の力を宿し、直感力と女性性を高める',price:400,wishes:['love'],colors:['white']},
+  {id:'inca_rose',ja:'インカローズ',en:'Inca Rose',color:'#e06080',grad:['#f07090','#c04060'],desc:'情熱的な愛を呼び込むバラ色の石',price:650,wishes:['love'],colors:['red','pink']},
+  {id:'citrine',ja:'シトリン',en:'Citrine',color:'#e8c040',grad:['#f0d060','#c8a020'],desc:'太陽の力を持つ金運・商売繁盛の石',price:350,wishes:['wealth'],colors:['yellow']},
+  {id:'tiger_eye',ja:'タイガーアイ',en:'Tiger Eye',color:'#a07020',grad:['#c09030','#806010'],desc:'洞察力と決断力を高め、金運を招く',price:300,wishes:['wealth'],colors:['yellow']},
+  {id:'rutile_quartz',ja:'ルチルクォーツ',en:'Rutilated Quartz',color:'#d4b060',grad:['#e8c878','#b09040'],desc:'金色の針が入った最強の金運石',price:800,wishes:['wealth'],colors:['yellow']},
+  {id:'pyrite',ja:'パイライト',en:'Pyrite',color:'#b0a870',grad:['#c8c090','#908850'],desc:'黄金色に輝く繁栄と富の石',price:300,wishes:['wealth'],colors:['yellow']},
+  {id:'goldstone',ja:'ゴールドストーン',en:'Goldstone',color:'#b87020',grad:['#d08830','#905810'],desc:'きらめく輝きで金運を強力に引き寄せる',price:250,wishes:['wealth'],colors:['yellow']},
+  {id:'lapis_lazuli',ja:'ラピスラズリ',en:'Lapis Lazuli',color:'#1a3a8a',grad:['#2050a0','#0a2060'],desc:'幸運を呼ぶ聖なる石。知恵と判断力を授ける',price:550,wishes:['career','study'],colors:['blue']},
+  {id:'sodalite',ja:'ソーダライト',en:'Sodalite',color:'#2a4a80',grad:['#3a5a90','#1a3060'],desc:'冷静な判断力と理性をもたらす知の石',price:300,wishes:['career','study'],colors:['blue']},
+  {id:'fluorite',ja:'フローライト',en:'Fluorite',color:'#70a0c0',grad:['#80c0d8','#5080a0'],desc:'天才の石。集中力と明晰な思考を高める',price:350,wishes:['career','study'],colors:['purple','blue']},
+  {id:'kyanite',ja:'カイヤナイト',en:'Kyanite',color:'#4060a0',grad:['#5070b0','#304080'],desc:'独立心と探究心を高め、道を切り開く',price:450,wishes:['career'],colors:['blue']},
+  {id:'blue_topaz',ja:'ブルートパーズ',en:'Blue Topaz',color:'#60b0e0',grad:['#80c8f0','#4098c8'],desc:'知性とコミュニケーション力を高める',price:500,wishes:['career'],colors:['blue']},
+  {id:'green_aventurine',ja:'グリーンアベンチュリン',en:'Green Aventurine',color:'#508050',grad:['#609860','#407040'],desc:'心身のバランスを整え、健康を維持する',price:250,wishes:['health'],colors:['green']},
+  {id:'malachite',ja:'マラカイト',en:'Malachite',color:'#208040',grad:['#30a050','#106030'],desc:'持ち主の体調変化を察知する健康の守護石',price:400,wishes:['health'],colors:['green']},
+  {id:'prehnite',ja:'プレナイト',en:'Prehnite',color:'#a0c880',grad:['#b0d890','#80b060'],desc:'不要なものを手放し、心身を整える',price:350,wishes:['health'],colors:['green']},
+  {id:'jade',ja:'ジェイド',en:'Jade',color:'#408040',grad:['#509850','#307030'],desc:'東洋で最も尊ばれる健康と長寿の石',price:500,wishes:['health'],colors:['green']},
+  {id:'unakite',ja:'ユナカイト',en:'Unakite',color:'#808050',grad:['#989860','#607040'],desc:'心身の調和をもたらすヒーリングストーン',price:250,wishes:['health'],colors:['green']},
+  {id:'amethyst',ja:'アメジスト',en:'Amethyst',color:'#7030a0',grad:['#8840b0','#582080'],desc:'精神の安定と高貴さをもたらす紫水晶',price:350,wishes:['healing','study'],colors:['purple']},
+  {id:'lepidolite',ja:'レピドライト',en:'Lepidolite',color:'#9070a0',grad:['#a080b0','#705880'],desc:'不安やストレスを癒すリチウムの石',price:350,wishes:['healing'],colors:['purple']},
+  {id:'sugilite',ja:'スギライト',en:'Sugilite',color:'#602080',grad:['#783098','#481060'],desc:'世界三大ヒーリングストーンの一つ',price:750,wishes:['healing'],colors:['purple']},
+  {id:'charoite',ja:'チャロアイト',en:'Charoite',color:'#6840a0',grad:['#7850b0','#503080'],desc:'恐怖や不安を克服し、精神を浄化する',price:600,wishes:['healing'],colors:['purple']},
+  {id:'larimar',ja:'ラリマー',en:'Larimar',color:'#70b0d0',grad:['#88c8e0','#5898b8'],desc:'愛と平和の石。カリブ海の癒しを持つ',price:700,wishes:['healing'],colors:['blue']},
+  {id:'onyx',ja:'オニキス',en:'Onyx',color:'#1a1a1a',grad:['#303030','#080808'],desc:'持ち主を守る最強の魔除け・厄除けの石',price:250,wishes:['protection'],colors:['black']},
+  {id:'hematite',ja:'ヘマタイト',en:'Hematite',color:'#404050',grad:['#505060','#2a2a38'],desc:'鋼のような強さで邪気を跳ね返す',price:200,wishes:['protection'],colors:['black']},
+  {id:'morion',ja:'モリオン',en:'Morion',color:'#101010',grad:['#202020','#000000'],desc:'最強の邪気払い。あらゆる悪から身を守る',price:500,wishes:['protection'],colors:['black']},
+  {id:'smoky_quartz',ja:'スモーキークォーツ',en:'Smoky Quartz',color:'#605040',grad:['#706050','#504030'],desc:'大地のエネルギーで心を安定させる',price:300,wishes:['protection'],colors:['black']},
+  {id:'obsidian',ja:'オブシディアン',en:'Obsidian',color:'#181818',grad:['#282828','#080808'],desc:'真実を映し出す鏡。邪念を断ち切る',price:250,wishes:['protection'],colors:['black']},
+  {id:'aquamarine',ja:'アクアマリン',en:'Aquamarine',color:'#60b0d0',grad:['#78c8e0','#4898b0'],desc:'幸せな結婚をもたらす海の宝石',price:500,wishes:['relationships'],colors:['blue']},
+  {id:'blue_lace_agate',ja:'ブルーレースアゲート',en:'Blue Lace Agate',color:'#90b8d0',grad:['#a8d0e0','#78a0b8'],desc:'穏やかなコミュニケーションを促す',price:350,wishes:['relationships'],colors:['blue']},
+  {id:'celestite',ja:'セレスタイト',en:'Celestite',color:'#a0c0e0',grad:['#b8d0f0','#88a8c8'],desc:'天使の石。平和と調和の波動を持つ',price:450,wishes:['relationships'],colors:['blue']},
+  {id:'amazonite',ja:'アマゾナイト',en:'Amazonite',color:'#50a090',grad:['#60b8a8','#408878'],desc:'希望の石。対人関係を円滑にする',price:350,wishes:['relationships'],colors:['green']},
+  {id:'turquoise',ja:'ターコイズ',en:'Turquoise',color:'#30a0a0',grad:['#40b8b0','#208888'],desc:'旅のお守り。友情と人の絆を深める',price:500,wishes:['relationships'],colors:['blue']},
+  {id:'crystal',ja:'クリスタル（水晶）',en:'Clear Quartz',color:'#e8e8f0',grad:['#f4f4ff','#d0d0e0'],desc:'万能の石。あらゆるパワーを増幅する',price:200,wishes:['study'],colors:['white']},
+  {id:'carnelian',ja:'カーネリアン',en:'Carnelian',color:'#c05020',grad:['#d86030','#a04010'],desc:'行動力と勇気を与える太陽の石',price:300,wishes:['career','health'],colors:['red']},
+  {id:'red_jasper',ja:'レッドジャスパー',en:'Red Jasper',color:'#a03020',grad:['#b84030','#802010'],desc:'大地の力強さで体力と精神力を高める',price:250,wishes:['health','protection'],colors:['red']},
+  {id:'pink_opal',ja:'ピンクオパール',en:'Pink Opal',color:'#f0b8c0',grad:['#f8d0d4','#e0a0a8'],desc:'優しさと包容力を高めるキューピッドの石',price:400,wishes:['love','relationships'],colors:['pink']},
+  {id:'howlite',ja:'ハウライト',en:'Howlite',color:'#e8e4e0',grad:['#f0ece8','#d8d0cc'],desc:'心を落ち着かせ、純粋さを保つ白い石',price:200,wishes:['healing'],colors:['white']},
+  {id:'selenite',ja:'セレナイト',en:'Selenite',color:'#f0ece8',grad:['#f8f4f0','#e0dcd4'],desc:'浄化力に優れた月の女神の石',price:350,wishes:['healing','protection'],colors:['white']},
+  // --- 追加石 ---
+  {id:'sunstone',ja:'サンストーン',en:'Sunstone',color:'#d08040',grad:['#e09858','#b06828'],desc:'太陽の輝きを宿し、自信とリーダーシップを与える',price:450,wishes:['career'],colors:['yellow']},
+  {id:'peridot',ja:'ペリドット',en:'Peridot',color:'#80b030',grad:['#98c848','#609020'],desc:'太陽の宝石。ポジティブなエネルギーで前向きに',price:500,wishes:['health','healing'],colors:['green']},
+  {id:'tanzanite',ja:'タンザナイト',en:'Tanzanite',color:'#4838a0',grad:['#5848b8','#302880'],desc:'高い霊性と知性を授ける希少な青紫の石',price:800,wishes:['career','study'],colors:['purple','blue']},
+  {id:'kunzite',ja:'クンツァイト',en:'Kunzite',color:'#d898c0',grad:['#e8a8d0','#c080a8'],desc:'無条件の愛と慈悲の心を育む淡いピンクの石',price:550,wishes:['love','healing'],colors:['pink']},
+  {id:'apatite',ja:'アパタイト',en:'Apatite',color:'#2888b0',grad:['#3898c0','#187898'],desc:'絆を深め、コミュニケーション能力を高める',price:400,wishes:['relationships'],colors:['blue']},
+  {id:'chrysocolla',ja:'クリソコラ',en:'Chrysocolla',color:'#308880',grad:['#40a098','#206860'],desc:'地球の石。心に平和と安定をもたらす',price:400,wishes:['healing','relationships'],colors:['green','blue']},
+  {id:'rhodochrosite',ja:'ロードクロサイト',en:'Rhodochrosite',color:'#e06878',grad:['#f07888','#c85060'],desc:'薔薇色の人生を導く情熱の石',price:700,wishes:['love'],colors:['pink','red']},
+  {id:'serpentine',ja:'サーペンティン',en:'Serpentine',color:'#608838',grad:['#78a048','#487028'],desc:'再生とデトックスの力で心身を清める',price:250,wishes:['health'],colors:['green']},
+  {id:'black_tourmaline',ja:'ブラックトルマリン',en:'Black Tourmaline',color:'#141414',grad:['#242424','#040404'],desc:'最強クラスの浄化・邪気払いの守護石',price:350,wishes:['protection'],colors:['black']},
+  {id:'pink_tourmaline',ja:'ピンクトルマリン',en:'Pink Tourmaline',color:'#d870a0',grad:['#e880b0','#c06088'],desc:'愛の電気石。恋愛運と女性の魅力を高める',price:600,wishes:['love'],colors:['pink']},
+  {id:'green_tourmaline',ja:'グリーントルマリン',en:'Green Tourmaline',color:'#309048',grad:['#40a858','#207838'],desc:'生命力を活性化させる緑の電気石',price:550,wishes:['health'],colors:['green']},
+  {id:'watermelon_tourmaline',ja:'ウォーターメロントルマリン',en:'Watermelon Tourmaline',color:'#90c070',grad:['#a0d080','#70a050'],desc:'ピンクと緑の調和で心のバランスを整える',price:750,wishes:['healing','love'],colors:['green','pink']},
+  {id:'labradorite',ja:'ラブラドライト',en:'Labradorite',color:'#405868',grad:['#506878','#304050'],desc:'虹色の閃光を放つ直感力と創造性の石',price:450,wishes:['career','study'],colors:['blue','black']},
+  {id:'alexandrite',ja:'アレキサンドライト',en:'Alexandrite',color:'#508068',grad:['#609878','#406050'],desc:'変色する奇跡の石。変化と適応力を高める',price:900,wishes:['career'],colors:['green','purple']},
+  {id:'iolite',ja:'アイオライト',en:'Iolite',color:'#3040a0',grad:['#4050b0','#203088'],desc:'ビジョンの石。人生の方向性を示す羅針盤',price:450,wishes:['career','study'],colors:['blue','purple']},
+  {id:'amber',ja:'アンバー（琥珀）',en:'Amber',color:'#c88020',grad:['#e09830','#a06810'],desc:'古代の生命力を封じ込めた太古の樹脂化石',price:500,wishes:['health','protection'],colors:['yellow']},
+  {id:'coral',ja:'コーラル（珊瑚）',en:'Coral',color:'#e05040',grad:['#f06050','#c03830'],desc:'海の生命力を宿す子宝と長寿の石',price:600,wishes:['health','love'],colors:['red']},
+  {id:'pearl',ja:'パール（真珠）',en:'Pearl',color:'#e8e0d8',grad:['#f0e8e0','#d0c8c0'],desc:'月と海の恵み。女性の美と品格を高める',price:550,wishes:['love','relationships'],colors:['white']},
+  {id:'opal',ja:'オパール',en:'Opal',color:'#d0d8e0',grad:['#e0e8f0','#b8c0d0'],desc:'虹色の遊色が美しい希望と創造性の石',price:700,wishes:['love','career'],colors:['white']},
+  {id:'sapphire',ja:'サファイア',en:'Sapphire',color:'#1830a0',grad:['#2840b8','#102080'],desc:'誠実と知恵の象徴。集中力と直感力を授ける',price:900,wishes:['career','study'],colors:['blue']},
+  {id:'ruby',ja:'ルビー',en:'Ruby',color:'#a01030',grad:['#c01840','#801020'],desc:'情熱と勝利の石。不滅のエネルギーをもたらす',price:900,wishes:['love','career'],colors:['red']},
+  {id:'emerald',ja:'エメラルド',en:'Emerald',color:'#108050',grad:['#189860','#006840'],desc:'叡智と安らぎの石。愛と富を引き寄せる',price:850,wishes:['love','wealth'],colors:['green']},
+  {id:'topaz',ja:'トパーズ',en:'Imperial Topaz',color:'#d8a040',grad:['#e8b858','#c08828'],desc:'希望と友愛の石。誠実さと豊かさを象徴する',price:600,wishes:['wealth','relationships'],colors:['yellow']},
+  {id:'spinel',ja:'スピネル',en:'Spinel',color:'#901838',grad:['#a82848','#782028'],desc:'活力と再生の石。新しい挑戦への勇気を与える',price:700,wishes:['career'],colors:['red']},
+  {id:'zoisite',ja:'ゾイサイト',en:'Zoisite',color:'#408030',grad:['#509840','#306820'],desc:'成長と変容を促す緑のヒーリングストーン',price:350,wishes:['health','healing'],colors:['green']},
+  {id:'hawk_eye',ja:'ホークスアイ',en:"Hawk's Eye",color:'#304868',grad:['#405878','#203850'],desc:'鷹の目。先見の明と洞察力を授ける',price:350,wishes:['career','protection'],colors:['blue','black']},
+  {id:'azurite',ja:'アズライト',en:'Azurite',color:'#183898',grad:['#2848a8','#102878'],desc:'第三の目を開く深い青の石。直感力を高める',price:500,wishes:['study'],colors:['blue']},
+  {id:'chrysoprase',ja:'クリソプレーズ',en:'Chrysoprase',color:'#60b868',grad:['#78d080','#48a050'],desc:'希望の緑。隠れた才能を引き出す',price:450,wishes:['career','healing'],colors:['green']},
+  {id:'dumortierite',ja:'デュモルチェライト',en:'Dumortierite',color:'#304080',grad:['#405090','#203068'],desc:'忍耐と秩序の石。困難を乗り越える力を授ける',price:300,wishes:['career','study'],colors:['blue']},
+  {id:'bronzite',ja:'ブロンザイト',en:'Bronzite',color:'#706040',grad:['#887850','#585030'],desc:'ブロンズの輝き。決断力と自信をもたらす',price:250,wishes:['protection','career'],colors:['yellow','black']},
+  {id:'bloodstone',ja:'ブラッドストーン',en:'Bloodstone',color:'#305828',grad:['#407038','#204018'],desc:'戦士の石。困難に立ち向かう勇気を与える',price:300,wishes:['health','protection'],colors:['green']},
+  {id:'angel_aura',ja:'エンジェルオーラ',en:'Angel Aura Quartz',color:'#d0d8f0',grad:['#e0e8ff','#b8c0e0'],desc:'天使の虹色に輝く浄化と癒しの水晶',price:450,wishes:['healing'],colors:['white']},
+  {id:'strawberry_quartz',ja:'ストロベリークォーツ',en:'Strawberry Quartz',color:'#e08890',grad:['#f098a0','#c87078'],desc:'愛と美を高める苺色のキュートな水晶',price:500,wishes:['love'],colors:['pink']},
+  {id:'black_spinel',ja:'ブラックスピネル',en:'Black Spinel',color:'#0c0c0c',grad:['#1c1c1c','#000000'],desc:'漆黒の輝き。強い意志と自立心を育む',price:400,wishes:['protection'],colors:['black']},
+  {id:'moss_agate',ja:'モスアゲート',en:'Moss Agate',color:'#688848',grad:['#80a058','#507038'],desc:'大地と植物の力で富と繁栄をもたらす',price:250,wishes:['wealth','health'],colors:['green']},
+  {id:'blue_calcite',ja:'ブルーカルサイト',en:'Blue Calcite',color:'#80b0d0',grad:['#98c8e0','#6898b8'],desc:'心を鎮め、穏やかな癒しをもたらす水色の石',price:300,wishes:['healing','relationships'],colors:['blue']},
+  {id:'red_agate',ja:'レッドアゲート',en:'Red Agate',color:'#b03020',grad:['#c84030','#901810'],desc:'生命力を活性化し、健康と長寿を授ける',price:250,wishes:['health'],colors:['red']},
+  {id:'white_jade',ja:'ホワイトジェイド',en:'White Jade',color:'#e8e4dc',grad:['#f0ece4','#d8d4cc'],desc:'純粋さと平和の象徴。心を穏やかにする',price:350,wishes:['healing','relationships'],colors:['white']},
+  {id:'lemon_quartz',ja:'レモンクォーツ',en:'Lemon Quartz',color:'#e8d860',grad:['#f0e878','#d0c040'],desc:'明るい黄色が希望と楽観をもたらす',price:300,wishes:['wealth','healing'],colors:['yellow']},
+  // --- 金運・wealth 強化 ---
+  {id:'green_jade',ja:'グリーンジェイド',en:'Green Jade',color:'#409040',grad:['#50a850','#307830'],desc:'東洋の富と繁栄の象徴。商売繁盛に',price:500,wishes:['wealth'],colors:['green']},
+  {id:'prasiolite',ja:'プラシオライト',en:'Prasiolite',color:'#88b880',grad:['#a0d098','#70a068'],desc:'繁栄の緑アメジスト。富と豊かさを引き寄せる',price:400,wishes:['wealth'],colors:['green']},
+  {id:'yellow_jasper',ja:'イエロージャスパー',en:'Yellow Jasper',color:'#c8a048',grad:['#d8b060','#b08838'],desc:'大地の安定した金運をもたらす黄色い碧玉',price:250,wishes:['wealth'],colors:['yellow']},
+  {id:'cinnabar',ja:'シナバー',en:'Cinnabar',color:'#c02020',grad:['#d83030','#a01010'],desc:'朱砂の赤が強力な商売繁盛と富を招く',price:350,wishes:['wealth'],colors:['red']},
+  {id:'aventurine_yellow',ja:'イエローアベンチュリン',en:'Yellow Aventurine',color:'#c8b050',grad:['#d8c068','#b09838'],desc:'金色の輝きで決断力と金運を同時に高める',price:300,wishes:['wealth','career'],colors:['yellow']},
+  {id:'cats_eye',ja:'キャッツアイ',en:"Cat's Eye",color:'#a09030',grad:['#b8a848','#887820'],desc:'猫目石。邪気を払い財運を守る',price:550,wishes:['wealth','protection'],colors:['yellow']},
+  // --- 紫系 強化 ---
+  {id:'purple_fluorite',ja:'パープルフローライト',en:'Purple Fluorite',color:'#7040a8',grad:['#8050b8','#603090'],desc:'知性と直感を結ぶ紫の蛍石。集中力を高める',price:350,wishes:['study'],colors:['purple']},
+  {id:'ametrine',ja:'アメトリン',en:'Ametrine',color:'#9860a0',grad:['#a870b0','#804888'],desc:'アメジストとシトリンの融合。知恵と富を兼ね備える',price:600,wishes:['wealth','study'],colors:['purple','yellow']},
+  {id:'phantom_quartz',ja:'ファントムクォーツ',en:'Phantom Quartz',color:'#8068a0',grad:['#9078b0','#685088'],desc:'成長の証を内包する幻影水晶。困難を乗り越える',price:500,wishes:['career','healing'],colors:['purple']},
+  {id:'purple_jade',ja:'パープルジェイド',en:'Purple Jade',color:'#7050a0',grad:['#8060b0','#604088'],desc:'夢の実現を助ける紫翡翠。精神性を高める',price:450,wishes:['healing','study'],colors:['purple']},
+  {id:'grape_agate',ja:'グレープアゲート',en:'Grape Agate',color:'#6848a0',grad:['#7858b0','#583888'],desc:'葡萄のような結晶が直感力と安らぎを与える',price:500,wishes:['healing'],colors:['purple']},
+  // --- 白系 強化 ---
+  {id:'milky_quartz',ja:'ミルキークォーツ',en:'Milky Quartz',color:'#e8e0e0',grad:['#f0e8e8','#d8d0d0'],desc:'母性と優しさの乳白色水晶。心を包み込む',price:200,wishes:['healing','love'],colors:['white']},
+  {id:'white_agate',ja:'ホワイトアゲート',en:'White Agate',color:'#ece8e4',grad:['#f4f0ec','#dcd8d4'],desc:'純白の瑪瑙。心身のバランスを整える',price:200,wishes:['healing'],colors:['white']},
+  {id:'rainbow_moonstone',ja:'レインボームーンストーン',en:'Rainbow Moonstone',color:'#dce0e8',grad:['#e8ecf4','#c8ccd8'],desc:'虹の閃光を放つ月の石。直感とインスピレーションを高める',price:500,wishes:['love','study'],colors:['white']},
+  {id:'white_topaz',ja:'ホワイトトパーズ',en:'White Topaz',color:'#eae8e4',grad:['#f2f0ec','#dad8d4'],desc:'透明な輝きで思考を明晰にし、目標達成を助ける',price:400,wishes:['career','study'],colors:['white']},
+  {id:'magnesite',ja:'マグネサイト',en:'Magnesite',color:'#e4e0dc',grad:['#ecece4','#d4d0cc'],desc:'リラクゼーションの石。深い瞑想状態へ導く',price:200,wishes:['healing'],colors:['white']},
+  // --- 赤系 強化 ---
+  {id:'red_tiger_eye',ja:'レッドタイガーアイ',en:'Red Tiger Eye',color:'#903020',grad:['#a84030','#782010'],desc:'情熱の虎目石。やる気と行動力を奮い立たせる',price:350,wishes:['career'],colors:['red']},
+  {id:'rhodolite',ja:'ロードライトガーネット',en:'Rhodolite Garnet',color:'#a02050',grad:['#b83060','#882040'],desc:'友愛のガーネット。愛情と信頼の絆を強める',price:550,wishes:['love','relationships'],colors:['red','pink']},
+  {id:'fire_agate',ja:'ファイアーアゲート',en:'Fire Agate',color:'#a04820',grad:['#b85828','#884018'],desc:'炎のような虹色が内なる情熱と勇気を燃やす',price:400,wishes:['career','protection'],colors:['red']},
+  {id:'red_coral',ja:'レッドコーラル',en:'Red Coral',color:'#c83030',grad:['#e04040','#a82020'],desc:'生命の海から生まれた赤珊瑚。活力と長寿の象徴',price:600,wishes:['health'],colors:['red']},
+  // --- ピンク系 強化 ---
+  {id:'morganite',ja:'モルガナイト',en:'Morganite',color:'#e8a8b8',grad:['#f0b8c8','#d890a0'],desc:'天使のピンク。愛と癒しのエネルギーに満ちた石',price:650,wishes:['love','healing'],colors:['pink']},
+  {id:'pink_sapphire',ja:'ピンクサファイア',en:'Pink Sapphire',color:'#d870a8',grad:['#e880b8','#c06090'],desc:'高貴なピンク。誠実な愛と幸福を引き寄せる',price:800,wishes:['love'],colors:['pink']},
+  {id:'pink_calcite',ja:'ピンクカルサイト',en:'Pink Calcite',color:'#e8b0b8',grad:['#f0c0c8','#d8a0a8'],desc:'優しいピンクが心の傷を癒し、自己肯定感を高める',price:250,wishes:['healing','love'],colors:['pink']},
+  {id:'cherry_quartz',ja:'チェリークォーツ',en:'Cherry Quartz',color:'#d07080',grad:['#e08090','#c06070'],desc:'桜色に輝く水晶。恋愛成就と女性の魅力を高める',price:300,wishes:['love'],colors:['pink']},
+  // --- 黒系 強化 ---
+  {id:'jet',ja:'ジェット',en:'Jet',color:'#101010',grad:['#1a1a1a','#000000'],desc:'古代より伝わる漆黒の守護石。悲しみを癒し邪を払う',price:350,wishes:['protection','healing'],colors:['black']},
+  {id:'black_onyx_matte',ja:'マットオニキス',en:'Matte Onyx',color:'#202020',grad:['#303030','#101010'],desc:'艶消しの漆黒。男性的な強さと忍耐力を象徴',price:250,wishes:['protection','career'],colors:['black']},
+  {id:'nuummite',ja:'ヌーミット',en:'Nuummite',color:'#181820',grad:['#282830','#080810'],desc:'30億年前の最古の鉱物。深い保護と根源的な力',price:700,wishes:['protection'],colors:['black']},
+  {id:'shungite',ja:'シュンガイト',en:'Shungite',color:'#141418',grad:['#242428','#040408'],desc:'電磁波から身を守る古代カーボンの石',price:400,wishes:['protection','health'],colors:['black']},
+  {id:'lava_stone',ja:'ラバストーン',en:'Lava Stone',color:'#282828',grad:['#383838','#181818'],desc:'火山のエネルギーを宿す溶岩石。グラウンディングに',price:200,wishes:['protection'],colors:['black']},
+  // --- 人間関係 強化 ---
+  {id:'angel_stone',ja:'エンジェライト',en:'Angelite',color:'#90a8c8',grad:['#a0b8d8','#7898b0'],desc:'天使の石。穏やかなコミュニケーションと共感を促す',price:400,wishes:['relationships','healing'],colors:['blue']},
+  {id:'hemimorphite',ja:'ヘミモルファイト',en:'Hemimorphite',color:'#70b8d0',grad:['#88d0e0','#58a0b8'],desc:'自己表現力を高め、対人関係を円滑にする',price:450,wishes:['relationships'],colors:['blue']},
+  {id:'green_calcite',ja:'グリーンカルサイト',en:'Green Calcite',color:'#70a870',grad:['#88c088','#589058'],desc:'心のわだかまりを解放し、人間関係を癒す',price:250,wishes:['relationships','healing'],colors:['green']},
+  {id:'pink_kunzite',ja:'ピンクダンビュライト',en:'Pink Danburite',color:'#e0a8c0',grad:['#e8b8d0','#d098a8'],desc:'無条件の愛と許しで人間関係を修復する',price:550,wishes:['relationships','love'],colors:['pink']},
+  // --- 学業 強化 ---
+  {id:'blue_apatite',ja:'ブルーアパタイト',en:'Blue Apatite',color:'#2080a8',grad:['#3090b8','#107090'],desc:'知識の吸収力を高め、学習効率をアップさせる',price:400,wishes:['study'],colors:['blue']},
+  {id:'clear_fluorite',ja:'クリアフローライト',en:'Clear Fluorite',color:'#d8e0e8',grad:['#e8f0f4','#c0c8d0'],desc:'透明な蛍石。雑念を払い、明晰な思考を促す',price:300,wishes:['study'],colors:['white']},
+  {id:'tiger_iron',ja:'タイガーアイアン',en:'Tiger Iron',color:'#685040',grad:['#806850','#504030'],desc:'虎目石と赤鉄鉱の融合。集中力と体力を同時に高める',price:350,wishes:['study','health'],colors:['yellow','red']},
+  {id:'yellow_fluorite',ja:'イエローフローライト',en:'Yellow Fluorite',color:'#d8c060',grad:['#e8d078','#c0a848'],desc:'知的好奇心を刺激する黄色い蛍石。創造力も高める',price:350,wishes:['study','career'],colors:['yellow']},
+  {id:'blue_goldstone',ja:'ブルーゴールドストーン',en:'Blue Goldstone',color:'#182848',grad:['#283858','#081838'],desc:'星空のような輝き。学問と知恵の象徴',price:250,wishes:['study'],colors:['blue','black']},
+  // --- 恋愛 追加 ---
+  {id:'pink_rhodochrosite',ja:'ピンクロードクロサイト',en:'Pink Rhodochrosite',color:'#e87898',grad:['#f088a8','#d06888'],desc:'情熱的な愛を引き寄せ、自己愛を深める薔薇色の石',price:700,wishes:['love'],colors:['pink']},
+  {id:'thulite',ja:'チューライト',en:'Thulite',color:'#c85878',grad:['#d86888','#b84868'],desc:'心を開き、愛情表現を豊かにするピンクの鉱物',price:450,wishes:['love','relationships'],colors:['pink']},
+  {id:'danburite',ja:'ダンビュライト',en:'Danburite',color:'#f0e0e8',grad:['#f8f0f4','#e0d0d8'],desc:'純粋な愛と慈悲の心を育む透明感ある石',price:600,wishes:['love','healing'],colors:['white','pink']},
+  {id:'scolecite',ja:'スコレサイト',en:'Scolecite',color:'#e8e0d8',grad:['#f0ece8','#d8d0c8'],desc:'深い愛と内なる平和をもたらす繊細な結晶',price:500,wishes:['love','healing'],colors:['white']},
+  {id:'rubellite',ja:'ルベライト',en:'Rubellite',color:'#c03060',grad:['#d04070','#a82050'],desc:'赤いトルマリン。情熱と献身的な愛を象徴する',price:800,wishes:['love'],colors:['red','pink']},
+  // --- 金運 追加 ---
+  {id:'golden_beryl',ja:'ゴールデンベリル',en:'Golden Beryl',color:'#d0a830',grad:['#e0b840','#c09820'],desc:'太陽の恵み。富と成功を引き寄せる黄金の輝き',price:650,wishes:['wealth'],colors:['yellow']},
+  {id:'yellow_sapphire',ja:'イエローサファイア',en:'Yellow Sapphire',color:'#d8b030',grad:['#e8c040','#c8a020'],desc:'繁栄と知恵をもたらす高貴な黄色の宝石',price:850,wishes:['wealth','career'],colors:['yellow']},
+  {id:'green_garnet',ja:'グリーンガーネット',en:'Green Garnet',color:'#408038',grad:['#509048','#306828'],desc:'豊穣と成長の象徴。ビジネスの成功を導く緑の石榴石',price:700,wishes:['wealth'],colors:['green']},
+  {id:'golden_tiger_eye',ja:'ゴールデンタイガーアイ',en:'Golden Tiger Eye',color:'#b89030',grad:['#c8a040','#a88020'],desc:'黄金の虎目が財運を強力に引き寄せる',price:400,wishes:['wealth','career'],colors:['yellow']},
+  {id:'heliodor',ja:'ヘリオドール',en:'Heliodor',color:'#c8b040',grad:['#d8c050','#b8a030'],desc:'太陽神の贈り物。自信と経済的繁栄を授ける',price:600,wishes:['wealth'],colors:['yellow']},
+  {id:'imperial_topaz',ja:'インペリアルトパーズ',en:'Imperial Topaz',color:'#d89040',grad:['#e8a050','#c88030'],desc:'王者の風格。最高の金運と成功を象徴する宝石',price:900,wishes:['wealth'],colors:['yellow','red']},
+  // --- 健康 追加 ---
+  {id:'red_garnet',ja:'レッドガーネット',en:'Red Garnet',color:'#882030',grad:['#a03040','#701020'],desc:'生命力を高め、血液循環を促進する深紅の石',price:500,wishes:['health'],colors:['red']},
+  {id:'ocean_jasper',ja:'オーシャンジャスパー',en:'Ocean Jasper',color:'#78a088',grad:['#88b098','#689078'],desc:'海の力で心身のバランスを整え、活力を取り戻す',price:350,wishes:['health','healing'],colors:['green']},
+  {id:'seraphinite',ja:'セラフィナイト',en:'Seraphinite',color:'#3a6838',grad:['#4a7848','#2a5828'],desc:'天使の羽のような模様。自然治癒力を高める深緑の石',price:550,wishes:['health','healing'],colors:['green']},
+  {id:'picture_jasper',ja:'ピクチャージャスパー',en:'Picture Jasper',color:'#a08060',grad:['#b09070','#907050'],desc:'大地のエネルギーで体を安定させ、免疫力を高める',price:250,wishes:['health'],colors:['yellow']},
+  // --- 人間関係 追加 ---
+  {id:'blue_chalcedony',ja:'ブルーカルセドニー',en:'Blue Chalcedony',color:'#88b0d0',grad:['#98c0e0','#78a0c0'],desc:'穏やかなコミュニケーションを促し、良縁を結ぶ',price:350,wishes:['relationships'],colors:['blue']},
+  {id:'stilbite',ja:'スティルバイト',en:'Stilbite',color:'#e0b8b0',grad:['#f0c8c0','#d0a8a0'],desc:'人間関係の摩擦を和らげ、信頼を深める優しい石',price:400,wishes:['relationships','healing'],colors:['pink']},
+  {id:'blue_kyanite',ja:'ブルーカイヤナイト',en:'Blue Kyanite',color:'#3868a0',grad:['#4878b0','#285890'],desc:'誠実なコミュニケーションを促進し、誤解を解く',price:450,wishes:['relationships'],colors:['blue']},
+  {id:'apache_tear',ja:'アパッチティアー',en:'Apache Tear',color:'#282828',grad:['#383838','#181818'],desc:'悲しみを癒し、人との絆を再構築する涙の形の黒曜石',price:300,wishes:['relationships','protection'],colors:['black']},
+  {id:'mangano_calcite',ja:'マンガノカルサイト',en:'Mangano Calcite',color:'#e8b0c0',grad:['#f0c0d0','#d8a0b0'],desc:'無条件の受容で対人関係を円滑にするピンクの方解石',price:350,wishes:['relationships','love'],colors:['pink']},
+  // --- 学業 追加 ---
+  {id:'azurite_malachite',ja:'アズロマラカイト',en:'Azurite Malachite',color:'#285878',grad:['#386888','#184868'],desc:'知性と直感の融合。深い理解力と洞察力を授ける',price:500,wishes:['study'],colors:['blue','green']},
+  {id:'spectrolite',ja:'スペクトロライト',en:'Spectrolite',color:'#384858',grad:['#485868','#283848'],desc:'虹色の閃光が知的探究心を刺激し学問の幅を広げる',price:600,wishes:['study'],colors:['blue','purple']},
+  {id:'blue_sodalite',ja:'ブルーソーダライト',en:'Blue Sodalite',color:'#283878',grad:['#384888','#182868'],desc:'論理的思考力を強化し、試験での集中力を高める',price:300,wishes:['study'],colors:['blue']},
+  {id:'white_howlite',ja:'ホワイトハウライト',en:'White Howlite',color:'#e8e4e0',grad:['#f0ece8','#d8d4d0'],desc:'心を静め、記憶力と学習の定着を助ける白い石',price:200,wishes:['study'],colors:['white']},
+  {id:'blue_tigers_eye',ja:'ブルータイガーアイ',en:'Blue Tiger Eye',color:'#304868',grad:['#405878','#203858'],desc:'冷静な判断力と集中力を高め、学業成績を向上させる',price:400,wishes:['study','career'],colors:['blue']},
+  // --- キャリア 追加 ---
+  {id:'fire_opal',ja:'ファイアオパール',en:'Fire Opal',color:'#d86020',grad:['#e87030','#c85010'],desc:'情熱と行動力で新しいキャリアの扉を開く炎の宝石',price:700,wishes:['career'],colors:['red','yellow']},
+  {id:'golden_labradorite',ja:'ゴールデンラブラドライト',en:'Golden Labradorite',color:'#b89848',grad:['#c8a858','#a88838'],desc:'リーダーシップと決断力を高め、昇進を引き寄せる',price:550,wishes:['career'],colors:['yellow']},
+  {id:'pietersite',ja:'ピーターサイト',en:'Pietersite',color:'#586068',grad:['#687078','#485058'],desc:'嵐の石。困難を乗り越え、キャリアの転機をつかむ',price:650,wishes:['career','protection'],colors:['blue','yellow']},
+  {id:'zircon',ja:'ジルコン',en:'Zircon',color:'#c0a880',grad:['#d0b890','#b09870'],desc:'知恵と繁栄の象徴。ビジネスでの成功と名誉を導く',price:600,wishes:['career','wealth'],colors:['yellow']},
+  // --- ヒーリング 追加 ---
+  {id:'chrysanthemum_stone',ja:'菊花石',en:'Chrysanthemum Stone',color:'#484848',grad:['#585858','#383838'],desc:'花のような模様が心の傷を癒し、新たな始まりを促す',price:450,wishes:['healing'],colors:['black','white']},
+  {id:'pink_halite',ja:'ピンクハライト',en:'Pink Halite',color:'#e8a0b8',grad:['#f0b0c8','#d890a8'],desc:'ネガティブなエネルギーを浄化し、心を軽やかにする岩塩',price:350,wishes:['healing'],colors:['pink']},
+  {id:'cavansite',ja:'カバンサイト',en:'Cavansite',color:'#2070a8',grad:['#3080b8','#106098'],desc:'深い青が精神的な疲労を癒し、直感力を回復させる',price:700,wishes:['healing','study'],colors:['blue']},
+  // --- 保護 追加 ---
+  {id:'rainbow_obsidian',ja:'レインボーオブシディアン',en:'Rainbow Obsidian',color:'#202020',grad:['#303030','#101010'],desc:'虹を秘めた黒曜石。強力な魔除けと心の保護',price:400,wishes:['protection'],colors:['black']},
+  {id:'aegirine',ja:'エジリン',en:'Aegirine',color:'#1a3020',grad:['#2a4030','#0a2010'],desc:'最強の保護石。ネガティブエネルギーを完全に遮断する',price:550,wishes:['protection'],colors:['black','green']},
+  {id:'staurolite',ja:'スタウロライト',en:'Staurolite',color:'#604830',grad:['#705840','#503820'],desc:'十字石。古来より魔除けの護符として崇められた石',price:500,wishes:['protection'],colors:['red']},
+  // --- 複合カテゴリ 追加 ---
+  {id:'moldavite',ja:'モルダバイト',en:'Moldavite',color:'#487030',grad:['#588040','#386020'],desc:'隕石の衝突で生まれた奇跡の石。変容と覚醒を促す',price:900,wishes:['healing','protection','career'],colors:['green']},
+  {id:'andalusite',ja:'アンダリュサイト',en:'Andalusite',color:'#887050',grad:['#988060','#786040'],desc:'多色性を持つ石。バランスと調和を全方位にもたらす',price:500,wishes:['health','relationships'],colors:['yellow','red']},
+  {id:'vesuvianite',ja:'ベスビアナイト',en:'Vesuvianite',color:'#508838',grad:['#609848','#407828'],desc:'心の束縛を解放し、本来の自分を取り戻す緑の石',price:450,wishes:['healing','love'],colors:['green']},
+  {id:'sardonyx',ja:'サードオニキス',en:'Sardonyx',color:'#a06030',grad:['#b07040','#904020'],desc:'夫婦和合と家庭円満の象徴。幸福な人間関係を築く',price:300,wishes:['relationships','protection'],colors:['red','white']},
+  {id:'scheelite',ja:'シェーライト',en:'Scheelite',color:'#d8c078',grad:['#e8d088','#c8b068'],desc:'精神と物質の調和。創造性と繁栄を同時にもたらす',price:650,wishes:['wealth','study','career'],colors:['yellow']},
+];
+
+const WISH_CATEGORIES = [
+  {id:'love',label:'恋愛運',icon:'♡'},
+  {id:'wealth',label:'金運',icon:'¥'},
+  {id:'career',label:'仕事運',icon:'✦'},
+  {id:'health',label:'健康運',icon:'♣'},
+  {id:'healing',label:'癒し',icon:'☽'},
+  {id:'protection',label:'厄除け',icon:'☆'},
+  {id:'relationships',label:'人間関係',icon:'∞'},
+  {id:'study',label:'学業',icon:'✎'},
+];
+
+const COLOR_CATEGORIES = [
+  {id:'red',label:'赤系',color:'#c03030'},
+  {id:'pink',label:'ピンク系',color:'#f0a0b0'},
+  {id:'blue',label:'青系',color:'#3060a0'},
+  {id:'purple',label:'紫系',color:'#7030a0'},
+  {id:'green',label:'緑系',color:'#308040'},
+  {id:'yellow',label:'黄系',color:'#d0a030'},
+  {id:'black',label:'黒系',color:'#1a1a1a'},
+  {id:'white',label:'白系',color:'#e8e4e0'},
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let state = {
+  braceletSize: 16,
+  beadSize: 8,
+  beadCount: 0,
+  slots: [],
+  selectedSlot: -1,
+  selectedStone: null,
+  activeWish: 'love',
+  activeColor: 'red',
+  activeTab: 'wish',
+  lastFilledStone: null,
+};
+
+function calcBeadCount(circumference, beadDiameter) {
+  return Math.floor((circumference * 10) / beadDiameter);
+}
+
+function updateBeadCount() {
+  state.beadCount = calcBeadCount(state.braceletSize, state.beadSize);
+  if (state.slots.length < state.beadCount) {
+    while (state.slots.length < state.beadCount) state.slots.push(null);
+  } else if (state.slots.length > state.beadCount) {
+    state.slots = state.slots.slice(0, state.beadCount);
+  }
+  if (state.selectedSlot >= state.beadCount) state.selectedSlot = -1;
+}
+
+/* ============================================================
+   BRACELET SVG RENDERING
+   ============================================================ */
+function renderBracelet() {
+  const svg = document.getElementById('bracelet-svg');
+  const cx = 180, cy = 180;
+  const radius = 140;
+  const n = state.beadCount;
+  const beadR = Math.min(28, Math.max(12, (2 * Math.PI * radius) / (n * 2.4)));
+
+  let html = '';
+
+  /* Background circle (string) */
+  html += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="#7ec0ec" stroke-width="2.5" stroke-dasharray="4,4" opacity="0.5"/>`;
+
+  /* String line (elastic cord look) */
+  html += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="#a0d4f0" stroke-width="1.8" opacity="0.6"/>`;
+
+  /* Center text */
+  html += `<text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="13" fill="#998b80" font-family="'Noto Sans JP',sans-serif" font-weight="500">${state.braceletSize}cm / ${state.beadSize}mm</text>`;
+  html += `<text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="12" fill="#998b80" font-family="'Noto Sans JP',sans-serif">${state.beadCount}玉</text>`;
+
+  const filledCount = state.slots.filter(s => s !== null).length;
+  html += `<text x="${cx}" y="${cy + 28}" text-anchor="middle" font-size="11" fill="#c5a030" font-family="'Noto Sans JP',sans-serif" font-weight="700">${filledCount} / ${state.beadCount} 選択済</text>`;
+
+  for (let i = 0; i < n; i++) {
+    const angle = (2 * Math.PI * i / n) - Math.PI / 2;
+    const x = cx + radius * Math.cos(angle);
+    const y = cy + radius * Math.sin(angle);
+    const stone = state.slots[i];
+    const isSelected = (i === state.selectedSlot);
+
+    if (stone) {
+      const stoneData = STONES.find(s => s.id === stone);
+      const gradId = `grad-${i}`;
+      html += `<defs><radialGradient id="${gradId}" cx="35%" cy="30%" r="65%">`;
+      html += `<stop offset="0%" stop-color="${stoneData.grad[0]}"/>`;
+      html += `<stop offset="100%" stop-color="${stoneData.grad[1]}"/>`;
+      html += `</radialGradient></defs>`;
+
+      if (isSelected) {
+        html += `<circle cx="${x}" cy="${y}" r="${beadR + 4}" fill="none" stroke="#7ec0ec" stroke-width="2.5" class="slot-selected" opacity="0.8"/>`;
+      }
+
+      html += `<circle cx="${x}" cy="${y}" r="${beadR}" fill="url(#${gradId})" stroke="rgba(0,0,0,0.15)" stroke-width="0.8"
+        data-slot="${i}" class="bead-slot filled" style="cursor:pointer;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))"/>`;
+
+      /* Highlight shine */
+      const shineX = x - beadR * 0.25;
+      const shineY = y - beadR * 0.25;
+      html += `<ellipse cx="${shineX}" cy="${shineY}" rx="${beadR * 0.35}" ry="${beadR * 0.25}" fill="rgba(255,255,255,0.3)" transform="rotate(-30,${shineX},${shineY})" pointer-events="none"/>`;
+    } else {
+      if (isSelected) {
+        html += `<circle cx="${x}" cy="${y}" r="${beadR + 4}" fill="none" stroke="#7ec0ec" stroke-width="2.5" class="slot-selected" opacity="0.8"/>`;
+      }
+      html += `<circle cx="${x}" cy="${y}" r="${beadR}" fill="#f5f3ee" stroke="#7ec0ec" stroke-width="1.5" stroke-dasharray="3,3"
+        data-slot="${i}" class="bead-slot empty" style="cursor:pointer"/>`;
+    }
+  }
+
+  svg.innerHTML = html;
+
+  /* Update info */
+  document.getElementById('bracelet-info').textContent = `内周 ${state.braceletSize}cm ・ 玉サイズ ${state.beadSize}mm ・ ${state.beadCount}玉`;
+
+  bindSlotEvents();
+  checkCompletion();
+}
+
+function bindSlotEvents() {
+  document.querySelectorAll('.bead-slot').forEach(el => {
+    const slotIdx = parseInt(el.getAttribute('data-slot'));
+
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideContextMenu();
+      if (el.classList.contains('filled')) {
+        showContextMenu(e, slotIdx);
+      } else {
+        selectSlot(slotIdx);
+        if (state.lastFilledStone) {
+          fillSlot(slotIdx, state.lastFilledStone);
+        }
+      }
+    });
+
+    el.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      if (el.classList.contains('filled')) {
+        showContextMenu(e, slotIdx);
+      }
+    });
+
+    /* Touch long press */
+    let pressTimer;
+    el.addEventListener('touchstart', (e) => {
+      pressTimer = setTimeout(() => {
+        if (el.classList.contains('filled')) {
+          removeStone(slotIdx);
+          showToast('石を取り除きました');
+        }
+      }, 600);
+    });
+    el.addEventListener('touchend', () => clearTimeout(pressTimer));
+    el.addEventListener('touchmove', () => clearTimeout(pressTimer));
+
+    /* Tooltip */
+    el.addEventListener('mouseenter', (e) => {
+      if (el.classList.contains('filled')) {
+        const stone = STONES.find(s => s.id === state.slots[slotIdx]);
+        if (stone) showTooltip(e, stone.ja);
+      }
+    });
+    el.addEventListener('mouseleave', () => hideTooltip());
+
+    /* Drop target */
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      el.parentElement.querySelector(`[data-slot="${slotIdx}"]`).style.filter = 'drop-shadow(0 0 8px rgba(27,42,74,0.8))';
+    });
+    el.addEventListener('dragleave', () => {
+      renderBracelet();
+    });
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const stoneId = e.dataTransfer.getData('text/plain');
+      if (stoneId) {
+        fillSlot(slotIdx, stoneId);
+      }
+    });
+  });
+}
+
+function selectSlot(idx) {
+  state.selectedSlot = idx;
+  renderBracelet();
+}
+
+function fillSlot(idx, stoneId) {
+  state.slots[idx] = stoneId;
+  state.lastFilledStone = stoneId;
+  /* Auto advance to next empty */
+  let next = -1;
+  for (let i = 1; i <= state.beadCount; i++) {
+    const check = (idx + i) % state.beadCount;
+    if (state.slots[check] === null) { next = check; break; }
+  }
+  state.selectedSlot = next;
+  renderBracelet();
+  updateOrderSummary();
+}
+
+function removeStone(idx) {
+  state.slots[idx] = null;
+  state.selectedSlot = idx;
+  renderBracelet();
+  updateOrderSummary();
+}
+
+/* ============================================================
+   CONTEXT MENU
+   ============================================================ */
+let contextSlot = -1;
+
+function showContextMenu(e, slotIdx) {
+  contextSlot = slotIdx;
+  const menu = document.getElementById('context-menu');
+  const rect = document.getElementById('bracelet-wrapper').getBoundingClientRect();
+  let x, y;
+  if (e.touches) {
+    x = e.touches[0].clientX;
+    y = e.touches[0].clientY;
+  } else {
+    x = e.clientX;
+    y = e.clientY;
+  }
+  menu.style.left = (x - rect.left) + 'px';
+  menu.style.top = (y - rect.top) + 'px';
+  menu.classList.add('show');
+  document.getElementById('bracelet-wrapper').style.position = 'relative';
+}
+
+function hideContextMenu() {
+  document.getElementById('context-menu').classList.remove('show');
+}
+
+document.getElementById('ctx-change').addEventListener('click', () => {
+  hideContextMenu();
+  selectSlot(contextSlot);
+  showToast('石を選択してください');
+});
+
+document.getElementById('ctx-remove').addEventListener('click', () => {
+  hideContextMenu();
+  removeStone(contextSlot);
+  showToast('石を取り除きました');
+});
+
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('context-menu').contains(e.target)) {
+    hideContextMenu();
+  }
+});
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
+function showTooltip(e, text) {
+  const tip = document.getElementById('tooltip');
+  tip.textContent = text;
+  tip.classList.add('show');
+  const rect = document.getElementById('bracelet-wrapper').getBoundingClientRect();
+  let x, y;
+  if (e.touches) {
+    x = e.touches[0].clientX - rect.left;
+    y = e.touches[0].clientY - rect.top - 40;
+  } else {
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top - 40;
+  }
+  tip.style.left = x + 'px';
+  tip.style.top = y + 'px';
+  tip.style.transform = 'translateX(-50%)';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').classList.remove('show');
+}
+
+/* ============================================================
+   SIZE SELECTORS
+   ============================================================ */
+document.getElementById('bracelet-sizes').addEventListener('click', (e) => {
+  const btn = e.target.closest('.size-option');
+  if (!btn) return;
+  document.querySelectorAll('#bracelet-sizes .size-option').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-checked', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-checked', 'true');
+  state.braceletSize = parseInt(btn.dataset.size);
+  updateBeadCount();
+  renderBracelet();
+  updateOrderSummary();
+});
+
+document.getElementById('bead-sizes').addEventListener('click', (e) => {
+  const btn = e.target.closest('.size-option');
+  if (!btn) return;
+  document.querySelectorAll('#bead-sizes .size-option').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-checked', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-checked', 'true');
+  state.beadSize = parseInt(btn.dataset.bead);
+  updateBeadCount();
+  renderBracelet();
+  updateOrderSummary();
+});
+
+/* ============================================================
+   TABS
+   ============================================================ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    const tabId = btn.dataset.tab;
+    document.getElementById('tab-' + tabId).classList.add('active');
+    state.activeTab = tabId;
+  });
+});
+
+/* ============================================================
+   WISH CATEGORIES
+   ============================================================ */
+function renderWishCategories() {
+  const container = document.getElementById('wish-categories');
+  container.innerHTML = WISH_CATEGORIES.map(cat =>
+    `<button class="wish-btn ${cat.id === state.activeWish ? 'active' : ''}" data-wish="${cat.id}">${cat.icon} ${cat.label}</button>`
+  ).join('');
+
+  container.addEventListener('click', (e) => {
+    const btn = e.target.closest('.wish-btn');
+    if (!btn) return;
+    container.querySelectorAll('.wish-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.activeWish = btn.dataset.wish;
+    renderWishStones();
+  });
+
+  renderWishStones();
+}
+
+function renderWishStones() {
+  const stones = STONES.filter(s => s.wishes.includes(state.activeWish));
+  document.getElementById('wish-stones').innerHTML = stones.map(s => stoneCardHTML(s)).join('');
+  bindStoneCards(document.getElementById('wish-stones'));
+}
+
+/* ============================================================
+   COLOR CATEGORIES
+   ============================================================ */
+function renderColorCategories() {
+  const container = document.getElementById('color-filters');
+  container.innerHTML = COLOR_CATEGORIES.map(cat =>
+    `<button class="color-filter-btn ${cat.id === state.activeColor ? 'active' : ''}" data-color="${cat.id}"
+      style="background:${cat.color}" aria-label="${cat.label}" title="${cat.label}">
+      <span class="color-label">${cat.label}</span>
+    </button>`
+  ).join('');
+
+  container.addEventListener('click', (e) => {
+    const btn = e.target.closest('.color-filter-btn');
+    if (!btn) return;
+    container.querySelectorAll('.color-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.activeColor = btn.dataset.color;
+    renderColorStones();
+  });
+
+  renderColorStones();
+}
+
+function renderColorStones() {
+  const stones = STONES.filter(s => s.colors.includes(state.activeColor));
+  document.getElementById('color-stones').innerHTML = stones.map(s => stoneCardHTML(s)).join('');
+  bindStoneCards(document.getElementById('color-stones'));
+}
+
+/* ============================================================
+   ALL STONES (By Type)
+   ============================================================ */
+function renderAllStones() {
+  const sorted = [...STONES].sort((a, b) => a.ja.localeCompare(b.ja, 'ja'));
+  document.getElementById('type-stones').innerHTML = sorted.map(s => stoneCardHTML(s)).join('');
+  bindStoneCards(document.getElementById('type-stones'));
+}
+
+/* ============================================================
+   STONE CARD HTML
+   ============================================================ */
+function stoneCardHTML(stone) {
+  return `
+  <div class="stone-card" data-stone="${stone.id}" draggable="true" role="button" aria-label="${stone.ja}を選択">
+    <div class="stone-preview" style="background:radial-gradient(circle at 35% 30%,${stone.grad[0]},${stone.grad[1]})"></div>
+    <div class="stone-name">${stone.ja}</div>
+    <div class="stone-name-en">${stone.en}</div>
+    <div class="stone-desc">${stone.desc}</div>
+    <div class="stone-price">¥${stone.price.toLocaleString()} / 玉</div>
+    <button class="stone-select-btn">選択</button>
+  </div>`;
+}
+
+function bindStoneCards(container) {
+  container.querySelectorAll('.stone-card').forEach(card => {
+    const stoneId = card.dataset.stone;
+
+    card.addEventListener('click', () => {
+      selectStone(stoneId);
+    });
+
+    card.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', stoneId);
+      e.dataTransfer.effectAllowed = 'copy';
+      card.style.opacity = '0.5';
+    });
+
+    card.addEventListener('dragend', () => {
+      card.style.opacity = '1';
+    });
+  });
+}
+
+function selectStone(stoneId) {
+  state.lastFilledStone = stoneId;
+
+  if (state.selectedSlot >= 0 && state.selectedSlot < state.beadCount) {
+    fillSlot(state.selectedSlot, stoneId);
+  } else {
+    /* Find first empty slot */
+    const emptyIdx = state.slots.findIndex(s => s === null);
+    if (emptyIdx >= 0) {
+      fillSlot(emptyIdx, stoneId);
+    } else {
+      showToast('全ての枠が埋まっています');
+    }
+  }
+}
+
+/* ============================================================
+   ORDER SUMMARY
+   ============================================================ */
+function updateOrderSummary() {
+  const orderList = document.getElementById('order-list');
+  const orderTotal = document.getElementById('order-total');
+  const sizeInfo = document.getElementById('order-size-info');
+
+  sizeInfo.textContent = `サイズ: ${state.braceletSize}cm / 玉: ${state.beadSize}mm / ${state.beadCount}玉`;
+
+  const counts = {};
+  state.slots.forEach(s => {
+    if (s) counts[s] = (counts[s] || 0) + 1;
+  });
+
+  const entries = Object.entries(counts);
+  if (entries.length === 0) {
+    orderList.innerHTML = '<li class="empty-state">石が選択されていません</li>';
+    orderTotal.style.display = 'none';
+    return;
+  }
+
+  orderTotal.style.display = 'block';
+  let totalPrice = 0;
+  let totalBeads = 0;
+
+  orderList.innerHTML = entries.map(([id, count]) => {
+    const stone = STONES.find(s => s.id === id);
+    const subtotal = stone.price * count;
+    totalPrice += subtotal;
+    totalBeads += count;
+    return `<li class="order-item">
+      <span class="order-item-name">
+        <span class="stone-dot" style="background:radial-gradient(circle at 35% 30%,${stone.grad[0]},${stone.grad[1]})"></span>
+        ${stone.ja} ×${count}
+      </span>
+      <span class="order-item-detail">¥${subtotal.toLocaleString()}</span>
+    </li>`;
+  }).join('');
+
+  document.getElementById('total-beads').textContent = `${totalBeads} / ${state.beadCount}`;
+  document.getElementById('total-price').textContent = `¥${totalPrice.toLocaleString()}`;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+/* Reset */
+function resetAll() {
+  state.slots = new Array(state.beadCount).fill(null);
+  state.selectedSlot = -1;
+  state.lastFilledStone = null;
+  renderBracelet();
+  updateOrderSummary();
+  showToast('デザインをリセットしました');
+}
+
+document.getElementById('btn-reset').addEventListener('click', resetAll);
+document.getElementById('btn-reset-order').addEventListener('click', resetAll);
+
+/* Auto fill */
+document.getElementById('btn-auto-fill').addEventListener('click', () => {
+  const wishStones = STONES.filter(s => s.wishes.includes(state.activeWish));
+  if (wishStones.length === 0) return;
+  for (let i = 0; i < state.beadCount; i++) {
+    if (state.slots[i] === null) {
+      const rand = wishStones[Math.floor(Math.random() * wishStones.length)];
+      state.slots[i] = rand.id;
+    }
+  }
+  state.selectedSlot = -1;
+  renderBracelet();
+  updateOrderSummary();
+  showToast(`「${WISH_CATEGORIES.find(w => w.id === state.activeWish).label}」でデザインしました`);
+});
+
+/* === Preset Patterns === */
+const PRESETS = [
+  {
+    name:'恋愛運ランキング',icon:'♡',desc:'最強の恋愛成就コンビ',
+    stones:['rose_quartz','inca_rose','rhodochrosite','moonstone','pink_tourmaline','kunzite','morganite','strawberry_quartz','garnet','pearl','rhodonite','pink_sapphire','cherry_quartz','ruby','pink_opal','aquamarine']
+  },
+  {
+    name:'金運最強',icon:'¥',desc:'富と繁栄を呼ぶ黄金の組合せ',
+    stones:['rutile_quartz','citrine','tiger_eye','pyrite','goldstone','emerald','topaz','green_jade','cats_eye','amber','prasiolite','yellow_jasper','aventurine_yellow','lemon_quartz','moss_agate','cinnabar']
+  },
+  {
+    name:'仕事運UP',icon:'✦',desc:'キャリアと成功の最強布陣',
+    stones:['lapis_lazuli','kyanite','sapphire','labradorite','blue_topaz','sunstone','tanzanite','alexandrite','hawk_eye','spinel','sodalite','red_tiger_eye','bronzite','dumortierite','fluorite','iolite']
+  },
+  {
+    name:'癒し・ヒーリング',icon:'☽',desc:'心と体を優しく癒す',
+    stones:['larimar','sugilite','charoite','amethyst','lepidolite','angel_aura','peridot','chrysocolla','blue_calcite','white_jade','prehnite','celestite','selenite','magnesite','kunzite','watermelon_tourmaline']
+  },
+  {
+    name:'厄除け・魔除け',icon:'☆',desc:'あらゆる邪から身を守る',
+    stones:['morion','black_tourmaline','onyx','obsidian','hematite','smoky_quartz','black_spinel','nuummite','shungite','lava_stone','jet','hawk_eye','amber','tiger_eye','bloodstone','black_onyx_matte']
+  },
+  {
+    name:'学業成就',icon:'✎',desc:'試験合格・知力向上の組合せ',
+    stones:['lapis_lazuli','fluorite','amethyst','sapphire','azurite','purple_fluorite','blue_apatite','crystal','sodalite','blue_goldstone','iolite','tanzanite','dumortierite','clear_fluorite','yellow_fluorite','labradorite']
+  },
+  {
+    name:'人間関係円満',icon:'∞',desc:'良縁と絆を深める組合せ',
+    stones:['aquamarine','blue_lace_agate','amazonite','turquoise','celestite','apatite','pearl','angel_stone','hemimorphite','chrysocolla','green_calcite','pink_kunzite','rhodolite','blue_calcite','white_jade','opal']
+  },
+  {
+    name:'総合運アップ',icon:'◇',desc:'全方位の運気を底上げ',
+    stones:['crystal','amethyst','rose_quartz','citrine','lapis_lazuli','tiger_eye','onyx','green_aventurine','moonstone','turquoise','garnet','aquamarine','peridot','sapphire','emerald','ruby']
+  },
+];
+
+function renderPresets(){
+  const grid = document.getElementById('preset-grid');
+  if(!grid) return;
+  grid.innerHTML = PRESETS.map((p,i) => `
+    <div class="preset-card" data-preset="${i}">
+      <div class="preset-icon">${p.icon}</div>
+      <div class="preset-name">${p.name}</div>
+      <div class="preset-desc">${p.desc}</div>
+    </div>
+  `).join('');
+
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('.preset-card');
+    if(!card) return;
+    const idx = parseInt(card.dataset.preset);
+    const preset = PRESETS[idx];
+    if(!preset) return;
+
+    const count = state.beadCount;
+    for(let i = 0; i < count; i++){
+      state.slots[i] = preset.stones[i % preset.stones.length];
+    }
+    state.selectedSlot = -1;
+    renderBracelet();
+    updateOrderSummary();
+    showToast(`「${preset.name}」パターンを適用しました`);
+  });
+}
+
+renderPresets();
+
+/* Fill all same */
+document.getElementById('btn-fill-same').addEventListener('click', () => {
+  if (!state.lastFilledStone) {
+    showToast('先に石を1つ選択してください');
+    return;
+  }
+  for (let i = 0; i < state.beadCount; i++) {
+    state.slots[i] = state.lastFilledStone;
+  }
+  state.selectedSlot = -1;
+  renderBracelet();
+  updateOrderSummary();
+  const stone = STONES.find(s => s.id === state.lastFilledStone);
+  showToast(`全て${stone.ja}で埋めました`);
+});
+
+/* ============================================================
+   COMPLETION CHECK
+   ============================================================ */
+let completionShown = false;
+
+function checkCompletion() {
+  const allFilled = state.slots.length > 0 && state.slots.every(s => s !== null);
+  if (allFilled && !completionShown) {
+    completionShown = true;
+    setTimeout(() => {
+      showCompletionBanner();
+      createSparkles();
+    }, 300);
+  }
+  if (!allFilled) {
+    completionShown = false;
+  }
+}
+
+function showCompletionBanner() {
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('completion-banner').classList.add('show');
+  setTimeout(() => {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('completion-banner').classList.remove('show');
+  }, 2500);
+}
+
+document.getElementById('overlay').addEventListener('click', () => {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('completion-banner').classList.remove('show');
+});
+
+function createSparkles() {
+  const wrapper = document.getElementById('bracelet-wrapper');
+  const rect = wrapper.getBoundingClientRect();
+  const container = document.createElement('div');
+  container.className = 'sparkle';
+  container.style.left = '0';
+  container.style.top = '0';
+  container.style.width = '100%';
+  container.style.height = '100%';
+  wrapper.style.position = 'relative';
+  wrapper.appendChild(container);
+
+  const colors = ['#1b2a4a', '#c5a030', '#d4b44a', '#fff', '#0f1a30', '#e8d080'];
+
+  for (let i = 0; i < 40; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'sparkle-particle';
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 80 + Math.random() * 120;
+    particle.style.left = cx + 'px';
+    particle.style.top = cy + 'px';
+    particle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+    particle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.animationDelay = (Math.random() * 0.5) + 's';
+    particle.style.width = (3 + Math.random() * 5) + 'px';
+    particle.style.height = particle.style.width;
+    container.appendChild(particle);
+  }
+
+  setTimeout(() => container.remove(), 2000);
+}
+
+/* ============================================================
+   SAVE / LOAD DESIGNS
+   ============================================================ */
+function getSavedDesigns() {
+  try {
+    return JSON.parse(localStorage.getItem('musubi_designs') || '[]');
+  } catch { return []; }
+}
+
+function saveDesign() {
+  const filledCount = state.slots.filter(s => s !== null).length;
+  if (filledCount === 0) {
+    showToast('石を1つ以上選択してください');
+    return;
+  }
+
+  const designs = getSavedDesigns();
+  if (designs.length >= 5) {
+    designs.shift();
+  }
+
+  const design = {
+    id: Date.now(),
+    name: new Date().toLocaleString('ja-JP', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }),
+    braceletSize: state.braceletSize,
+    beadSize: state.beadSize,
+    slots: [...state.slots],
+  };
+
+  designs.push(design);
+  localStorage.setItem('musubi_designs', JSON.stringify(designs));
+  renderSavedDesigns();
+  showToast('デザインを保存しました');
+}
+
+function loadDesign(designId) {
+  const designs = getSavedDesigns();
+  const design = designs.find(d => d.id === designId);
+  if (!design) return;
+
+  state.braceletSize = design.braceletSize;
+  state.beadSize = design.beadSize;
+
+  /* Update size buttons */
+  document.querySelectorAll('#bracelet-sizes .size-option').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.size) === state.braceletSize);
+    b.setAttribute('aria-checked', parseInt(b.dataset.size) === state.braceletSize ? 'true' : 'false');
+  });
+  document.querySelectorAll('#bead-sizes .size-option').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.bead) === state.beadSize);
+    b.setAttribute('aria-checked', parseInt(b.dataset.bead) === state.beadSize ? 'true' : 'false');
+  });
+
+  updateBeadCount();
+  state.slots = design.slots.slice(0, state.beadCount);
+  while (state.slots.length < state.beadCount) state.slots.push(null);
+  state.selectedSlot = -1;
+
+  renderBracelet();
+  updateOrderSummary();
+  showToast('デザインを読み込みました');
+}
+
+function deleteDesign(designId, e) {
+  e.stopPropagation();
+  let designs = getSavedDesigns();
+  designs = designs.filter(d => d.id !== designId);
+  localStorage.setItem('musubi_designs', JSON.stringify(designs));
+  renderSavedDesigns();
+  showToast('デザインを削除しました');
+}
+
+function renderSavedDesigns() {
+  const container = document.getElementById('saved-designs');
+  const designs = getSavedDesigns();
+
+  if (designs.length === 0) {
+    container.innerHTML = '<div class="empty-state">保存されたデザインはありません</div>';
+    return;
+  }
+
+  container.innerHTML = designs.map(design => {
+    const miniSvg = generateMiniSvg(design);
+    return `<div class="saved-design-card" data-design="${design.id}">
+      ${miniSvg}
+      <div class="saved-design-name">${design.name}</div>
+      <button class="saved-design-delete" data-delete="${design.id}" aria-label="削除">✕</button>
+    </div>`;
+  }).join('');
+
+  container.querySelectorAll('.saved-design-card').forEach(card => {
+    card.addEventListener('click', () => loadDesign(parseInt(card.dataset.design)));
+  });
+
+  container.querySelectorAll('.saved-design-delete').forEach(btn => {
+    btn.addEventListener('click', (e) => deleteDesign(parseInt(btn.dataset.delete), e));
+  });
+}
+
+function generateMiniSvg(design) {
+  const n = design.slots.length;
+  const cx = 50, cy = 50, r = 38;
+  const beadR = Math.min(10, (2 * Math.PI * r) / (n * 2.4));
+  let svg = `<svg viewBox="0 0 100 100" width="80" height="80">`;
+  svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#7ec0ec" stroke-width="1"/>`;
+
+  for (let i = 0; i < n; i++) {
+    const angle = (2 * Math.PI * i / n) - Math.PI / 2;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    const stone = design.slots[i] ? STONES.find(s => s.id === design.slots[i]) : null;
+    if (stone) {
+      svg += `<circle cx="${x}" cy="${y}" r="${beadR}" fill="${stone.color}"/>`;
+    } else {
+      svg += `<circle cx="${x}" cy="${y}" r="${beadR}" fill="#f0ece6" stroke="#ccc" stroke-width="0.5"/>`;
+    }
+  }
+
+  svg += '</svg>';
+  return svg;
+}
+
+document.getElementById('btn-save').addEventListener('click', saveDesign);
+
+/* ============================================================
+   ORDER BUTTON & ORDER MODAL
+   ============================================================ */
+
+/* --- EmailJS Init --- */
+(function() {
+  try {
+    emailjs.init('YOUR_PUBLIC_KEY');
+  } catch(e) {
+    console.warn('EmailJS not loaded:', e);
+  }
+})();
+
+/* --- Order Modal Elements --- */
+const orderModalOverlay = document.getElementById('order-modal-overlay');
+const orderModal = document.getElementById('order-modal');
+const orderModalClose = document.getElementById('order-modal-close');
+const orderCancelBtn = document.getElementById('order-cancel-btn');
+const orderSubmitBtn = document.getElementById('order-submit-btn');
+const orderFormSection = document.getElementById('order-form-section');
+const orderSuccessSection = document.getElementById('order-success-section');
+const orderCloseSuccessBtn = document.getElementById('order-close-success-btn');
+const orderError = document.getElementById('order-error');
+const orderModalSpecs = document.getElementById('order-modal-specs');
+const orderModalStones = document.getElementById('order-modal-stones');
+
+/* --- Helper: build order details text for email --- */
+function buildOrderDetailsText() {
+  let text = '';
+  text += `ブレスレットサイズ: ${state.braceletSize}cm\n`;
+  text += `玉サイズ: ${state.beadSize}mm\n`;
+  text += `玉数: ${state.beadCount}個\n\n`;
+  text += `【石の配置】\n`;
+  let total = 0;
+  state.slots.forEach((slotId, i) => {
+    if (slotId) {
+      const stone = STONES.find(s => s.id === slotId);
+      text += `位置${i + 1}: ${stone.ja} (${stone.en}) - ¥${stone.price.toLocaleString()}\n`;
+      total += stone.price;
+    } else {
+      text += `位置${i + 1}: (空き)\n`;
+    }
+  });
+  text += `\n合計金額: ¥${total.toLocaleString()}`;
+  return { text, total };
+}
+
+/* --- Helper: populate order summary in modal --- */
+function populateOrderSummary() {
+  /* Specs row */
+  orderModalSpecs.innerHTML =
+    `<span>サイズ: <strong>${state.braceletSize}cm</strong></span>` +
+    `<span>玉: <strong>${state.beadSize}mm</strong></span>` +
+    `<span>玉数: <strong>${state.beadCount}個</strong></span>`;
+
+  /* Stone arrangement */
+  let html = '';
+  let total = 0;
+  state.slots.forEach((slotId, i) => {
+    if (slotId) {
+      const stone = STONES.find(s => s.id === slotId);
+      total += stone.price;
+      html += `<div class="order-summary-row">
+        <span class="slot-label">位置${i + 1}</span>
+        <span class="stone-label">
+          <span class="dot" style="background:linear-gradient(135deg,${stone.grad[0]},${stone.grad[1]})"></span>
+          ${stone.ja}
+        </span>
+        <span class="price-label">¥${stone.price.toLocaleString()}</span>
+      </div>`;
+    } else {
+      html += `<div class="order-summary-row">
+        <span class="slot-label">位置${i + 1}</span>
+        <span class="stone-label"><span class="empty-slot">(空き)</span></span>
+        <span class="price-label">-</span>
+      </div>`;
+    }
+  });
+  html += `<div class="order-summary-total">
+    <span>合計金額</span>
+    <span>¥${total.toLocaleString()}</span>
+  </div>`;
+  orderModalStones.innerHTML = html;
+}
+
+/* --- Show order modal --- */
+function showOrderModal() {
+  populateOrderSummary();
+  orderFormSection.style.display = '';
+  orderSuccessSection.style.display = 'none';
+  orderError.classList.remove('show');
+  orderError.textContent = '';
+  orderSubmitBtn.disabled = false;
+  orderSubmitBtn.textContent = '送信';
+  orderModalOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+/* --- Close order modal --- */
+function closeOrderModal() {
+  orderModalOverlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* --- Validate form --- */
+function validateOrderForm() {
+  const fields = [
+    { el: document.getElementById('order-name'), label: 'お名前' },
+    { el: document.getElementById('order-postal'), label: '郵便番号' },
+    { el: document.getElementById('order-prefecture'), label: '都道府県' },
+    { el: document.getElementById('order-address'), label: '住所' },
+    { el: document.getElementById('order-phone'), label: '電話番号' },
+    { el: document.getElementById('order-email'), label: 'メールアドレス' },
+  ];
+  let valid = true;
+  const missing = [];
+  fields.forEach(f => {
+    const val = f.el.value.trim();
+    f.el.classList.remove('invalid');
+    if (!val) {
+      f.el.classList.add('invalid');
+      missing.push(f.label);
+      valid = false;
+    }
+  });
+  /* Basic email format check */
+  const emailEl = document.getElementById('order-email');
+  const emailVal = emailEl.value.trim();
+  if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+    emailEl.classList.add('invalid');
+    missing.push('メールアドレスの形式');
+    valid = false;
+  }
+  if (!valid) {
+    orderError.textContent = `入力内容を確認してください: ${missing.join('、')}`;
+    orderError.classList.add('show');
+  } else {
+    orderError.classList.remove('show');
+  }
+  return valid;
+}
+
+/* --- Submit order via EmailJS (with mailto: fallback) --- */
+async function submitOrder() {
+  if (!validateOrderForm()) return;
+
+  orderSubmitBtn.disabled = true;
+  orderSubmitBtn.textContent = '送信中...';
+  orderError.classList.remove('show');
+
+  const customerName = document.getElementById('order-name').value.trim();
+  const postalCode = document.getElementById('order-postal').value.trim();
+  const prefecture = document.getElementById('order-prefecture').value;
+  const address = document.getElementById('order-address').value.trim();
+  const phone = document.getElementById('order-phone').value.trim();
+  const email = document.getElementById('order-email').value.trim();
+
+  const { text: orderDetails, total } = buildOrderDetailsText();
+
+  const templateParams = {
+    to_email: 'ozeight@gmail.com',
+    customer_name: customerName,
+    postal_code: postalCode,
+    prefecture: prefecture,
+    address: address,
+    phone: phone,
+    email: email,
+    order_details: orderDetails,
+  };
+
+  let emailSent = false;
+  try {
+    if (typeof emailjs !== 'undefined' && emailjs.send) {
+      await emailjs.send('service_powerstone', 'template_order', templateParams);
+      emailSent = true;
+    }
+  } catch (e) {
+    console.warn('EmailJS send failed:', e);
+  }
+
+  if (!emailSent) {
+    /* Fallback: mailto: link */
+    const subject = encodeURIComponent(`【パワーストーン注文】${customerName}様`);
+    const body = encodeURIComponent(
+      `お名前: ${customerName}\n` +
+      `郵便番号: ${postalCode}\n` +
+      `都道府県: ${prefecture}\n` +
+      `住所: ${address}\n` +
+      `電話番号: ${phone}\n` +
+      `メールアドレス: ${email}\n\n` +
+      orderDetails
+    );
+    const mailtoUrl = `mailto:ozeight@gmail.com?subject=${subject}&body=${body}`;
+    window.open(mailtoUrl, '_blank');
+  }
+
+  /* Show success */
+  orderFormSection.style.display = 'none';
+  orderSuccessSection.style.display = '';
+
+  /* Reset form fields */
+  document.getElementById('order-name').value = '';
+  document.getElementById('order-postal').value = '';
+  document.getElementById('order-prefecture').value = '';
+  document.getElementById('order-address').value = '';
+  document.getElementById('order-phone').value = '';
+  document.getElementById('order-email').value = '';
+}
+
+/* --- Event Listeners --- */
+document.getElementById('btn-order').addEventListener('click', () => {
+  const filledCount = state.slots.filter(s => s !== null).length;
+  if (filledCount === 0) {
+    showToast('石を選択してください');
+    return;
+  }
+  if (filledCount < state.beadCount) {
+    const proceed = confirm(`まだ ${state.beadCount - filledCount} 枠が空いています。このまま注文しますか？`);
+    if (!proceed) return;
+  }
+  showOrderModal();
+});
+
+orderModalClose.addEventListener('click', closeOrderModal);
+orderCancelBtn.addEventListener('click', closeOrderModal);
+orderCloseSuccessBtn.addEventListener('click', closeOrderModal);
+orderSubmitBtn.addEventListener('click', submitOrder);
+
+/* Close on overlay click (outside modal) */
+orderModalOverlay.addEventListener('click', (e) => {
+  if (e.target === orderModalOverlay) closeOrderModal();
+});
+
+/* Close on Escape key */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && orderModalOverlay.classList.contains('show')) {
+    closeOrderModal();
+  }
+});
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+/* ============================================================
+   HOROSCOPE SYSTEM
+   パワーストーン・ブレスレットデザイナー 星座エンジン
+   古代インド占星術スタイル ── 古代インド占星術の神秘
+   ============================================================ */
+
+// ---------- 1. Vedic Zodiac Data (Rashis) ----------
+
+const ZODIAC_SIGNS = [
+  {id:'aries',       ja:'牡羊座（メーシャ）',   symbol:'♈', element:'fire',  ruler:'mars',    vedic:'Mesha'},
+  {id:'taurus',      ja:'牡牛座（ヴリシャバ）', symbol:'♉', element:'earth', ruler:'venus',   vedic:'Vrishabha'},
+  {id:'gemini',      ja:'双子座（ミトゥナ）',   symbol:'♊', element:'air',   ruler:'mercury', vedic:'Mithuna'},
+  {id:'cancer',      ja:'蟹座（カルカ）',       symbol:'♋', element:'water', ruler:'moon',    vedic:'Karka'},
+  {id:'leo',         ja:'獅子座（シンハ）',     symbol:'♌', element:'fire',  ruler:'sun',     vedic:'Simha'},
+  {id:'virgo',       ja:'乙女座（カンニャ）',   symbol:'♍', element:'earth', ruler:'mercury', vedic:'Kanya'},
+  {id:'libra',       ja:'天秤座（トゥラー）',   symbol:'♎', element:'air',   ruler:'venus',   vedic:'Tula'},
+  {id:'scorpio',     ja:'蠍座（ヴリシュチカ）', symbol:'♏', element:'water', ruler:'mars',    vedic:'Vrishchika'},
+  {id:'sagittarius', ja:'射手座（ダヌス）',     symbol:'♐', element:'fire',  ruler:'jupiter', vedic:'Dhanus'},
+  {id:'capricorn',   ja:'山羊座（マカラ）',     symbol:'♑', element:'earth', ruler:'saturn',  vedic:'Makara'},
+  {id:'aquarius',    ja:'水瓶座（クンバ）',     symbol:'♒', element:'air',   ruler:'saturn',  vedic:'Kumbha'},
+  {id:'pisces',      ja:'魚座（ミーナ）',       symbol:'♓', element:'water', ruler:'jupiter', vedic:'Meena'},
+];
+
+// Short Rashi names for the kundali chart cells
+const RASHI_SHORT = [
+  'メーシャ','ヴリシャバ','ミトゥナ','カルカ','シンハ','カンニャ',
+  'トゥラー','ヴリシュチカ','ダヌス','マカラ','クンバ','ミーナ'
+];
+
+// ---------- 2. Nakshatra Data (27 Lunar Mansions) ----------
+
+const NAKSHATRAS = [
+  {name:'Ashwini',            ja:'アシュヴィニー',             deity:'Ashwini Kumars', ruler:'Ketu'},
+  {name:'Bharani',            ja:'バラニー',                   deity:'Yama',           ruler:'Venus'},
+  {name:'Krittika',           ja:'クリッティカー',             deity:'Agni',           ruler:'Sun'},
+  {name:'Rohini',             ja:'ローヒニー',                 deity:'Brahma',         ruler:'Moon'},
+  {name:'Mrigashira',         ja:'ムリガシラー',               deity:'Soma',           ruler:'Mars'},
+  {name:'Ardra',              ja:'アールドラー',               deity:'Rudra',          ruler:'Rahu'},
+  {name:'Punarvasu',          ja:'プナルヴァス',               deity:'Aditi',          ruler:'Jupiter'},
+  {name:'Pushya',             ja:'プシュヤ',                   deity:'Brihaspati',     ruler:'Saturn'},
+  {name:'Ashlesha',           ja:'アーシュレーシャー',         deity:'Naga',           ruler:'Mercury'},
+  {name:'Magha',              ja:'マガー',                     deity:'Pitris',         ruler:'Ketu'},
+  {name:'Purva Phalguni',     ja:'プールヴァ・パルグニー',     deity:'Bhaga',          ruler:'Venus'},
+  {name:'Uttara Phalguni',    ja:'ウッタラ・パルグニー',       deity:'Aryaman',        ruler:'Sun'},
+  {name:'Hasta',              ja:'ハスタ',                     deity:'Savitar',        ruler:'Moon'},
+  {name:'Chitra',             ja:'チトラー',                   deity:'Vishwakarma',    ruler:'Mars'},
+  {name:'Swati',              ja:'スワーティ',                 deity:'Vayu',           ruler:'Rahu'},
+  {name:'Vishakha',           ja:'ヴィシャーカー',             deity:'Indra-Agni',     ruler:'Jupiter'},
+  {name:'Anuradha',           ja:'アヌラーダー',               deity:'Mitra',          ruler:'Saturn'},
+  {name:'Jyeshtha',           ja:'ジェーシュタ',               deity:'Indra',          ruler:'Mercury'},
+  {name:'Mula',               ja:'ムーラ',                     deity:'Nirrti',         ruler:'Ketu'},
+  {name:'Purva Ashadha',      ja:'プールヴァ・アシャーダー',   deity:'Apas',           ruler:'Venus'},
+  {name:'Uttara Ashadha',     ja:'ウッタラ・アシャーダー',     deity:'Vishwedevas',    ruler:'Sun'},
+  {name:'Shravana',           ja:'シュラヴァナ',               deity:'Vishnu',         ruler:'Moon'},
+  {name:'Dhanishta',          ja:'ダニシュター',               deity:'Vasus',          ruler:'Mars'},
+  {name:'Shatabhisha',        ja:'シャタビシャー',             deity:'Varuna',         ruler:'Rahu'},
+  {name:'Purva Bhadrapada',   ja:'プールヴァ・バードラパダー', deity:'Ajaikapada',     ruler:'Jupiter'},
+  {name:'Uttara Bhadrapada',  ja:'ウッタラ・バードラパダー',   deity:'Ahirbudhnya',    ruler:'Saturn'},
+  {name:'Revati',             ja:'レーヴァティ',               deity:'Pushan',         ruler:'Mercury'},
+];
+
+function getNakshatra(siderealLongitude) {
+  const idx = Math.floor(siderealLongitude / (360 / 27));
+  return NAKSHATRAS[idx % 27];
+}
+
+// ---------- 3. Astronomical Utility Functions ----------
+
+function degToRad(d) { return d * Math.PI / 180; }
+function radToDeg(r) { return r * 180 / Math.PI; }
+function sinD(d) { return Math.sin(degToRad(d)); }
+function cosD(d) { return Math.cos(degToRad(d)); }
+function tanD(d) { return Math.tan(degToRad(d)); }
+function normalize360(deg) { return ((deg % 360) + 360) % 360; }
+
+// Julian Day Number from calendar date (UTC)
+function dateToJD(year, month, day, hour) {
+  if (month <= 2) { year--; month += 12; }
+  const A = Math.floor(year / 100);
+  const B = 2 - A + Math.floor(A / 4);
+  const JD = Math.floor(365.25 * (year + 4716)) +
+             Math.floor(30.6001 * (month + 1)) +
+             day + (hour / 24) + B - 1524.5;
+  return JD;
+}
+
+// Lahiri Ayanamsa (sidereal offset)
+function getLahiriAyanamsa(jd) {
+  const T = (jd - 2451545.0) / 36525.0;
+  return 23.856 + (50.29 / 3600) * T * 100;
+}
+
+// Convert tropical ecliptic longitude to sidereal
+function toSidereal(tropicalLong, jd) {
+  const ayanamsa = getLahiriAyanamsa(jd);
+  return normalize360(tropicalLong - ayanamsa);
+}
+
+// ---------- 4. Planetary Position Calculations (Simplified VSOP87) ----------
+
+function getPlanetPositions(jd) {
+  const T = (jd - 2451545.0) / 36525.0;
+  const positions = {};
+
+  // Sun (simplified)
+  const sunM = normalize360(357.5291 + 35999.0503 * T);
+  const sunL = normalize360(280.4665 + 36000.7698 * T);
+  const sunEq = 1.9146 * sinD(sunM) + 0.02 * sinD(2 * sunM);
+  positions.sun = normalize360(sunL + sunEq);
+
+  // Moon (simplified)
+  const moonL = normalize360(218.3165 + 481267.8813 * T);
+  const moonM = normalize360(134.9634 + 477198.8676 * T);
+  const moonF = normalize360(93.2720 + 483202.0175 * T);
+  const moonD = normalize360(297.8502 + 445267.1115 * T);
+  const moonSunM = sunM;
+  const moonLong = moonL
+    + 6.289 * sinD(moonM)
+    + 1.274 * sinD(2 * moonD - moonM)
+    + 0.658 * sinD(2 * moonD)
+    + 0.214 * sinD(2 * moonM)
+    - 0.186 * sinD(moonSunM)
+    - 0.114 * sinD(2 * moonF);
+  positions.moon = normalize360(moonLong);
+
+  // Mars
+  const marsL = normalize360(355.433 + 19140.2993 * T);
+  const marsM = normalize360(19.373 + 19139.8585 * T);
+  const marsEq = 10.691 * sinD(marsM) + 0.623 * sinD(2 * marsM);
+  positions.mars = normalize360(marsL + marsEq);
+
+  // Mercury
+  const merL = normalize360(252.251 + 149472.6746 * T);
+  const merM = normalize360(174.795 + 149472.5153 * T);
+  const merEq = 23.440 * sinD(merM) + 2.970 * sinD(2 * merM);
+  positions.mercury = normalize360(merL + merEq);
+
+  // Jupiter
+  const jupL = normalize360(34.351 + 3034.9057 * T);
+  const jupM = normalize360(20.020 + 3034.6874 * T);
+  const jupEq = 5.555 * sinD(jupM) + 0.168 * sinD(2 * jupM);
+  positions.jupiter = normalize360(jupL + jupEq);
+
+  // Venus
+  const venL = normalize360(181.980 + 58517.8159 * T);
+  const venM = normalize360(50.416 + 58517.8039 * T);
+  const venEq = 0.776 * sinD(venM) + 0.005 * sinD(2 * venM);
+  positions.venus = normalize360(venL + venEq);
+
+  // Saturn
+  const satL = normalize360(50.077 + 1222.1138 * T);
+  const satM = normalize360(317.021 + 1222.1116 * T);
+  const satEq = 6.406 * sinD(satM) + 0.257 * sinD(2 * satM);
+  positions.saturn = normalize360(satL + satEq);
+
+  // Rahu (Mean North Node - retrograde)
+  const rahuL = normalize360(125.044 - 1934.1362 * T);
+  positions.rahu = rahuL;
+
+  // Ketu (always opposite Rahu)
+  positions.ketu = normalize360(rahuL + 180);
+
+  return positions;
+}
+
+// ---------- 5. Ascendant (Lagna) Calculation ----------
+
+function calcAscendant(jd, latitude, longitude) {
+  const T = (jd - 2451545.0) / 36525.0;
+
+  // Greenwich Mean Sidereal Time (degrees)
+  const GMST = normalize360(
+    280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T
+  );
+
+  // Local Sidereal Time
+  const LST = normalize360(GMST + longitude);
+
+  // Obliquity of ecliptic
+  const eps = 23.4393 - 0.0130 * T;
+
+  // Ascendant formula
+  const lstRad = degToRad(LST);
+  const epsRad = degToRad(eps);
+  const latRad = degToRad(latitude);
+
+  let asc = Math.atan2(
+    cosD(LST),
+    -(Math.sin(epsRad) * Math.tan(latRad) + Math.cos(epsRad) * Math.sin(lstRad))
+  );
+  asc = radToDeg(asc);
+  asc = normalize360(asc);
+
+  return asc;
+}
+
+// ---------- 6. Vedic Chart Computation (Main Entry) ----------
+
+// Planet abbreviations for chart display
+const PLANET_ABBR = {
+  sun: 'Su', moon: 'Mo', mars: 'Ma', mercury: 'Me',
+  jupiter: 'Ju', venus: 'Ve', saturn: 'Sa', rahu: 'Ra', ketu: 'Ke'
+};
+
+const PLANET_JA = {
+  sun: '太陽', moon: '月', mars: '火星', mercury: '水星',
+  jupiter: '木星', venus: '金星', saturn: '土星', rahu: 'ラーフ', ketu: 'ケートゥ'
+};
+
+function computeVedicChart(year, month, day, hour, minute, latitude, longitude) {
+  // Convert birth time to UTC (Japan is UTC+9)
+  const utcHour = hour - 9 + (minute / 60);
+  const jd = dateToJD(year, month, day, utcHour);
+  const ayanamsa = getLahiriAyanamsa(jd);
+
+  // Get tropical positions
+  const tropical = getPlanetPositions(jd);
+
+  // Convert all to sidereal
+  const sidereal = {};
+  const planetKeys = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'];
+  planetKeys.forEach(p => {
+    sidereal[p] = toSidereal(tropical[p], jd);
+  });
+
+  // Ascendant (tropical then sidereal)
+  const tropicalAsc = calcAscendant(jd, latitude, longitude);
+  const siderealAsc = toSidereal(tropicalAsc, jd);
+
+  // Determine Rashi (sign index 0-11) for each planet
+  const rashis = {};
+  planetKeys.forEach(p => {
+    rashis[p] = Math.floor(sidereal[p] / 30);
+  });
+  const ascRashi = Math.floor(siderealAsc / 30);
+
+  // Build houses: in South Indian chart, houses are fixed to signs.
+  // Planets are placed in the sign (Rashi) they occupy.
+  const houses = Array.from({length: 12}, () => []);
+  planetKeys.forEach(p => {
+    houses[rashis[p]].push({
+      key: p,
+      abbr: PLANET_ABBR[p],
+      degree: sidereal[p] % 30
+    });
+  });
+
+  // Moon's Nakshatra
+  const moonNakshatra = getNakshatra(sidereal.moon);
+
+  return {
+    sidereal,
+    rashis,
+    ascRashi,
+    ascDegree: siderealAsc,
+    houses,
+    moonNakshatra,
+    ayanamsa,
+    jd,
+    planetKeys
+  };
+}
+
+// ---------- 7. Rashi index helpers for rendering ----------
+
+function getRashiSign(rashiIdx) {
+  return ZODIAC_SIGNS[rashiIdx % 12];
+}
+
+// Get Sun sign, Moon sign, ASC sign from Vedic chart for compatibility with reading templates
+function getSignFromRashi(rashiIdx) {
+  return ZODIAC_SIGNS[rashiIdx % 12];
+}
+
+// Legacy compatibility: getSunSign by date (still used by readings)
+function getSunSign(month, day) {
+  // Approximate tropical sun sign for element/reading selection
+  const boundaries = [
+    {m:3,d:21},{m:4,d:20},{m:5,d:21},{m:6,d:22},{m:7,d:23},{m:8,d:23},
+    {m:9,d:23},{m:10,d:24},{m:11,d:23},{m:12,d:22},{m:1,d:20},{m:2,d:19}
+  ];
+  const dayVal = month * 100 + day;
+  const order = [0,1,2,3,4,5,6,7,8,9,10,11]; // Aries..Pisces
+  for (let i = 0; i < 12; i++) {
+    const s = boundaries[i];
+    const e = boundaries[(i + 1) % 12];
+    const sv = s.m * 100 + s.d;
+    const ev = e.m * 100 + e.d;
+    if (sv < ev) {
+      if (dayVal >= sv && dayVal < ev) return ZODIAC_SIGNS[i];
+    } else {
+      if (dayVal >= sv || dayVal < ev) return ZODIAC_SIGNS[i];
+    }
+  }
+  return ZODIAC_SIGNS[0];
+}
+
+function getDayOfYear(month, day) {
+  const daysInMonth = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let total = 0;
+  for (let i = 1; i < month; i++) total += daysInMonth[i];
+  return total + day;
+}
+
+// ---------- 8. Element Helper ----------
+
+function getElement(signId) {
+  const sign = ZODIAC_SIGNS.find(z => z.id === signId);
+  return sign ? sign.element : 'fire';
+}
+
+const ELEMENT_JA = {fire:'火', earth:'地', air:'風', water:'水'};
+
+const RULER_JA = {
+  mars:'火星', venus:'金星', mercury:'水星', moon:'月', sun:'太陽',
+  pluto:'冥王星', jupiter:'木星', saturn:'土星', uranus:'天王星', neptune:'海王星'
+};
+
+// ---------- 9. South Indian Kundali Chart Layout ----------
+
+// South Indian chart: 4x4 grid, 12 outer cells = fixed Rashis, 4 center cells = info
+// Cell indices (0-15) in the 4x4 grid and their Rashi mapping:
+// [12, 1,  2,  3 ]   (Pisces, Aries, Taurus, Gemini)
+// [11, C,  C,  4 ]   (Aquarius, center, center, Cancer)
+// [10, C,  C,  5 ]   (Capricorn, center, center, Leo)
+// [ 9, 8,  7,  6 ]   (Sagittarius, Scorpio, Libra, Virgo)
+// Rashi numbers are 1-indexed in traditional Jyotish, but our arrays are 0-indexed.
+
+const KUNDALI_GRID = [
+  // [row, col] => rashi index (0-11), or -1 for center
+  // Row 0
+  {row:0, col:0, rashi:11}, // Pisces (12th sign, index 11)
+  {row:0, col:1, rashi:0},  // Aries (1st sign, index 0)
+  {row:0, col:2, rashi:1},  // Taurus
+  {row:0, col:3, rashi:2},  // Gemini
+  // Row 1
+  {row:1, col:0, rashi:10}, // Aquarius
+  {row:1, col:1, rashi:-1}, // center
+  {row:1, col:2, rashi:-1}, // center
+  {row:1, col:3, rashi:3},  // Cancer
+  // Row 2
+  {row:2, col:0, rashi:9},  // Capricorn
+  {row:2, col:1, rashi:-1}, // center
+  {row:2, col:2, rashi:-1}, // center
+  {row:2, col:3, rashi:4},  // Leo
+  // Row 3
+  {row:3, col:0, rashi:8},  // Sagittarius
+  {row:3, col:1, rashi:7},  // Scorpio
+  {row:3, col:2, rashi:6},  // Libra
+  {row:3, col:3, rashi:5},  // Virgo
+];
+
+function renderKundaliChart(chartData) {
+  const container = document.getElementById('kundali-chart');
+  if (!container) return;
+
+  let html = '';
+  KUNDALI_GRID.forEach(cell => {
+    if (cell.rashi === -1) {
+      // Center cell
+      html += '<div class="kundali-cell center-cell"></div>';
+    } else {
+      const rashi = cell.rashi;
+      const rashiName = RASHI_SHORT[rashi];
+      const isLagna = (rashi === chartData.ascRashi);
+      const planetsInHouse = chartData.houses[rashi];
+      const planetStr = planetsInHouse.map(p => {
+        const deg = p.degree.toFixed(1);
+        return `${p.abbr}`;
+      }).join(' ');
+
+      html += `<div class="kundali-cell">
+        ${isLagna ? '<div class="lagna-mark"></div>' : ''}
+        <div class="rashi-name">${rashiName}</div>
+        <div class="planet-list">${planetStr}</div>
+      </div>`;
+    }
+  });
+
+  // Fill center cells with birth info
+  // The center cells are at indices 5,6,9,10 in the grid
+  // We'll replace them after building the grid
+  container.innerHTML = html;
+
+  // Now populate center cells with info
+  const cells = container.querySelectorAll('.kundali-cell');
+  const centerCells = container.querySelectorAll('.center-cell');
+  if (centerCells.length === 4) {
+    // Merge center into a single info block visually
+    centerCells[0].innerHTML = `<div class="kundali-center-info">
+      <div class="center-title">ジョーティシュ</div>
+      <div>ラーシチャート</div>
+    </div>`;
+    centerCells[1].innerHTML = `<div class="kundali-center-info">
+      <div>ラグナ: ${RASHI_SHORT[chartData.ascRashi]}</div>
+      <div>${chartData.ascDegree.toFixed(1)}°</div>
+    </div>`;
+    centerCells[2].innerHTML = `<div class="kundali-center-info">
+      <div>ナクシャトラ</div>
+      <div>${chartData.moonNakshatra.ja}</div>
+    </div>`;
+    centerCells[3].innerHTML = `<div class="kundali-center-info">
+      <div>アヤナーンシャ</div>
+      <div>${chartData.ayanamsa.toFixed(2)}°</div>
+    </div>`;
+  }
+}
+
+function renderPlanetTable(chartData) {
+  const container = document.getElementById('planet-table-container');
+  if (!container) return;
+
+  const rows = chartData.planetKeys.map(key => {
+    const deg = chartData.sidereal[key];
+    const rashiIdx = Math.floor(deg / 30);
+    const sign = ZODIAC_SIGNS[rashiIdx];
+    const degInSign = (deg % 30).toFixed(2);
+    const nak = getNakshatra(deg);
+    return `<tr>
+      <td>${PLANET_JA[key]}</td>
+      <td>${PLANET_ABBR[key]}</td>
+      <td>${sign.ja.split('（')[0]}</td>
+      <td>${degInSign}°</td>
+      <td>${nak.ja}</td>
+    </tr>`;
+  }).join('');
+
+  // Add Ascendant row
+  const ascDeg = chartData.ascDegree;
+  const ascRashiIdx = Math.floor(ascDeg / 30);
+  const ascSign = ZODIAC_SIGNS[ascRashiIdx];
+  const ascDegInSign = (ascDeg % 30).toFixed(2);
+  const ascNak = getNakshatra(ascDeg);
+  const ascRow = `<tr style="font-weight:600">
+    <td>ラグナ</td>
+    <td>Asc</td>
+    <td>${ascSign.ja.split('（')[0]}</td>
+    <td>${ascDegInSign}°</td>
+    <td>${ascNak.ja}</td>
+  </tr>`;
+
+  container.innerHTML = `
+    <table class="planet-table">
+      <thead><tr>
+        <th>惑星</th><th>略号</th><th>ラーシ</th><th>度数</th><th>ナクシャトラ</th>
+      </tr></thead>
+      <tbody>${ascRow}${rows}</tbody>
+    </table>
+  `;
+}
+
+// ---------- 10a. Zodiac Stone Mapping ----------
+
+const ZODIAC_STONES = {
+  aries:       {main:'garnet',      support:'carnelian',      accent:'ruby',          healing:'bloodstone'},
+  taurus:      {main:'emerald',     support:'rose_quartz',    accent:'jade',          healing:'malachite'},
+  gemini:      {main:'apatite',     support:'blue_lace_agate',accent:'citrine',       healing:'chrysocolla'},
+  cancer:      {main:'moonstone',   support:'pearl',          accent:'larimar',       healing:'selenite'},
+  leo:         {main:'sunstone',    support:'tiger_eye',      accent:'citrine',       healing:'peridot'},
+  virgo:       {main:'sapphire',    support:'amazonite',      accent:'blue_topaz',    healing:'chrysoprase'},
+  libra:       {main:'opal',        support:'rose_quartz',    accent:'lapis_lazuli',  healing:'lepidolite'},
+  scorpio:     {main:'obsidian',    support:'labradorite',    accent:'garnet',        healing:'sugilite'},
+  sagittarius: {main:'turquoise',   support:'lapis_lazuli',   accent:'amethyst',      healing:'sodalite'},
+  capricorn:   {main:'onyx',        support:'tiger_eye',      accent:'garnet',        healing:'smoky_quartz'},
+  aquarius:    {main:'aquamarine',  support:'amethyst',       accent:'fluorite',      healing:'angel_stone'},
+  pisces:      {main:'amethyst',    support:'aquamarine',     accent:'moonstone',     healing:'larimar'},
+};
+
+// Element-based accent stones for pattern 3
+const ELEMENT_STONES = {
+  fire:  ['carnelian','sunstone','ruby','garnet','citrine','red_jasper'],
+  earth: ['tiger_eye','jade','malachite','smoky_quartz','onyx','emerald'],
+  air:   ['aquamarine','blue_topaz','fluorite','lapis_lazuli','blue_lace_agate','apatite'],
+  water: ['moonstone','larimar','amethyst','pearl','labradorite','selenite'],
+};
+
+// ---------- 10b. Reading Generation (Ancient Vedic Style) ----------
+
+const LIFETIME_TEMPLATES = {
+  fire: [
+    (sun, moon, asc) => `${sun.ja}に宿る${ELEMENT_JA[sun.element]}のエネルギーと、${RULER_JA[sun.ruler]}の守護が、あなたの人生に力強い情熱と行動力を与えています。あなたは生まれながらにリーダーシップの素質を持ち、周囲を明るく照らす太陽のような存在です。${moon.ja}の月が示すあなたの内面には、誰かのために全力を尽くしたいという深い思いやりが眠っています。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが第一印象に表れ、初対面の人にも頼もしさと温かさを感じさせます。あなたの課題は、燃え尽きるまで走り続けてしまうこと。自分自身を大切にする時間も必要です。カーネリアンやガーネットなど${ELEMENT_JA[sun.element]}の石は、あなたの情熱を安定させながら持続的なエネルギーを与えてくれます。特に${RULER_JA[sun.ruler]}と共鳴する石を身につけることで、行動力を保ちながらも心のバランスを整え、あなた本来の輝きを最大限に引き出すことができるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}のもとに生まれたあなたは、${RULER_JA[sun.ruler]}の力強いエネルギーに守護されています。困難な状況でも決して諦めない不屈の精神と、新しいことに果敢に挑戦する勇気があなたの最大の武器です。${moon.ja}の月が照らすあなたの感情の世界には、実は繊細で温かい一面が隠れています。強さの裏にある優しさ、それがあなたの本当の魅力です。${asc.ja}が${ELEMENT_JA[asc.element]}の質を帯びることで、社会的な場面では堂々とした存在感を放ちます。人生のテーマは「自分の炎で他者の心にも火を灯すこと」。ルビーやサンストーンなどの石は、あなたの内なる炎を美しく輝かせ、自信と勇気を高めてくれます。疲れを感じたときほど、石の温かなエネルギーがあなたを支えてくれるでしょう。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}に守護された${sun.ja}のあなたは、${ELEMENT_JA[sun.element]}の創造的なエネルギーに満ちた人です。アイデアが次々と湧き出る発想力と、それを形にする実行力を兼ね備えています。${moon.ja}の月が${ELEMENT_JA[moon.element]}の波を送るとき、あなたの感性はさらに研ぎ澄まされ、直感的なひらめきが降りてきます。${asc.ja}の${ELEMENT_JA[asc.element]}の影響で、あなたは周囲の人を自然と巻き込み、場の空気を明るく変える力を持っています。ただし、複数のことに手を出しすぎて集中力が散漫になることも。シトリンやカーネリアンは、あなたの創造力にフォーカスを与え、エネルギーを一点に集中させる助けになります。${RULER_JA[sun.ruler]}と共鳴する石を身につけることで、散らばりがちな才能が一つの大きな成果として結実していくでしょう。`,
+    (sun, moon, asc) => `${sun.ja}に${ELEMENT_JA[sun.element]}の魂を宿し、${RULER_JA[sun.ruler]}に守られたあなた。その存在感は、まるで暗闇を照らすたいまつのようです。あなたには生まれながらに人を鼓舞し、勇気を与える力があります。${moon.ja}の月が${ELEMENT_JA[moon.element]}の光であなたの心を照らすとき、表面的な強さだけでなく、深い共感力と思いやりが溢れ出します。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが加わることで、あなたは「強くて優しいリーダー」として周囲に認められていきます。人生の中で乗り越えるべき壁は、「完璧でなければ」というプレッシャーを手放すこと。ガーネットやレッドジャスパーは、地に足をつけた自信を与え、無理なく自分らしくいられる心の余裕を作ってくれます。${ELEMENT_JA[sun.element]}の石があなたの情熱を守り、長く安定して輝き続ける力を授けてくれるでしょう。`,
+  ],
+  earth: [
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}のエネルギーと${RULER_JA[sun.ruler]}の守護のもとに生まれたあなたは、揺るぎない安定感と堅実さを持つ人です。コツコツと積み上げる力、約束を守る誠実さ、そして周囲に安心感を与える包容力があなたの最大の魅力です。${moon.ja}の月が${ELEMENT_JA[moon.element]}の静かな波であなたの心を満たすとき、豊かな感性と深い愛情が溢れ出します。${asc.ja}の${ELEMENT_JA[asc.element]}の影響で、初対面の人にも信頼できる印象を与えます。あなたの人生のテーマは「確かなものを築き、大切な人を守ること」。タイガーアイやジェイドなどの石は、あなたの堅実さをさらに強化しながら、豊かさと繁栄を引き寄せるエネルギーを与えてくれます。${RULER_JA[sun.ruler]}と共鳴する石を身につけることで、努力が確実に実を結ぶ流れが生まれるでしょう。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}に守護された${sun.ja}のあなたは、${ELEMENT_JA[sun.element]}の深い忍耐力と実務能力を持って生まれました。目の前の課題に着実に取り組み、時間をかけて確かな成果を出す力は、あなたの天性の才能です。${moon.ja}の月が${ELEMENT_JA[moon.element]}の光で内面を照らすとき、あなたの中にある温かい思いやりと、大切なものを守りたいという強い意志が浮かび上がります。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーは、あなたに社会的な信頼と落ち着いた存在感をもたらします。課題は変化を恐れて慎重になりすぎること。エメラルドやマラカイトは、安定を保ちながらも新しい可能性に心を開く柔軟性を与えてくれます。大地の石のエネルギーが、あなたの着実な歩みを力強く支えてくれるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}に宿る${ELEMENT_JA[sun.element]}の力と${RULER_JA[sun.ruler]}の守護は、あなたに「本物を見抜く目」を授けています。表面的な華やかさに惑わされず、物事の本質を見極める洞察力があなたの大きな強みです。${moon.ja}の月が${ELEMENT_JA[moon.element]}の穏やかな波を送るとき、あなたの直感はさらに冴え渡り、正しい選択へと導かれます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが加わることで、あなたは「静かだけれど確かな存在」として周囲に安心感を与えます。人生で意識したいのは、自分の頑張りを認めてあげること。スモーキークォーツやオニキスは、不安やストレスを吸収し、心の平穏を保つ助けになります。大地の石を身につけることで、あなた本来の安定した力がより一層発揮されるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}に根ざし、${RULER_JA[sun.ruler]}に守られたあなたは、まるで大きな樹木のような存在です。周囲の人はあなたの傍にいると自然と安心し、心が落ち着きます。${moon.ja}の月が${ELEMENT_JA[moon.element]}の穏やかな光であなたの心を満たすとき、深い慈愛と生命力が内側から湧き上がります。${asc.ja}の${ELEMENT_JA[asc.element]}の影響で、社会的な場面では実力と信頼を兼ね備えた頼れる人として認知されます。あなたの才能は「育てること」。仕事でも人間関係でも、時間をかけて大切に育んだものが大きな実りをもたらします。タイガーアイやジェイドは、繁栄と成長のエネルギーをもたらし、あなたの「育む力」をさらに高めてくれます。石の持つ大地の安定感が、あなたの毎日を豊かに彩ってくれるでしょう。`,
+  ],
+  air: [
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}のエネルギーと${RULER_JA[sun.ruler]}の守護が、あなたに鋭い知性とコミュニケーション能力を与えています。新しい情報をすばやく吸収し、人と人を繋ぐ架け橋となる力があなたの天性の才能です。${moon.ja}の月が${ELEMENT_JA[moon.element]}の光であなたの感性を照らすとき、知性だけでなく豊かな感受性も花開き、言葉に温かみが宿ります。${asc.ja}が${ELEMENT_JA[asc.element]}の質を帯びることで、初対面でも親しみやすく知的な印象を与えます。課題は、考えすぎて行動に移せなくなること。アクアマリンやラピスラズリなどの石は、思考をクリアにし、直感と知性のバランスを整えてくれます。${RULER_JA[sun.ruler]}と共鳴する石を身につけることで、アイデアが明確な形となり、あなたの言葉がより多くの人の心に届くようになるでしょう。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}に守護された${sun.ja}のあなたは、${ELEMENT_JA[sun.element]}の軽やかさと知的好奇心に溢れた人です。一つの分野に留まらず、幅広い知識と経験を求める探究心があなたの人生を豊かにします。${moon.ja}の月が${ELEMENT_JA[moon.element]}の波を送るとき、論理だけでは捉えられない深い理解力が芽生え、人の心の機微を感じ取る力が高まります。${asc.ja}が${ELEMENT_JA[asc.element]}のエネルギーを帯びることで、社交的な場面で自然と輝く魅力が生まれます。意識したいのは、地に足をつけること。フローライトやブルートパーズは、散らばりがちな思考を整理し、本当に大切なことに集中する力を与えてくれます。風の石のエネルギーが、あなたの知的な冒険を支え、実りある成果へと導いてくれるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}に宿る${ELEMENT_JA[sun.element]}の力と${RULER_JA[sun.ruler]}の導きが、あなたに「言葉で世界を変える力」を授けています。あなたの言葉には不思議な説得力があり、複雑な物事をわかりやすく伝える才能があります。${moon.ja}の月が${ELEMENT_JA[moon.element]}の柔らかな光を送るとき、知的な表現に感情の深みが加わり、人の心を動かすコミュニケーションが可能になります。${asc.ja}の${ELEMENT_JA[asc.element]}の影響は、あなたに柔軟性と適応力を与え、どんな環境でも自分らしくいられる強さをもたらします。人生のテーマは「知恵を分かち合い、人と人を繋ぐこと」。ブルーレースアゲートやアパタイトは、コミュニケーション力を高め、自分の思いを誠実に伝える勇気を与えてくれます。石の澄んだエネルギーが、あなたの言葉をさらに輝かせてくれるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}に導かれ、${RULER_JA[sun.ruler]}に守られたあなたは、自由で独創的な発想の持ち主です。既存の枠にとらわれず、新しい視点で物事を捉えるあなたの考え方は、周囲に新鮮な刺激を与えます。${moon.ja}の月が${ELEMENT_JA[moon.element]}の光で内面を照らすとき、ひらめきと感性が融合し、芸術的な創造力が花開きます。${asc.ja}が${ELEMENT_JA[asc.element]}の質を帯びることで、多面的で魅力的な人柄が周囲を惹きつけます。気をつけたいのは、自由を求めるあまり人との絆を疎かにしないこと。ラピスラズリやフローライトは、知性と感情のバランスを整え、深い人間関係を築く助けになります。${ELEMENT_JA[sun.element]}の石を身につけることで、自由さと絆の両方を大切にした、あなたらしい豊かな人生を歩めるでしょう。`,
+  ],
+  water: [
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}のエネルギーと${RULER_JA[sun.ruler]}の守護は、あなたに深い感受性と豊かな共感力を与えています。人の気持ちを察する力、場の空気を読む繊細さ、そして誰かの痛みに寄り添える優しさがあなたの最大の才能です。${moon.ja}の月が${ELEMENT_JA[moon.element]}の潮汐であなたの心を満たすとき、直感力がさらに高まり、言葉にならないメッセージを受け取る力が働きます。${asc.ja}が${ELEMENT_JA[asc.element]}の器を整えることで、穏やかで包容力のある印象を周囲に与えます。課題は、他者の感情を吸収しすぎて疲れてしまうこと。ムーンストーンやアメジストは、感受性を守りながら心の浄化を促し、あなた自身のエネルギーを回復させてくれます。${RULER_JA[sun.ruler]}と共鳴する石が、あなたの繊細な心を優しく包み込んでくれるでしょう。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}に守護された${sun.ja}のあなたは、${ELEMENT_JA[sun.element]}の深い洞察力と直感を持って生まれました。表面的なことに騙されず、人や物事の本質を見抜く力があなたの大きな強みです。${moon.ja}の月が${ELEMENT_JA[moon.element]}の波であなたの感情を揺らすとき、その揺れこそが創造力の源泉となり、芸術的な感性や癒しの力として開花します。${asc.ja}が${ELEMENT_JA[asc.element]}の質を帯びることで、静かな中にも存在感のある雰囲気を醸し出します。意識したいのは、自分の感情を抑え込まないこと。ラリマーやラブラドライトは、感情の流れを健やかに保ち、直感を研ぎ澄ませてくれます。水の石のエネルギーが、あなたの豊かな内面世界を守り、才能を開花させる助けとなるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}に宿る${ELEMENT_JA[sun.element]}の力と${RULER_JA[sun.ruler]}の導きが、あなたに「癒す力」を授けています。あなたがそばにいるだけで周囲の人は安らぎを感じ、心を開いてくれます。それは意識せずとも発揮される、あなただけの特別な才能です。${moon.ja}の月が${ELEMENT_JA[moon.element]}の深い波を送るとき、人の心の奥にある痛みや希望を感じ取る力がさらに高まります。${asc.ja}の${ELEMENT_JA[asc.element]}の影響で、あなたは穏やかで受容的な存在として人々に愛されます。大切なのは、他者を癒す前にまず自分自身を満たすこと。パールやセレナイトは、心の浄化と内なる平和を促し、あなたが本来の輝きを取り戻す助けになります。石の静かなエネルギーが、あなたの癒しの力をさらに深めてくれるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}の${ELEMENT_JA[sun.element]}に包まれ、${RULER_JA[sun.ruler]}に守られたあなたは、感情の豊かさと精神的な深さを兼ね備えた人です。喜びも悲しみも深く味わうことができるあなたは、その経験を通じて人間としての深みを増していきます。${moon.ja}の月が${ELEMENT_JA[moon.element]}の潮であなたの感情を揺さぶるとき、そこには創造的なエネルギーが生まれ、芸術や表現活動の源泉となります。${asc.ja}が${ELEMENT_JA[asc.element]}の質を帯びることで、神秘的で惹きつけられる魅力を放ちます。人生のテーマは「感情を力に変え、深い絆を築くこと」。アメジストやムーンストーンは、感情の波を穏やかに整え、直感力を高めてくれます。${ELEMENT_JA[sun.element]}の石を身につけることで、あなたの豊かな感性が安定した輝きとなり、人生に深い充実感をもたらしてくれるでしょう。`,
+  ],
+};
+
+const TODAY_TEMPLATES = {
+  fire: [
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたに${RULER_JA[sun.ruler]}が力強いエネルギーを送っています。今日は${ELEMENT_JA[sun.element]}のエレメントが活性化する日。朝から行動力が高まり、ずっと気になっていたことに取り組む絶好のタイミングです。午前中に大切な決断や新しいチャレンジを。${moon.ja}の月の影響で、午後は感情が豊かになります。その熱い気持ちをポジティブな方向に使いましょう。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが対人運を高めるので、人との会話から良いヒントが得られそうです。今日のラッキーアクションは、朝日を浴びながら深呼吸すること。カーネリアンやガーネットなど${ELEMENT_JA[sun.element]}の石を身につけると、エネルギーが安定し、自信を持って行動できます。夜は頑張った自分を褒めて、ゆっくり休みましょう。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}の星の流れが${sun.ja}のあなたに新しい風を吹き込みます。今日は挑戦の日。「やってみたい」と思っていたことに一歩踏み出すのに最適です。${ELEMENT_JA[sun.element]}のエネルギーが背中を押してくれるので、勇気を出して。${moon.ja}の月が感情面にも活力を与え、人との交流が楽しくなる一日です。ただし、勢いがある分、言葉が強くなりがちなので、大切な人への言い方には少し気をつけて。${asc.ja}の${ELEMENT_JA[asc.element]}の影響で、午後から夕方にかけて良いアイデアが浮かびそうです。ルビーやサンストーンを身につけると、情熱を保ちながらも冷静さを忘れない一日を過ごせます。石の温かなエネルギーが、あなたの挑戦を支えてくれるでしょう。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたの創造力が輝く日です。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}の星の配置が、アイデアとインスピレーションを呼び覚まします。仕事でも趣味でも、「こうしたらもっと良くなる」というひらめきが降りてくるかもしれません。${moon.ja}の月の影響で、感性が研ぎ澄まされる午後は、クリエイティブな作業に集中するのがおすすめ。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが人前での表現力を高めるので、プレゼンや自己アピールにも良い日です。シトリンやカーネリアンは、創造のエネルギーを高めて集中力を持続させてくれます。今日生まれたアイデアは、メモしておくと後で役立つはず。寝る前に石を握りながら、今日のインスピレーションに感謝する時間を作ってみてください。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}が${sun.ja}のあなたの決断力を後押しする日です。先延ばしにしていたこと、迷っていたことに決着をつけるのに良いタイミング。${ELEMENT_JA[sun.element]}のエネルギーが「ここぞ」という勇気を与えてくれます。${moon.ja}の月の影響で直感が冴えるので、頭で考えすぎるより「こうだ」と感じた方向に進んでみて。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが社会的な運気を高め、周囲からの評価や信頼がアップします。ガーネットやレッドジャスパーを身につけると、地に足のついた自信が生まれ、ブレない軸で一日を過ごせます。夕方以降は少しペースを落として、温かい飲み物でリラックス。今日の決断を、石のエネルギーが静かに見守ってくれています。`;
+    },
+  ],
+  earth: [
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたに${RULER_JA[sun.ruler]}が安定と豊かさのエネルギーを届けています。今日は${ELEMENT_JA[sun.element]}の力が強く、地に足をつけた着実な行動が実を結ぶ日です。午前中は計画を立てたり、書類を整理したり、基盤を固める作業に最適。${moon.ja}の月が内面の安らぎをもたらし、心穏やかに過ごせます。${asc.ja}の${ELEMENT_JA[asc.element]}の影響で、お金や仕事に関する判断力が高まるので、大切な契約や買い物の決断にも良い日です。タイガーアイやジェイドを身につけると、繁栄のエネルギーが高まり、良い流れを引き寄せやすくなります。今日のラッキーアクションは、部屋の整理整頓。空間を整えることで、心もすっきりし、運気が上がります。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}の安定したエネルギーが${sun.ja}のあなたを包んでいます。今日は集中力が冴える日。${ELEMENT_JA[sun.element]}の堅実さが味方し、コツコツとした作業が驚くほどはかどります。${moon.ja}の月が感情に落ち着きを与え、冷静な判断ができる一日です。午後に少し予想外のことが起きるかもしれませんが、慌てず対処すれば大丈夫。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが周囲との関係を円滑にしてくれます。スモーキークォーツやオニキスを手元に置いておくと、不安やストレスを吸収し、穏やかな気持ちを保てます。夕方以降は自然に触れる時間を作ると、大地のエネルギーで心身がリフレッシュされるでしょう。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたの努力が報われ始める日です。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}の星の流れが、これまで地道に続けてきたことに光を当ててくれます。「見えない努力」が「見える成果」に変わるきっかけが生まれそうです。${moon.ja}の月の影響で直感が鋭くなり、本当に大切なことが何かがクリアに見えてきます。不要なものを手放す決断にも良い日。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが対人関係に誠実さを加え、今日交わした約束は長く続く信頼の礎になります。エメラルドやマラカイトは、心を開きながらも芯の強さを保つエネルギーを与えてくれます。石を胸元に身につけて、穏やかでも力強い一日を。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}が${sun.ja}のあなたに実りの兆しを告げています。${ELEMENT_JA[sun.element]}のエネルギーが最も安定する今日は、丁寧な仕事が特に高く評価される日。急がず、一つ一つの作業に心を込めて取り組みましょう。${moon.ja}の月が直感を高め、「なんとなくこっちがいい」という感覚が的確な判断につながります。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが実務能力を活性化し、具体的な成果が出やすい一日です。思いがけない嬉しい知らせが届くかもしれません。タイガーアイやジェイドを身につけると、豊かさを引き寄せるエネルギーが高まります。夜はゆっくりとお茶を飲みながら、今日の小さな幸せを噛みしめてみてください。石があなたの穏やかな幸福を守ってくれます。`;
+    },
+  ],
+  air: [
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたにコミュニケーションの追い風が吹いています。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}のエネルギーが、言葉の力を何倍にも高める日です。メールや会話、SNSなど、あらゆる伝達手段であなたの思いが相手にしっかり届きます。${moon.ja}の月が感情に軽やかさを与え、難しい話題も柔らかく伝えられる一日。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが社交運を上げ、新しい出会いや意外なつながりが生まれるかもしれません。ただし、情報量が多くなりがちなので、「本当に大事なこと」を見失わないように注意。アクアマリンやブルートパーズを身につけると、思考がクリアになり、大切なことにフォーカスできます。石の澄んだエネルギーが、あなたの言葉に真実の力を宿してくれるでしょう。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}が${sun.ja}のあなたの知的好奇心を刺激する日です。${ELEMENT_JA[sun.element]}の学びのエネルギーが高まり、新しい知識やスキルの吸収力が普段の何倍にもなっています。本を読む、動画で学ぶ、詳しい人に話を聞く──どんな方法でも、今日のインプットは将来の大きな財産になります。${moon.ja}の月の影響で感性が豊かになり、知識だけでなく「心で感じる理解」が深まります。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが加わり、学んだことをすぐに活かせるチャンスも。フローライトやラピスラズリは、集中力と直感力を同時に高めてくれる心強い味方です。今日学んだことを誰かにシェアすると、さらに理解が深まり、良い縁も広がるでしょう。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたの言葉に特別な説得力が宿る日です。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}の配置が、表現力とコミュニケーション力を最大限に引き上げています。大事な話し合い、プレゼン、告白──今日は言葉で伝えるべきことを伝える絶好のチャンスです。${moon.ja}の月が共感力を高め、相手の気持ちを察しながら話せるので、一方的にならず心が通じ合います。${asc.ja}の${ELEMENT_JA[asc.element]}のバランスが、主張と傾聴の絶妙なハーモニーを生みます。話す前にほんの一瞬、間を置くことで、言葉がさらに深く届きます。ブルーレースアゲートやアパタイトは、心を落ち着けて自分の思いを誠実に伝える勇気をくれます。今日の会話が、新しい関係や展開の扉を開いてくれるかもしれません。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}の明晰なエネルギーが${sun.ja}のあなたの思考力を研ぎ澄ませます。今日は頭の回転が速く、複雑な問題もすっきり整理できる日。${ELEMENT_JA[sun.element]}のエネルギーがパズルのピースを自然に組み合わせてくれるような感覚を味わえるでしょう。${moon.ja}の月の影響で、論理と直感の両方が冴え、普段なら気づかないような解決策がひらめくかもしれません。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが新しい視点を開き、行き詰まっていたことに突破口が。ただし、結論を急がず、じっくり考えることも大切です。ラピスラズリやフローライトを身につけると、知性と直感のバランスが整い、最良の答えにたどり着けます。今日のひらめきをメモしておくと、未来のあなたに役立つ宝物になるでしょう。`;
+    },
+  ],
+  water: [
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたの直感力が高まる特別な日です。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}のエネルギーが、心の奥深くにある「内なる声」をはっきりと聞こえるようにしてくれます。今朝、目覚めた瞬間に感じたこと、ふと頭に浮かんだこと──それが今日一日の大切なヒントです。${moon.ja}の月が感受性をさらに高め、人の気持ちが普段より敏感に伝わってきます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーがその繊細な感覚を穏やかに整えてくれるので、感情に振り回される心配はありません。ムーンストーンやアメジストは、直感を守りながら心の浄化を促してくれます。今日のラッキーアクションは水に触れること。入浴や水辺の散歩が、心身のリフレッシュと運気アップにつながります。石を身につけて、内なる声に耳を傾ける一日にしてください。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}が${sun.ja}のあなたに心の浄化のエネルギーを送っています。今日は${ELEMENT_JA[sun.element]}のエレメントが感情面に働きかけ、モヤモヤしていた気持ちがすっと軽くなるような感覚を味わえるかもしれません。${moon.ja}の月が感情の波を穏やかに整え、午前中は少しセンシティブになりやすいですが、それは心が古い重荷を手放しているサイン。自分に優しく、ゆったり過ごしましょう。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが午後から安定感をもたらし、すっきりとした気持ちで過ごせます。ラリマーやラブラドライトは、感情のデトックスを助け、心に穏やかな光を灯してくれます。今日は「頑張る」より「ゆるめる」がキーワード。石のエネルギーに身を委ねて、自分を大切にする時間を過ごしてください。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${sun.ja}のあなたの癒しの力が輝く日です。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}のエネルギーが、あなたの持つ共感力と優しさを最大限に引き出します。今日はあなたの笑顔や何気ない一言が、誰かの心を深く癒すかもしれません。${moon.ja}の月の影響で直感が鋭くなり、相手が本当に必要としていることが自然とわかります。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが人間関係に温かさと調和をもたらし、友人や家族との絆がより深まる一日です。ただし、相手のケアに集中しすぎて自分が疲れないよう気をつけて。パールやセレナイトは、他者への共感力を保ちながら自分自身のエネルギーを守ってくれます。入浴時に石を近くに置いて、今日一日の疲れを優しく洗い流してあげてください。`;
+    },
+    (sun, moon, asc) => {
+      const d = new Date();
+      return `${d.getMonth()+1}月${d.getDate()}日、${RULER_JA[sun.ruler]}が${sun.ja}のあなたの内面に深い気づきをもたらす日です。${ELEMENT_JA[sun.element]}のエネルギーが心の奥を静かに照らし、普段は気づかない自分の本当の気持ちが見えてきます。午前中は静かな環境で過ごすのがおすすめ。瞑想や日記を書く時間が、驚くほど深い洞察を与えてくれます。${moon.ja}の月が感受性を豊かにし、音楽や自然の美しさに心が大きく動かされるかもしれません。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが午後の気づきを穏やかに受け止め、新しい自分との出会いをサポートしてくれます。アメジストやムーンストーンを身につけると、内面の声が聞き取りやすくなり、心の平穏が保たれます。今日は流れに身を任せるのが吉。石のエネルギーとともに、静かで充実した一日をお過ごしください。`;
+    },
+  ],
+};
+
+const FUTURE_TEMPLATES = {
+  fire: [
+    (sun, moon, asc) => `${sun.ja}のあなたに、${RULER_JA[sun.ruler]}の星の流れが大きなチャンスの到来を告げています。これからの季節、あなたの${ELEMENT_JA[sun.element]}のエネルギーはさらに力強く燃え上がり、今まで温めてきた夢や目標が動き出す時期に入ります。新しいプロジェクト、キャリアの転機、人間関係の発展──どの分野でも前進の風が吹いています。${moon.ja}の月の影響で、感情面でも成熟が進み、情熱だけでなく思いやりを兼ね備えた魅力的な人へと成長していきます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーがあなたの活躍の舞台を広げ、より多くの人があなたの魅力に気づくでしょう。この大切な時期を最大限に活かすために、カーネリアンやガーネットなど${ELEMENT_JA[sun.element]}の石を常に身につけておくことをおすすめします。石があなたの情熱を安定させ、ブレない軸を保ちながら飛躍する力を与えてくれます。あなたの未来は明るく照らされています。自分を信じて、一歩を踏み出してください。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}の星の動きが、${sun.ja}のあなたに人生の大きな転機を予告しています。これまでの努力、勇気ある決断、諦めなかった日々──そのすべてが実を結ぶ時が近づいています。${ELEMENT_JA[sun.element]}のエネルギーが最も輝く季節に、あなたの才能が周囲に認められるチャンスが訪れます。${moon.ja}の月の流れが直感をますます鋭くし、「これだ」と感じる瞬間が増えていくでしょう。その直感を信じてください。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが新しい出会いを引き寄せ、人生を共に歩む仲間や支援者との縁が生まれます。ルビーやサンストーンは、この転機を力強く乗り越えるためのお守りとなります。石の持つ勇気と自信のエネルギーが、あなたを次のステージへと導いてくれるでしょう。未来は、あなたが思っている以上に素晴らしいものが待っています。`,
+    (sun, moon, asc) => `${sun.ja}のあなたの人生のステージが、大きく変わろうとしています。${RULER_JA[sun.ruler]}の星の流れが新しい${ELEMENT_JA[sun.element]}のエネルギーを点火し、今いる場所から飛躍するタイミングが近づいています。変化は時に不安を伴いますが、それは成長の証。古い殻を破って新しい自分に生まれ変わるプロセスです。${moon.ja}の月が内面の変容を優しくサポートし、${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが外側の環境にも良い変化をもたらします。仕事、住まい、人間関係──あなたを取り巻くすべてが、より「あなたらしい」形に再構成されていきます。この変化の時期にシトリンやカーネリアンを身につけることで、心の安定を保ちながら前に進む力が得られます。石はあなたの魂の錨となり、どんな波にも揺るがない自信を与えてくれるでしょう。変化を恐れず、ワクワクする気持ちで未来を迎えてください。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}の力が高まるこれからの季節、${sun.ja}のあなたの内なる${ELEMENT_JA[sun.element]}は新しい使命に向けて燃え上がります。不要な執着や古い習慣を手放し、本当に大切なものだけが残る清々しい時期が訪れます。${moon.ja}の月が感情面の浄化を促し、過去のモヤモヤがすっきりと晴れていく感覚を味わえるでしょう。そこから見えてくるのは、あなたが本当に進みたい道です。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが複数の選択肢を示してくれますが、心が最もワクワクする道を選んでください。それがあなたにとって最善の道です。ガーネットやレッドジャスパーは、この浄化と再出発のプロセスを力強くサポートしてくれます。定期的に石を朝日に当てて浄化し、新しい意図を込めることで、石との絆がさらに深まります。あなたの炎は、これからますます美しく燃え上がっていきます。`,
+  ],
+  earth: [
+    (sun, moon, asc) => `${sun.ja}のあなたに、${RULER_JA[sun.ruler]}の星の流れが実りの季節を告げています。${ELEMENT_JA[sun.element]}のエネルギーに守られたあなたがコツコツと積み上げてきた努力が、目に見える成果として花開く時が近づいています。これまで理解されなかった日々、成果が見えずに不安だった夜──そのすべてが報われます。${moon.ja}の月が内面の成熟をもたらし、成功を正しく受け止める器の大きさを与えてくれます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが社会的な信頼をさらに高め、あなたの名前がより広い世界に届くようになるでしょう。この実りの季節を最大限に活かすために、タイガーアイやジェイドを常に身につけることをおすすめします。繁栄と安定のエネルギーを持つこれらの石が、あなたの着実な歩みを力強く支えてくれます。あなたの努力は、必ず報われます。その日は、もうすぐそこです。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}が守護する分野で、${sun.ja}のあなたの才能が大きく開花する時期が近づいています。忍耐を持って築き上げてきたものが、確かな成果として結実します。${ELEMENT_JA[sun.element]}の堅実さが生む信頼は、お金では買えない最大の財産です。${moon.ja}の月の流れが人間関係に深い絆をもたらし、あなたの誠実さに惹かれる人がさらに増えていきます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが新しい責任やポジションを引き寄せますが、それは重荷ではなく、あなたの価値が認められた証です。エメラルドやマラカイトは、成長と繁栄のエネルギーであなたの前進を後押しします。石を身につけることで、チャンスを逃さない鋭い感覚と、それを確実にものにする行動力が高まるでしょう。あなたが築くものは、長く確かに残ります。`,
+    (sun, moon, asc) => `${sun.ja}のあなたの影響力が、これからの季節にさらに大きく広がっていきます。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}の星の配置が、あなたの「人を支える力」を最大限に引き出します。仕事でも家庭でも、あなたを頼りにする人が増え、より大きな舞台で活躍するチャンスが巡ってきます。${moon.ja}の月が感情に安定と柔軟性を同時に与え、大きな決断でも自信を持って選択できるようになります。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが金運も上昇させ、正当な報酬があなたのもとに届きます。スモーキークォーツやオニキスは、プレッシャーから心を守り、落ち着いた判断力を維持する助けになります。住まいの中に石を置くことで、空間全体に安定と繁栄のエネルギーが満ち、家族全体の運気も上がるでしょう。あなたの誠実さこそが、最も価値ある財産です。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}の恵みにより、${sun.ja}のあなたの努力が確実に報われる季節が到来します。${ELEMENT_JA[sun.element]}のエネルギーが「静かな革命」を起こします。表面的には穏やかな日常でも、あなたの内側では大きな変容が進んでいます。これまでの忍耐と誠実さが、ダイヤモンドのように輝く価値に変わっていく過程です。${moon.ja}の月の導きが、何を手放し何を大切にすべきかを教えてくれます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが現実を加速させ、住まい、仕事、人間関係がより「あなたらしい」形に整っていきます。タイガーアイやジェイドを日常的に身につけることで、豊かさのエネルギーが持続的にあなたを包みます。時々、石を自然の中に連れ出して大地のエネルギーで浄化してあげてください。あなたの一歩一歩が、確かな未来の礎になっています。`,
+  ],
+  air: [
+    (sun, moon, asc) => `${sun.ja}のあなたに、${RULER_JA[sun.ruler]}の星の流れが知性と表現力の覚醒を告げています。これからの季節、あなたの${ELEMENT_JA[sun.element]}のエネルギーが世界を大きく広げます。新しい知識、新しい人脈、新しい可能性──それらが次々とあなたのもとに舞い込んできます。${moon.ja}の月がインスピレーションを活性化し、アイデアが実現可能なビジョンとして結晶していきます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが社会的なネットワークを拡大し、思いがけない場所から素晴らしい縁がつながるでしょう。この知的覚醒の波を最大限に活かすために、アクアマリンやラピスラズリを身につけることをおすすめします。思考をクリアに保ち、アイデアを的確に表現する力を高めてくれます。あなたの言葉と知恵が、多くの人に良い影響を与えるこれからの日々。その翼を大きく広げてください。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}の知性のエネルギーが頂点に達するこれからの季節、${sun.ja}のあなたのアイデアが大きな力を持ちます。${ELEMENT_JA[sun.element]}のエネルギーが蓄積してきた知識と経験を一気に開花させ、周囲を驚かせるような成果を生み出すチャンスです。${moon.ja}の月が知性に温かみと深みを加え、「頭がいいだけの人」ではなく「心のある知恵者」としてのあなたの魅力を引き出します。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが表現力を強化し、執筆、プレゼン、教育など、知性を活かす舞台が広がります。フローライトやブルートパーズは、集中力を高めながらも柔軟な発想を保つ助けになります。学びの場に石を持ち込むと、吸収力がぐんと上がるのを実感できるでしょう。あなたの知恵が世に放たれる時が来ています。`,
+    (sun, moon, asc) => `${sun.ja}のあなたの言葉が、これからの季節にさらに大きな影響力を持つようになります。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}の星の配置が、あなたのコミュニケーション能力を最大限に引き上げます。大切な人との関係が深まり、新しい出会いにも恵まれる時期です。${moon.ja}の月が直感を研ぎ澄まし、「いつ話すべきか、いつ聴くべきか」のタイミングが自然とわかるようになります。${asc.ja}の${ELEMENT_JA[asc.element]}のバランスが、出会いを長く続く絆に育てる力を与えてくれます。ブルーレースアゲートやアパタイトは、人との繋がりを深め、コミュニケーションに調和をもたらす石です。身につけることで、あなたの言葉がより多くの人の心に届くようになるでしょう。思いがけない場所での出会いが、人生を大きく動かすかもしれません。心を開いて、その風を受け止めてください。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}が知性の風を送るこれからの季節、${sun.ja}のあなたの思考力と直感力が新たな高みに達します。${ELEMENT_JA[sun.element]}のエネルギーが論理と感性を見事に融合させ、今まで解けなかった問題への答えが見えてくるでしょう。${moon.ja}の月が感情に深みを与え、知性だけでは冷たくなりがちな判断に人間的な温かさを加えます。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーがアイデアを現実のプロジェクトや作品として形にする後押しをします。ラピスラズリやフローライトは、思考をクリアに保ちながら高い集中力を維持する助けになります。瞑想の前に石を手に持つと、驚くほど深い洞察が得られることも。あなたの思考と言葉が未来を形作る力を持っています。その知恵を大いに活かし、あなたらしい道を切り拓いていってください。`,
+  ],
+  water: [
+    (sun, moon, asc) => `${sun.ja}のあなたに、${RULER_JA[sun.ruler]}の星の流れが深い内面の覚醒を告げています。これからの季節、あなたの${ELEMENT_JA[sun.element]}のエネルギーが感受性と直感力をさらに高め、今まで気づかなかった自分の才能や可能性に出会えるでしょう。${moon.ja}の月が感情の浄化を促し、心の中にあった古い重荷がすっと軽くなる体験があるかもしれません。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが外的な環境にも良い変化をもたらし、内面の成長と連動して人間関係や仕事の状況も好転していきます。癒しの才能がより具体的な形で発揮される機会も増えるでしょう。ムーンストーンやアメジストは、この覚醒のプロセスを優しくサポートし、感受性を守りながら内面の成長を促してくれます。満月の夜に石を月光浴させると、エネルギーがリセットされて一層澄んだ直感が得られます。あなたの中に眠る力が、静かに、でも確実に目覚めています。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}の深いエネルギーが増すこれからの時期、${sun.ja}のあなたの直感力がさらに冴え渡ります。${ELEMENT_JA[sun.element]}のエネルギーが感情面の大きな浄化を促し、心の中にあったモヤモヤや古い痛みが自然と癒されていく季節です。一時的に感情が揺れることがあるかもしれませんが、それは嵐の後の晴天への過程。${moon.ja}の月がその浄化を穏やかにサポートし、心が澄み切った後には驚くほどクリアな視界が広がります。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが内面の変化を外の世界にも反映させ、人間関係がより本質的で深いものに整っていきます。ラリマーやラブラドライトは、感情の波を穏やかに整え、変容の時期を安心して過ごすための心強い味方です。石を身につけることで、不安が和らぎ、変化を楽しむ余裕が生まれるでしょう。`,
+    (sun, moon, asc) => `${sun.ja}のあなたの癒しの力が、これからの季節にさらに大きく花開いていきます。${RULER_JA[sun.ruler]}と${ELEMENT_JA[sun.element]}の星の配置が、あなたの共感力と優しさを新たな高みへと引き上げます。古い自分を手放し、より本質的な自分に生まれ変わるプロセスが始まっています。${moon.ja}の月の満ち欠けに合わせて、手放しと受容のリズムが自然と整っていくでしょう。${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが仕事や社会的な立場にも良い変化をもたらし、あなたの才能がより活かせる環境へと導かれます。パールやセレナイトは、変容の時期にあなたの心を優しく守り、新しい自分との出会いをサポートしてくれます。水のように柔軟であることは、水のように強いこと。石のエネルギーとともに、自分らしい輝きを信じて前に進んでください。`,
+    (sun, moon, asc) => `${RULER_JA[sun.ruler]}が感情の深層に光を当てるこれからの季節、${sun.ja}のあなたの中に眠る癒しの力が完全に目覚めます。${ELEMENT_JA[sun.element]}のエネルギーが最も深く働くこの時期、あなたの存在そのものが周囲の人に安らぎと癒しを与えるようになります。笑顔一つ、何気ない一言が、誰かの心を大きく救うことがあるでしょう。${moon.ja}の月が「自分はなぜここにいるのか」という問いへの答えをますます鮮明にし、${asc.ja}の${ELEMENT_JA[asc.element]}のエネルギーが日常の中に具体的な使命の道筋を示してくれます。アメジストやムーンストーンは、あなたの豊かな感性を守りながら、癒しの力を安定して発揮する助けになります。塩水で石を清め、月の光の下で一晩休ませると、石のエネルギーが深くリセットされます。あなたは既に正しい流れの中にいます。自分を信じて、その優しい力で世界を照らしてください。`,
+  ],
+};
+
+function generateReadings(sunSign, moonSign, asc) {
+  const el = sunSign.element;
+
+  // Select template based on combination hash for variety
+  const hash = (sunSign.id.length + moonSign.id.length * 3 + asc.id.length * 7) % 4;
+  const hash2 = (sunSign.id.length * 2 + moonSign.id.length + asc.id.length * 5) % 4;
+  const hash3 = (sunSign.id.length * 5 + moonSign.id.length * 7 + asc.id.length) % 4;
+
+  return {
+    lifetime: LIFETIME_TEMPLATES[el][hash](sunSign, moonSign, asc),
+    today:    TODAY_TEMPLATES[el][hash2](sunSign, moonSign, asc),
+    future:   FUTURE_TEMPLATES[el][hash3](sunSign, moonSign, asc),
+  };
+}
+
+// ---------- 10c. Bracelet Pattern Generation ----------
+
+let horoscopePatterns = [];
+
+function generateHoroscopePatterns(sunSign, moonSign, asc) {
+  const count = state.beadCount || 20;
+  const sunStones = ZODIAC_STONES[sunSign.id];
+  const moonStones = ZODIAC_STONES[moonSign.id];
+  const ascStones = ZODIAC_STONES[asc.id];
+
+  // Validate stone exists in STONES array; fallback to crystal if not found
+  function validStone(id) {
+    return STONES.find(s => s.id === id) ? id : 'crystal';
+  }
+
+  // --- Pattern 1: Destiny Stone (Sun Sign dominant) ---
+  // 60% main, 25% support, 15% accent
+  const p1Main   = Math.round(count * 0.60);
+  const p1Sup    = Math.round(count * 0.25);
+  const p1Acc    = count - p1Main - p1Sup;
+  const p1Stones = [];
+
+  const p1MainId = validStone(sunStones.main);
+  const p1SupId  = validStone(sunStones.support);
+  const p1AccId  = validStone(sunStones.accent);
+
+  // Interleave stones in a pleasing pattern
+  for (let i = 0; i < count; i++) {
+    const pos = i / count;
+    if (pos < 0.60) {
+      // Alternate main and support in the main section
+      if (i % 4 === 3 && p1Stones.filter(s => s === p1SupId).length < p1Sup) {
+        p1Stones.push(p1SupId);
+      } else {
+        p1Stones.push(p1MainId);
+      }
+    } else if (pos < 0.85) {
+      p1Stones.push(p1SupId);
+    } else {
+      p1Stones.push(p1AccId);
+    }
+  }
+  // Adjust counts to exact ratios
+  const p1Adjusted = distributeStones(count, [
+    {id: p1MainId, ratio: 0.60},
+    {id: p1SupId,  ratio: 0.25},
+    {id: p1AccId,  ratio: 0.15},
+  ]);
+
+  // --- Pattern 2: Guardian Stone (Moon + ASC dominant) ---
+  // 40% moon main, 30% asc healing, 30% moon support
+  const p2MainId    = validStone(moonStones.main);
+  const p2HealingId = validStone(ascStones.healing);
+  const p2SupId     = validStone(moonStones.support);
+
+  const p2Adjusted = distributeStones(count, [
+    {id: p2MainId,    ratio: 0.40},
+    {id: p2HealingId, ratio: 0.30},
+    {id: p2SupId,     ratio: 0.30},
+  ]);
+
+  // --- Pattern 3: Future Stone (Balanced mix of all three signs) ---
+  const allSignStones = [sunStones, moonStones, ascStones];
+  const elementAccents = ELEMENT_STONES[sunSign.element] || ELEMENT_STONES.fire;
+
+  // Pick unique stones from all three signs
+  const futureStoneSet = [
+    validStone(sunStones.main),
+    validStone(moonStones.main),
+    validStone(ascStones.main),
+    validStone(sunStones.support),
+    validStone(moonStones.healing),
+  ];
+  // Add element accent if different from existing
+  const accentCandidate = elementAccents.find(s => !futureStoneSet.includes(s) && STONES.find(st => st.id === s));
+  if (accentCandidate) {
+    futureStoneSet.push(accentCandidate);
+  }
+
+  // Distribute evenly with slight emphasis on sun main
+  const uniqueFuture = [...new Set(futureStoneSet)];
+  const p3Adjusted = [];
+  const sunMainCount = Math.round(count * 0.25);
+  const remaining = count - sunMainCount;
+  const othersCount = uniqueFuture.length - 1;
+  const perOther = othersCount > 0 ? Math.floor(remaining / othersCount) : 0;
+  let leftover = remaining - perOther * othersCount;
+
+  for (let i = 0; i < count; i++) {
+    p3Adjusted.push(uniqueFuture[0]); // placeholder
+  }
+  // Build properly
+  const p3Built = [];
+  p3Built.push(...Array(sunMainCount).fill(uniqueFuture[0]));
+  for (let i = 1; i < uniqueFuture.length; i++) {
+    const c = perOther + (leftover > 0 ? 1 : 0);
+    if (leftover > 0) leftover--;
+    p3Built.push(...Array(c).fill(uniqueFuture[i]));
+  }
+  // Trim or pad to exact count
+  while (p3Built.length < count) p3Built.push(uniqueFuture[0]);
+  while (p3Built.length > count) p3Built.pop();
+
+  // Shuffle pattern 3 for a more organic look
+  const p3Shuffled = interleavePattern(p3Built);
+
+  horoscopePatterns = [
+    {
+      name: '運命の石 ── Destiny Stone',
+      desc: `${sunSign.ja}（太陽星座）が導く運命の組み合わせ`,
+      stones: interleavePattern(p1Adjusted),
+      icon: '☉'
+    },
+    {
+      name: '守護の石 ── Guardian Stone',
+      desc: `${moonSign.ja}（月星座）と${asc.ja}（ASC）が守る癒しの組み合わせ`,
+      stones: interleavePattern(p2Adjusted),
+      icon: '☽'
+    },
+    {
+      name: '未来の石 ── Future Stone',
+      desc: `${ELEMENT_JA[sunSign.element]}・${ELEMENT_JA[moonSign.element]}・${ELEMENT_JA[asc.element]}のエレメントバランスで紡ぐ未来への組み合わせ`,
+      stones: p3Shuffled,
+      icon: '✦'
+    }
+  ];
+
+  return horoscopePatterns;
+}
+
+// Helper: distribute stones by ratio, returning flat array
+function distributeStones(count, specs) {
+  const result = [];
+  let remaining = count;
+
+  for (let i = 0; i < specs.length; i++) {
+    const isLast = i === specs.length - 1;
+    const c = isLast ? remaining : Math.round(count * specs[i].ratio);
+    for (let j = 0; j < c; j++) result.push(specs[i].id);
+    remaining -= c;
+  }
+
+  return result;
+}
+
+// Helper: interleave stones for a visually pleasing pattern
+function interleavePattern(stones) {
+  // Count occurrences
+  const counts = {};
+  stones.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
+
+  // Sort by count descending
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const total = stones.length;
+  const result = new Array(total).fill(null);
+
+  // Place each stone type as evenly as possible
+  for (const [stoneId, stoneCount] of sorted) {
+    const interval = total / stoneCount;
+    let placed = 0;
+    let pos = sorted.indexOf(sorted.find(s => s[0] === stoneId)) * 0.5; // Offset each type slightly
+
+    while (placed < stoneCount) {
+      let idx = Math.round(pos) % total;
+      // Find nearest empty slot
+      let tries = 0;
+      while (result[idx] !== null && tries < total) {
+        idx = (idx + 1) % total;
+        tries++;
+      }
+      if (result[idx] === null) {
+        result[idx] = stoneId;
+        placed++;
+      }
+      pos += interval;
+    }
+  }
+
+  // Fill any remaining nulls (shouldn't happen but safety)
+  for (let i = 0; i < result.length; i++) {
+    if (result[i] === null) result[i] = stones[0];
+  }
+
+  return result;
+}
+
+// ---------- 10. UI Rendering Functions ----------
+
+function renderHoroscopeResults(sunSign, moonSign, asc, chartData) {
+  // Generate data
+  const readings = generateReadings(sunSign, moonSign, asc);
+  const patterns = generateHoroscopePatterns(sunSign, moonSign, asc);
+
+  // a) Kundali Chart
+  if (chartData) {
+    renderKundaliChart(chartData);
+    renderPlanetTable(chartData);
+  }
+
+  // b) Zodiac Badges (updated to Vedic terms)
+  const badgesContainer = document.getElementById('zodiac-badges');
+  if (badgesContainer) {
+    badgesContainer.innerHTML = [
+      {label: '太陽のラーシ ☉', sign: sunSign},
+      {label: '月のラーシ ☽', sign: moonSign},
+      {label: 'ラグナ ↑', sign: asc},
+    ].map(b => `
+      <div class="horoscope-sign-badge">
+        <div class="sign-label">${b.label}</div>
+        <div class="sign-symbol">${b.sign.symbol}</div>
+        <div class="sign-name">${b.sign.ja}</div>
+        <div class="sign-element">${ELEMENT_JA[b.sign.element]}のエレメント</div>
+      </div>
+    `).join('');
+  }
+
+  // c) Readings
+  const readingMap = {
+    'reading-lifetime': {title: '✧ あなたの生涯の運命 ✧', text: readings.lifetime},
+    'reading-today':    {title: '✧ 今日のエネルギー ✧', text: readings.today},
+    'reading-future':   {title: '✧ 未来への予言 ✧', text: readings.future},
+  };
+
+  Object.entries(readingMap).forEach(([id, data]) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.innerHTML = `
+        <div class="horoscope-reading-title">${data.title}</div>
+        <div class="horoscope-reading-text">${data.text}</div>
+      `;
+    }
+  });
+
+  // d) Recommended Patterns
+  const stonesContainer = document.getElementById('horoscope-stones');
+  if (stonesContainer) {
+    stonesContainer.innerHTML = `
+      <div class="horoscope-reading-title">✧ 運命が導くブレスレット ✧</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1rem">
+        ${patterns.map((pat, i) => {
+          const uniqueIds = [...new Set(pat.stones)].slice(0, 8);
+          const miniStones = uniqueIds.map(sid => {
+            const st = STONES.find(s => s.id === sid);
+            if (!st) return '';
+            return `<div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,${st.grad[0]},${st.grad[1]});display:inline-block;margin:2px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 1px 3px rgba(0,0,0,0.3)" title="${st.ja}"></div>`;
+          }).join('');
+
+          return `
+            <div class="horoscope-pattern-card" data-pattern-idx="${i}">
+              <div class="pattern-icon">${pat.icon}</div>
+              <div class="pattern-title">${pat.name}</div>
+              <div class="pattern-desc">${pat.desc}</div>
+              <div class="pattern-stones" style="margin:0.5rem 0;min-height:30px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center">
+                ${miniStones}
+              </div>
+              <button class="pattern-btn" data-idx="${i}">このパターンを適用</button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    // e) Apply Pattern Event
+    stonesContainer.querySelectorAll('.pattern-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = parseInt(this.getAttribute('data-idx'));
+        const pattern = horoscopePatterns[idx];
+        if (!pattern) return;
+
+        const targetCount = state.beadCount || state.slots.length;
+        for (let i = 0; i < targetCount; i++) {
+          const stoneId = pattern.stones[i % pattern.stones.length];
+          if (stoneId && STONES.find(s => s.id === stoneId)) {
+            state.slots[i] = stoneId;
+          }
+        }
+
+        if (typeof renderBracelet === 'function') renderBracelet();
+        if (typeof updateOrderSummary === 'function') updateOrderSummary();
+        if (typeof showToast === 'function') {
+          showToast(`${pattern.icon} ${pattern.name} を適用しました`);
+        }
+
+        stonesContainer.querySelectorAll('.horoscope-pattern-card').forEach(card => {
+          card.style.borderColor = '';
+          card.style.boxShadow = '';
+        });
+        const card = this.closest('.horoscope-pattern-card');
+        if (card) {
+          card.style.borderColor = 'rgba(90,164,217,.5)';
+          card.style.boxShadow = '0 0 20px rgba(90,164,217,.3)';
+        }
+
+        const braceletEl = document.getElementById('bracelet-wrapper');
+        if (braceletEl) {
+          braceletEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+      });
+    });
+  }
+}
+
+// ---------- 11. Initialization ----------
+
+function initHoroscope() {
+  const horoscopeBtn = document.getElementById('horoscope-btn');
+  if (!horoscopeBtn) return;
+
+  horoscopeBtn.addEventListener('click', function() {
+    const dateInput = document.getElementById('horoscope-date');
+    const timeInput = document.getElementById('horoscope-time');
+    const placeInput = document.getElementById('horoscope-place');
+
+    if (!dateInput || !dateInput.value) {
+      if (typeof showToast === 'function') showToast('生年月日を入力してください');
+      return;
+    }
+
+    // Parse date
+    const dateParts = dateInput.value.split('-');
+    const year  = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]);
+    const day   = parseInt(dateParts[2]);
+
+    // Parse time (default 12:00 if not provided)
+    let hour = 12;
+    let minute = 0;
+    if (timeInput && timeInput.value) {
+      const timeParts = timeInput.value.split(':');
+      hour = parseInt(timeParts[0]);
+      minute = parseInt(timeParts[1] || 0);
+    }
+
+    // Parse latitude and longitude from prefecture select
+    let latitude = 35.68;
+    let longitude = 139.69;
+    if (placeInput && placeInput.value) {
+      const parts = placeInput.value.split(',');
+      latitude = parseFloat(parts[0]) || 35.68;
+      longitude = parseFloat(parts[1]) || 139.69;
+    }
+
+    // Compute full Vedic chart
+    const chartData = computeVedicChart(year, month, day, hour, minute, latitude, longitude);
+
+    // Get sign objects for readings/patterns (compatibility with templates)
+    const sunSign  = getSignFromRashi(chartData.rashis.sun);
+    const moonSign = getSignFromRashi(chartData.rashis.moon);
+    const ascSign  = getSignFromRashi(chartData.ascRashi);
+
+    // Render results with chart data
+    renderHoroscopeResults(sunSign, moonSign, ascSign, chartData);
+
+    // Show results section
+    const resultsSection = document.getElementById('horoscope-results');
+    if (resultsSection) {
+      resultsSection.classList.add('show');
+      setTimeout(() => {
+        resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }, 100);
+    }
+
+    // Show mystical toast
+    if (typeof showToast === 'function') {
+      const toasts = [
+        `${sunSign.symbol} ジョーティシュの叡智が開かれました`,
+        `${sunSign.symbol} ナクシャトラがあなたの運命を照らします`,
+        `${sunSign.symbol} ヴェーダの星辰が紐解かれました`,
+        `${sunSign.symbol} グラハの配置があなたに語りかけています`,
+      ];
+      showToast(toasts[Math.floor(Math.random() * toasts.length)]);
+    }
+  });
+}
+
+/* END HOROSCOPE SYSTEM */
+
+/* ============================================================
+   INITIALIZE
+   ============================================================ */
+function init() {
+  updateBeadCount();
+  state.slots = new Array(state.beadCount).fill(null);
+  state.selectedSlot = 0;
+  renderBracelet();
+  renderWishCategories();
+  renderColorCategories();
+  renderAllStones();
+  renderSavedDesigns();
+  updateOrderSummary();
+  initHoroscope();
+
+  /* Add floating star decorations */
+  const braceletSection = document.querySelector('.bracelet-section');
+  for (let i = 0; i < 8; i++) {
+    const star = document.createElement('div');
+    star.className = 'star-decoration';
+    star.style.top = (10 + Math.random() * 80) + '%';
+    star.style.left = (5 + Math.random() * 90) + '%';
+    star.style.animationDelay = (Math.random() * 3) + 's';
+    star.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    star.style.width = (3 + Math.random() * 5) + 'px';
+    star.style.height = star.style.width;
+    braceletSection.appendChild(star);
+  }
+}
+
+init();
+
+/* === 3D Scroll Observer === */
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+
+document.querySelectorAll('.panel, .sidebar .panel').forEach(el => {
+  el.classList.add('scroll-reveal');
+  scrollObserver.observe(el);
+});
+
+/* Stone card stagger animation */
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const cards = entry.target.querySelectorAll('.stone-card');
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('card-visible'), i * 60);
+      });
+    }
+  });
+}, {threshold: 0.05});
+
+document.querySelectorAll('.stone-grid').forEach(g => cardObserver.observe(g));
+
+/* Header shrink on scroll */
+window.addEventListener('scroll', () => {
+  document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
+}, {passive: true});
+
+/* === Parallax Cloud & Mirror Water System === */
+(function(){
+  const scene = document.getElementById('cloud-scene');
+  if(!scene) return;
+
+  const HORIZON = 0.46;
+
+  /* 12 clouds across 3 depth layers */
+  const C = [
+    /* Far — slow, soft, dreamy */
+    {x:3,y:8,w:280,h:55,b:[[80,-22,35],[160,-30,45],[-35,-14,28],[220,-18,30]],s:.18,bl:5,o:.45,d:.3},
+    {x:50,y:5,w:240,h:45,b:[[60,-20,30],[140,-26,38],[200,-15,25]],s:.15,bl:6,o:.4,d:-.25},
+    {x:78,y:15,w:200,h:38,b:[[50,-16,24],[110,-22,32],[-25,-12,20]],s:.16,bl:6,o:.38,d:.2},
+    {x:30,y:3,w:320,h:50,b:[[90,-25,38],[180,-32,48],[40,-15,25],[260,-20,32]],s:.14,bl:7,o:.35,d:-.18},
+    /* Mid — moderate speed & detail */
+    {x:15,y:20,w:300,h:60,b:[[85,-28,38],[180,-35,50],[35,-16,30],[-30,-12,24],[250,-20,28]],s:.35,bl:3,o:.6,d:.45},
+    {x:60,y:28,w:250,h:50,b:[[70,-22,32],[150,-28,42],[210,-15,24]],s:.32,bl:3,o:.55,d:-.4},
+    {x:-8,y:32,w:230,h:45,b:[[55,-20,28],[130,-25,36],[180,-14,22],[-20,-10,18]],s:.3,bl:4,o:.5,d:.35},
+    {x:42,y:25,w:200,h:42,b:[[50,-18,26],[120,-24,34]],s:.33,bl:3,o:.52,d:-.3},
+    /* Near — fast, crisp, dramatic */
+    {x:22,y:12,w:360,h:70,b:[[100,-32,45],[210,-40,55],[55,-20,32],[290,-18,30],[-30,-15,25]],s:.55,bl:1,o:.72,d:.6},
+    {x:70,y:36,w:280,h:55,b:[[75,-25,35],[165,-32,45],[240,-18,28],[15,-14,22]],s:.5,bl:2,o:.65,d:-.55},
+    {x:-3,y:40,w:220,h:44,b:[[60,-20,28],[130,-26,36],[180,-14,22]],s:.48,bl:2,o:.58,d:.5},
+    {x:88,y:8,w:260,h:48,b:[[70,-22,30],[150,-28,40],[-20,-12,22],[210,-16,26]],s:.52,bl:2,o:.6,d:-.45},
+  ];
+
+  const items = [];
+  let scrollY = 0, targetScrollY = 0, time = 0;
+
+  C.forEach(c => {
+    const skyPct = c.y * HORIZON;
+    /* Sky cloud */
+    const sky = document.createElement('div');
+    sky.className = 'pcloud pcloud-sky';
+    sky.style.cssText = `left:${c.x}%;top:${skyPct}%;width:${c.w}px;height:${c.h}px;opacity:${c.o};filter:blur(${c.bl}px)`;
+    sky.style.boxShadow = c.b.map(([dx,dy,sz])=>`${dx}px ${dy}px 0 ${sz}px rgba(255,255,255,${c.o*.85})`).join(',')+`,inset 0 -4px 14px rgba(200,230,255,.25),0 0 35px rgba(255,255,255,.25)`;
+    scene.appendChild(sky);
+
+    /* Mirror reflection — high fidelity */
+    const ref = document.createElement('div');
+    ref.className = 'pcloud pcloud-ref';
+    const refPct = HORIZON*100+(HORIZON*100-skyPct);
+    ref.style.cssText = `left:${c.x}%;top:${refPct}%;width:${c.w}px;height:${c.h*.7}px;opacity:${c.o*.45};filter:blur(${c.bl+3}px)`;
+    ref.style.boxShadow = c.b.map(([dx,dy,sz])=>`${dx}px ${Math.abs(dy)*.5}px 0 ${sz*.6}px rgba(210,235,250,${c.o*.3})`).join(',');
+    scene.appendChild(ref);
+
+    items.push({sky,ref,s:c.s,d:c.d,cx:0,cy:0,ry:0});
+  });
+
+  /* Water sparkles */
+  const waterEl = document.querySelector('.water-surface');
+  if(waterEl){
+    for(let i=0;i<30;i++){
+      const sp = document.createElement('div');
+      sp.className = 'water-sparkle';
+      sp.style.cssText = `left:${5+Math.random()*90}%;top:${5+Math.random()*85}%;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;--dur:${1.5+Math.random()*4}s;--delay:${Math.random()*6}s`;
+      waterEl.appendChild(sp);
+    }
+  }
+
+  /* Smooth lerp animation loop — buttery 60fps */
+  function lerp(a,b,t){return a+(b-a)*t}
+  window.addEventListener('scroll',()=>{targetScrollY=window.scrollY},{passive:true});
+
+  (function tick(){
+    time += 0.016;
+    scrollY = lerp(scrollY, targetScrollY, 0.06);
+
+    items.forEach(it => {
+      const yOff = scrollY * it.s;
+      const driftX = Math.sin(time * it.d * 0.4) * 50 * Math.abs(it.d);
+      const driftY = Math.cos(time * it.d * 0.25) * 10;
+      const rotZ = Math.sin(time * it.d * 0.15) * 2;
+
+      it.cx = lerp(it.cx, driftX, 0.025);
+      it.cy = lerp(it.cy, -yOff + driftY, 0.06);
+      it.ry = lerp(it.ry, yOff * 0.5, 0.04);
+
+      it.sky.style.transform = `translate3d(${it.cx}px,${it.cy}px,0) rotate(${rotZ}deg)`;
+      it.ref.style.transform = `translate3d(${it.cx}px,${it.ry}px,0) scaleY(-0.65) rotate(${-rotZ*.4}deg)`;
+    });
+    requestAnimationFrame(tick);
+  })();
+
+  /* Reflection shimmer */
+  setInterval(()=>{
+    items.forEach(({ref})=>{
+      const base = parseFloat(ref.dataset.bo || ref.style.opacity);
+      ref.style.transition = 'opacity 3s ease';
+      ref.style.opacity = (base*(0.7+Math.random()*0.6))+'';
+      setTimeout(()=>{ref.style.transition='opacity 3s ease';ref.style.opacity=base+''},3000);
+    });
+  },4500);
+  items.forEach(({ref})=>{ref.dataset.bo=ref.style.opacity});
+})();
+</script>
+</body>
+</html>
