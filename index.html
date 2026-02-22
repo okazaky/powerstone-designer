@@ -1048,6 +1048,32 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
 /* Scrollbar for modal */
 .order-modal::-webkit-scrollbar{width:4px}
 .order-modal::-webkit-scrollbar-thumb{background:rgba(90,164,217,.3);border-radius:2px}
+/* === Per-Slot Bead Size Picker === */
+.slot-size-picker{
+  position:absolute;z-index:150;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(90,164,217,.3);border-radius:var(--radius-sm);
+  padding:.4rem;display:flex;gap:.3rem;
+  box-shadow:0 4px 16px rgba(90,160,220,.15);
+  transform:translateX(-50%);
+  white-space:nowrap;
+}
+.slot-size-picker::after{
+  content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-bottom-color:rgba(255,255,255,.92);
+}
+.slot-size-picker .size-pick-btn{
+  padding:.3rem .5rem;border-radius:6px;
+  border:1px solid rgba(90,164,217,.2);background:rgba(255,255,255,.5);
+  font-family:inherit;font-size:.7rem;font-weight:500;color:var(--text);
+  cursor:pointer;transition:var(--transition);
+}
+.slot-size-picker .size-pick-btn:hover{
+  border-color:rgba(90,164,217,.5);color:var(--primary);background:rgba(90,164,217,.1);
+}
+.slot-size-picker .size-pick-btn.active{
+  border-color:rgba(90,164,217,.5);background:rgba(90,164,217,.2);color:var(--primary);font-weight:700;
+}
 </style>
 </head>
 <body>
@@ -1125,12 +1151,11 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
 </div>
 </div>
 <div class="size-group">
-<label>玉のサイズ</label>
+<label>デフォルト玉サイズ</label>
 <div class="size-options" id="bead-sizes" role="radiogroup" aria-label="玉のサイズ">
 <button class="size-option" data-bead="6" role="radio" aria-checked="false">6mm</button>
 <button class="size-option active" data-bead="8" role="radio" aria-checked="true">8mm</button>
 <button class="size-option" data-bead="10" role="radio" aria-checked="false">10mm</button>
-<button class="size-option" data-bead="12" role="radio" aria-checked="false">12mm</button>
 </div>
 </div>
 </div>
@@ -1393,7 +1418,14 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
 <!-- Context Menu -->
 <div class="context-menu" id="context-menu">
 <button class="context-menu-item" id="ctx-change">石を変更</button>
+<button class="context-menu-item" id="ctx-size">玉サイズを変更</button>
 <button class="context-menu-item danger" id="ctx-remove">石を取り除く</button>
+</div>
+<!-- Per-slot size picker (floating) -->
+<div class="slot-size-picker" id="slot-size-picker" style="display:none">
+<button class="size-pick-btn" data-pick-size="6">6mm</button>
+<button class="size-pick-btn" data-pick-size="8">8mm</button>
+<button class="size-pick-btn" data-pick-size="10">10mm</button>
 </div>
 <!-- Overlay -->
 <div class="overlay" id="overlay"></div>
@@ -1487,17 +1519,16 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
 <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="85" fill="none" stroke="#a0d4f0" stroke-width=".5"/><polygon points="100,20 140,75 185,100 140,125 100,180 60,125 15,100 60,75" fill="none" stroke="#a0d4f0" stroke-width=".4"/></svg>
 </div>
 <div class="footer-links">
-<a href="#">特定商取引法に基づく表記</a>
-<a href="#">プライバシーポリシー</a>
-<a href="#">配送について</a>
-<a href="#">返品・交換について</a>
-<a href="#">お問い合わせ</a>
+<a href="tokushoho.html">特定商取引法に基づく表記</a>
+<a href="privacy.html">プライバシーポリシー</a>
+<a href="shipping.html">配送について</a>
+<a href="returns.html">返品・交換について</a>
+<a href="contact.html">お問い合わせ</a>
 </div>
 <p>© 2026 Ordermade Power Stone All Rights Reserved.</p>
 <p>※ 天然石の色味は実物と若干異なる場合がございます。</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 /* ============================================================
    DATA - Stone Database
@@ -1711,6 +1742,7 @@ let state = {
   beadSize: 8,
   beadCount: 0,
   slots: [],
+  beadSizes: [],
   selectedSlot: -1,
   selectedStone: null,
   activeWish: 'love',
@@ -1724,13 +1756,64 @@ function calcBeadCount(circumference, beadDiameter) {
 }
 
 function updateBeadCount() {
-  state.beadCount = calcBeadCount(state.braceletSize, state.beadSize);
-  if (state.slots.length < state.beadCount) {
-    while (state.slots.length < state.beadCount) state.slots.push(null);
-  } else if (state.slots.length > state.beadCount) {
-    state.slots = state.slots.slice(0, state.beadCount);
+  const totalMm = state.braceletSize * 10;
+
+  if (state.beadSizes.length === 0) {
+    /* Initial: fill entirely with default bead size */
+    const count = Math.floor(totalMm / state.beadSize);
+    state.beadCount = count;
+    state.slots = new Array(count).fill(null);
+    state.beadSizes = new Array(count).fill(state.beadSize);
+  } else {
+    /* Recalculate with mixed sizes */
+    let usedMm = state.beadSizes.reduce((a, b) => a + b, 0);
+    /* Remove from end if total exceeds circumference */
+    while (usedMm > totalMm && state.beadSizes.length > 1) {
+      usedMm -= state.beadSizes[state.beadSizes.length - 1];
+      state.beadSizes.pop();
+      state.slots.pop();
+    }
+    /* Add default-sized beads if room remains */
+    while (usedMm + state.beadSize <= totalMm) {
+      state.beadSizes.push(state.beadSize);
+      state.slots.push(null);
+      usedMm += state.beadSize;
+    }
+    state.beadCount = state.beadSizes.length;
   }
   if (state.selectedSlot >= state.beadCount) state.selectedSlot = -1;
+}
+
+/* Change a single bead's size and recalculate layout */
+function changeBeadSize(slotIdx, newSize) {
+  if (slotIdx < 0 || slotIdx >= state.beadSizes.length) return;
+  const oldSize = state.beadSizes[slotIdx];
+  state.beadSizes[slotIdx] = newSize;
+
+  const totalMm = state.braceletSize * 10;
+  let usedMm = state.beadSizes.reduce((a, b) => a + b, 0);
+
+  /* Remove empty slots from end if over budget */
+  while (usedMm > totalMm && state.beadSizes.length > 1) {
+    const lastIdx = state.beadSizes.length - 1;
+    if (lastIdx === slotIdx) break; /* Don't remove the slot we just changed */
+    usedMm -= state.beadSizes[lastIdx];
+    state.beadSizes.pop();
+    state.slots.pop();
+  }
+
+  /* Add default-sized beads if room remains */
+  while (usedMm + state.beadSize <= totalMm) {
+    state.beadSizes.push(state.beadSize);
+    state.slots.push(null);
+    usedMm += state.beadSize;
+  }
+
+  state.beadCount = state.beadSizes.length;
+  if (state.selectedSlot >= state.beadCount) state.selectedSlot = -1;
+
+  renderBracelet();
+  updateOrderSummary();
 }
 
 /* ============================================================
@@ -1741,7 +1824,14 @@ function renderBracelet() {
   const cx = 180, cy = 180;
   const radius = 140;
   const n = state.beadCount;
-  const beadR = Math.min(28, Math.max(12, (2 * Math.PI * radius) / (n * 2.4)));
+
+  /* Calculate per-bead angular weight based on individual sizes */
+  const totalSizeMm = state.beadSizes.reduce((a, b) => a + b, 0) || 1;
+  const baseBeadR = Math.min(28, Math.max(12, (2 * Math.PI * radius) / (n * 2.4)));
+
+  /* Check if we have mixed sizes */
+  const hasMixedSizes = state.beadSizes.some(s => s !== state.beadSizes[0]);
+  const mixedLabel = hasMixedSizes ? 'ミックス' : `${state.beadSize}mm`;
 
   let html = '';
 
@@ -1752,18 +1842,33 @@ function renderBracelet() {
   html += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="#a0d4f0" stroke-width="1.8" opacity="0.6"/>`;
 
   /* Center text */
-  html += `<text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="13" fill="#998b80" font-family="'Noto Sans JP',sans-serif" font-weight="500">${state.braceletSize}cm / ${state.beadSize}mm</text>`;
+  html += `<text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="13" fill="#998b80" font-family="'Noto Sans JP',sans-serif" font-weight="500">${state.braceletSize}cm / ${mixedLabel}</text>`;
   html += `<text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="12" fill="#998b80" font-family="'Noto Sans JP',sans-serif">${state.beadCount}玉</text>`;
 
   const filledCount = state.slots.filter(s => s !== null).length;
   html += `<text x="${cx}" y="${cy + 28}" text-anchor="middle" font-size="11" fill="#c5a030" font-family="'Noto Sans JP',sans-serif" font-weight="700">${filledCount} / ${state.beadCount} 選択済</text>`;
 
+  /* Pre-compute angle per bead proportional to size */
+  const totalAngle = 2 * Math.PI;
+  const angles = [];
+  let cumAngle = -Math.PI / 2;
   for (let i = 0; i < n; i++) {
-    const angle = (2 * Math.PI * i / n) - Math.PI / 2;
+    const beadFraction = (state.beadSizes[i] || state.beadSize) / totalSizeMm;
+    const halfAngle = beadFraction * totalAngle / 2;
+    angles.push(cumAngle + halfAngle);
+    cumAngle += halfAngle * 2;
+  }
+
+  for (let i = 0; i < n; i++) {
+    const angle = angles[i];
     const x = cx + radius * Math.cos(angle);
     const y = cy + radius * Math.sin(angle);
     const stone = state.slots[i];
     const isSelected = (i === state.selectedSlot);
+    const slotSize = state.beadSizes[i] || state.beadSize;
+    /* Scale bead radius proportional to its size relative to default */
+    const sizeRatio = slotSize / state.beadSize;
+    const beadR = Math.max(8, Math.min(34, baseBeadR * sizeRatio));
 
     if (stone) {
       const stoneData = STONES.find(s => s.id === stone);
@@ -1780,6 +1885,11 @@ function renderBracelet() {
       html += `<circle cx="${x}" cy="${y}" r="${beadR}" fill="url(#${gradId})" stroke="rgba(0,0,0,0.15)" stroke-width="0.8"
         data-slot="${i}" class="bead-slot filled" style="cursor:pointer;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))"/>`;
 
+      /* Size label on bead if mixed sizes */
+      if (hasMixedSizes) {
+        html += `<text x="${x}" y="${y + 3}" text-anchor="middle" font-size="${Math.max(7, beadR * 0.5)}" fill="rgba(255,255,255,0.7)" font-weight="700" pointer-events="none">${slotSize}</text>`;
+      }
+
       /* Highlight shine */
       const shineX = x - beadR * 0.25;
       const shineY = y - beadR * 0.25;
@@ -1790,13 +1900,19 @@ function renderBracelet() {
       }
       html += `<circle cx="${x}" cy="${y}" r="${beadR}" fill="#f5f3ee" stroke="#7ec0ec" stroke-width="1.5" stroke-dasharray="3,3"
         data-slot="${i}" class="bead-slot empty" style="cursor:pointer"/>`;
+
+      /* Size label on empty bead if mixed sizes */
+      if (hasMixedSizes) {
+        html += `<text x="${x}" y="${y + 3}" text-anchor="middle" font-size="${Math.max(7, beadR * 0.45)}" fill="rgba(90,164,217,0.6)" font-weight="500" pointer-events="none">${slotSize}</text>`;
+      }
     }
   }
 
   svg.innerHTML = html;
 
   /* Update info */
-  document.getElementById('bracelet-info').textContent = `内周 ${state.braceletSize}cm ・ 玉サイズ ${state.beadSize}mm ・ ${state.beadCount}玉`;
+  const sizeInfo = hasMixedSizes ? `ミックスサイズ` : `玉サイズ ${state.beadSize}mm`;
+  document.getElementById('bracelet-info').textContent = `内周 ${state.braceletSize}cm ・ ${sizeInfo} ・ ${state.beadCount}玉`;
 
   bindSlotEvents();
   checkCompletion();
@@ -1931,9 +2047,66 @@ document.getElementById('ctx-remove').addEventListener('click', () => {
   showToast('石を取り除きました');
 });
 
+document.getElementById('ctx-size').addEventListener('click', () => {
+  hideContextMenu();
+  showSlotSizePicker(contextSlot);
+});
+
+/* --- Per-Slot Size Picker --- */
+function showSlotSizePicker(slotIdx) {
+  const picker = document.getElementById('slot-size-picker');
+  const wrapper = document.getElementById('bracelet-wrapper');
+  const svg = document.getElementById('bracelet-svg');
+  const slotEl = svg.querySelector(`[data-slot="${slotIdx}"]`);
+  if (!slotEl) return;
+
+  const wrapperRect = wrapper.getBoundingClientRect();
+  const svgRect = svg.getBoundingClientRect();
+  const cx = parseFloat(slotEl.getAttribute('cx'));
+  const cy = parseFloat(slotEl.getAttribute('cy'));
+
+  /* Map SVG coords to screen coords */
+  const scaleX = svgRect.width / 360;
+  const scaleY = svgRect.height / 360;
+  const screenX = svgRect.left + cx * scaleX - wrapperRect.left;
+  const screenY = svgRect.top + cy * scaleY - wrapperRect.top;
+
+  picker.style.display = 'flex';
+  picker.style.left = screenX + 'px';
+  picker.style.top = (screenY + 20) + 'px';
+  picker.dataset.slot = slotIdx;
+
+  /* Highlight current size */
+  const currentSize = state.beadSizes[slotIdx] || state.beadSize;
+  picker.querySelectorAll('.size-pick-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.pickSize) === currentSize);
+  });
+
+  wrapper.style.position = 'relative';
+  wrapper.appendChild(picker);
+}
+
+function hideSlotSizePicker() {
+  const picker = document.getElementById('slot-size-picker');
+  picker.style.display = 'none';
+}
+
+document.getElementById('slot-size-picker').addEventListener('click', (e) => {
+  const btn = e.target.closest('.size-pick-btn');
+  if (!btn) return;
+  const newSize = parseInt(btn.dataset.pickSize);
+  const slotIdx = parseInt(document.getElementById('slot-size-picker').dataset.slot);
+  changeBeadSize(slotIdx, newSize);
+  hideSlotSizePicker();
+  showToast(`位置${slotIdx + 1}を${newSize}mmに変更しました`);
+});
+
 document.addEventListener('click', (e) => {
   if (!document.getElementById('context-menu').contains(e.target)) {
     hideContextMenu();
+  }
+  if (!document.getElementById('slot-size-picker').contains(e.target)) {
+    hideSlotSizePicker();
   }
 });
 
@@ -1975,6 +2148,7 @@ document.getElementById('bracelet-sizes').addEventListener('click', (e) => {
   btn.classList.add('active');
   btn.setAttribute('aria-checked', 'true');
   state.braceletSize = parseInt(btn.dataset.size);
+  /* beadSizes kept as-is; updateBeadCount will trim/add beads as needed */
   updateBeadCount();
   renderBracelet();
   updateOrderSummary();
@@ -1990,6 +2164,8 @@ document.getElementById('bead-sizes').addEventListener('click', (e) => {
   btn.classList.add('active');
   btn.setAttribute('aria-checked', 'true');
   state.beadSize = parseInt(btn.dataset.bead);
+  /* Reset beadSizes to recalculate from scratch with new default */
+  state.beadSizes = [];
   updateBeadCount();
   renderBracelet();
   updateOrderSummary();
@@ -2138,7 +2314,9 @@ function updateOrderSummary() {
   const orderTotal = document.getElementById('order-total');
   const sizeInfo = document.getElementById('order-size-info');
 
-  sizeInfo.textContent = `サイズ: ${state.braceletSize}cm / 玉: ${state.beadSize}mm / ${state.beadCount}玉`;
+  const hasMixed = state.beadSizes.some(s => s !== state.beadSizes[0]);
+  const sizeLabel = hasMixed ? 'ミックス' : `${state.beadSize}mm`;
+  sizeInfo.textContent = `サイズ: ${state.braceletSize}cm / 玉: ${sizeLabel} / ${state.beadCount}玉`;
 
   const counts = {};
   state.slots.forEach(s => {
@@ -2180,6 +2358,7 @@ function updateOrderSummary() {
 /* Reset */
 function resetAll() {
   state.slots = new Array(state.beadCount).fill(null);
+  state.beadSizes = new Array(state.beadCount).fill(state.beadSize);
   state.selectedSlot = -1;
   state.lastFilledStone = null;
   renderBracelet();
@@ -2384,6 +2563,7 @@ function saveDesign() {
     braceletSize: state.braceletSize,
     beadSize: state.beadSize,
     slots: [...state.slots],
+    beadSizes: [...state.beadSizes],
   };
 
   designs.push(design);
@@ -2410,6 +2590,12 @@ function loadDesign(designId) {
     b.setAttribute('aria-checked', parseInt(b.dataset.bead) === state.beadSize ? 'true' : 'false');
   });
 
+  /* Restore beadSizes if saved, otherwise reset */
+  if (design.beadSizes && design.beadSizes.length > 0) {
+    state.beadSizes = [...design.beadSizes];
+  } else {
+    state.beadSizes = [];
+  }
   updateBeadCount();
   state.slots = design.slots.slice(0, state.beadCount);
   while (state.slots.length < state.beadCount) state.slots.push(null);
@@ -2485,14 +2671,7 @@ document.getElementById('btn-save').addEventListener('click', saveDesign);
    ORDER BUTTON & ORDER MODAL
    ============================================================ */
 
-/* --- EmailJS Init --- */
-(function() {
-  try {
-    emailjs.init('YOUR_PUBLIC_KEY');
-  } catch(e) {
-    console.warn('EmailJS not loaded:', e);
-  }
-})();
+/* --- Email service (formsubmit.co as primary, mailto: as fallback) --- */
 
 /* --- Order Modal Elements --- */
 const orderModalOverlay = document.getElementById('order-modal-overlay');
@@ -2510,18 +2689,22 @@ const orderModalStones = document.getElementById('order-modal-stones');
 /* --- Helper: build order details text for email --- */
 function buildOrderDetailsText() {
   let text = '';
+  const hasMixed = state.beadSizes.some(s => s !== state.beadSizes[0]);
   text += `ブレスレットサイズ: ${state.braceletSize}cm\n`;
-  text += `玉サイズ: ${state.beadSize}mm\n`;
+  text += `デフォルト玉サイズ: ${state.beadSize}mm\n`;
+  if (hasMixed) text += `玉サイズ: ミックス（個別サイズは各位置に記載）\n`;
   text += `玉数: ${state.beadCount}個\n\n`;
   text += `【石の配置】\n`;
   let total = 0;
   state.slots.forEach((slotId, i) => {
+    const beadMm = state.beadSizes[i] || state.beadSize;
+    const sizeStr = hasMixed ? ` [${beadMm}mm]` : '';
     if (slotId) {
       const stone = STONES.find(s => s.id === slotId);
-      text += `位置${i + 1}: ${stone.ja} (${stone.en}) - ¥${stone.price.toLocaleString()}\n`;
+      text += `位置${i + 1}${sizeStr}: ${stone.ja} (${stone.en}) - ¥${stone.price.toLocaleString()}\n`;
       total += stone.price;
     } else {
-      text += `位置${i + 1}: (空き)\n`;
+      text += `位置${i + 1}${sizeStr}: (空き)\n`;
     }
   });
   text += `\n合計金額: ¥${total.toLocaleString()}`;
@@ -2531,15 +2714,19 @@ function buildOrderDetailsText() {
 /* --- Helper: populate order summary in modal --- */
 function populateOrderSummary() {
   /* Specs row */
+  const hasMixed = state.beadSizes.some(s => s !== state.beadSizes[0]);
+  const sizeLabel = hasMixed ? 'ミックス' : `${state.beadSize}mm`;
   orderModalSpecs.innerHTML =
     `<span>サイズ: <strong>${state.braceletSize}cm</strong></span>` +
-    `<span>玉: <strong>${state.beadSize}mm</strong></span>` +
+    `<span>玉: <strong>${sizeLabel}</strong></span>` +
     `<span>玉数: <strong>${state.beadCount}個</strong></span>`;
 
   /* Stone arrangement */
   let html = '';
   let total = 0;
   state.slots.forEach((slotId, i) => {
+    const beadMm = state.beadSizes[i] || state.beadSize;
+    const sizeTag = hasMixed ? ` <small style="color:var(--text-lighter)">(${beadMm}mm)</small>` : '';
     if (slotId) {
       const stone = STONES.find(s => s.id === slotId);
       total += stone.price;
@@ -2547,14 +2734,14 @@ function populateOrderSummary() {
         <span class="slot-label">位置${i + 1}</span>
         <span class="stone-label">
           <span class="dot" style="background:linear-gradient(135deg,${stone.grad[0]},${stone.grad[1]})"></span>
-          ${stone.ja}
+          ${stone.ja}${sizeTag}
         </span>
         <span class="price-label">¥${stone.price.toLocaleString()}</span>
       </div>`;
     } else {
       html += `<div class="order-summary-row">
         <span class="slot-label">位置${i + 1}</span>
-        <span class="stone-label"><span class="empty-slot">(空き)</span></span>
+        <span class="stone-label"><span class="empty-slot">(空き)</span>${sizeTag}</span>
         <span class="price-label">-</span>
       </div>`;
     }
@@ -2623,7 +2810,7 @@ function validateOrderForm() {
   return valid;
 }
 
-/* --- Submit order via EmailJS (with mailto: fallback) --- */
+/* --- Submit order via formsubmit.co (with mailto: fallback) --- */
 async function submitOrder() {
   if (!validateOrderForm()) return;
 
@@ -2640,25 +2827,37 @@ async function submitOrder() {
 
   const { text: orderDetails, total } = buildOrderDetailsText();
 
-  const templateParams = {
-    to_email: 'ozeight@gmail.com',
-    customer_name: customerName,
-    postal_code: postalCode,
-    prefecture: prefecture,
-    address: address,
-    phone: phone,
-    email: email,
-    order_details: orderDetails,
-  };
-
   let emailSent = false;
+
+  /* Primary: formsubmit.co (free, no backend needed) */
   try {
-    if (typeof emailjs !== 'undefined' && emailjs.send) {
-      await emailjs.send('service_powerstone', 'template_order', templateParams);
+    const formData = new FormData();
+    formData.append('name', customerName);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('_subject', `【パワーストーン注文】${customerName}様`);
+    formData.append('message',
+      `お名前: ${customerName}\n` +
+      `郵便番号: ${postalCode}\n` +
+      `都道府県: ${prefecture}\n` +
+      `住所: ${address}\n` +
+      `電話番号: ${phone}\n` +
+      `メールアドレス: ${email}\n\n` +
+      orderDetails
+    );
+    formData.append('_replyto', email);
+    formData.append('_template', 'table');
+
+    const res = await fetch('https://formsubmit.co/ajax/ozeight@gmail.com', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' },
+    });
+    if (res.ok) {
       emailSent = true;
     }
   } catch (e) {
-    console.warn('EmailJS send failed:', e);
+    /* formsubmit.co failed; fall through to mailto: */
   }
 
   if (!emailSent) {
@@ -3737,7 +3936,6 @@ function initHoroscope() {
    ============================================================ */
 function init() {
   updateBeadCount();
-  state.slots = new Array(state.beadCount).fill(null);
   state.selectedSlot = 0;
   renderBracelet();
   renderWishCategories();
