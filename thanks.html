@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ご注文ありがとうございます | Ordermade Power Stone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans JP',sans-serif;color:#2a4060;line-height:1.8;
+  background:#d4ecf8;
+  background-image:linear-gradient(180deg,#78bce8 0%,#a0d4f6 20%,#d8f0fe 40%,#ffffff 50%,#d8f0fe 60%,#a0d4f6 80%,#78bce8 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+.page-header{
+  background:linear-gradient(180deg,#6ab0e0 0%,#88c8ee 30%,#c8ecfc 70%,#ffffff 100%);
+  color:#2a5580;text-align:center;padding:2rem 1rem 1.5rem;
+}
+.page-header h1{font-size:clamp(1.2rem,3vw,1.8rem);font-weight:700;letter-spacing:.1em}
+.page-header .back-link{
+  display:inline-block;margin-top:.8rem;font-size:.85rem;color:#3a80b8;text-decoration:none;
+}
+.page-header .back-link:hover{text-decoration:underline}
+.content{
+  max-width:800px;margin:2rem auto;padding:0 1rem;
+}
+.card{
+  background:rgba(255,255,255,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-radius:16px;border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 4px 24px rgba(90,160,220,.08);
+  padding:2rem;
+}
+.card p{
+  font-size:.95rem;color:#2a4060;line-height:1.9;margin-bottom:1.2rem;
+}
+.card p:last-child{margin-bottom:0}
+.success-icon{
+  display:block;text-align:center;font-size:3rem;margin-bottom:1rem;
+}
+.card h2{
+  text-align:center;font-size:1.3rem;font-weight:700;color:#2a5580;margin-bottom:1.5rem;
+}
+.back-btn{
+  display:inline-block;margin-top:1.5rem;padding:.6rem 1.5rem;
+  background:linear-gradient(135deg,#7ec0ec,#5aa0d8);color:#fff;
+  border-radius:8px;text-decoration:none;font-size:.9rem;font-weight:500;
+  transition:opacity .2s;
+}
+.back-btn:hover{opacity:.85}
+.btn-wrap{text-align:center;margin-top:1.5rem}
+.footer{
+  text-align:center;padding:2rem 1rem;font-size:.75rem;color:#5a8ab0;margin-top:2rem;
+}
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>ご注文ありがとうございます</h1>
+  <a href="index.html" class="back-link">&larr; トップページに戻る</a>
+</header>
+
+<div class="content">
+<div class="card">
+  <div class="success-icon">&#10004;&#65039;</div>
+  <h2>ご注文ありがとうございました。</h2>
+  <p>ブレスレットは、注文いただいてから素材を取り寄せ、組み合わせて浄化を行ったうえで発送します。</p>
+  <p>到着まで2週間〜4週間程度かかる場合がありますので、あらかじめご了承ください。</p>
+  <p>発送は代引きのみでお送りさせていただきます。</p>
+  <p>よろしくお願いします。</p>
+  <div class="btn-wrap">
+    <a href="index.html" class="back-btn">トップページに戻る</a>
+  </div>
+</div>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2026 Ordermade Power Stone All Rights Reserved.</p>
+</footer>
+</body>
+</html>

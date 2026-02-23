@@ -1074,6 +1074,61 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
 .slot-size-picker .size-pick-btn.active{
   border-color:rgba(90,164,217,.5);background:rgba(90,164,217,.2);color:var(--primary);font-weight:700;
 }
+.fortune-meter-section {
+  margin: 1.5rem 0;
+  padding: 1.2rem;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.fortune-meter-section .section-title {
+  text-align: center;
+  font-size: 1rem;
+  color: #3a6a90;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.fortune-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.fortune-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fortune-bar-label {
+  width: 80px;
+  font-size: 0.8rem;
+  color: #3a6a90;
+  text-align: right;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+.fortune-bar-track {
+  flex: 1;
+  height: 20px;
+  background: rgba(200,220,240,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.fortune-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  min-width: 0;
+}
+.fortune-bar-value {
+  width: 36px;
+  font-size: 0.75rem;
+  color: #5a8ab0;
+  text-align: left;
+  flex-shrink: 0;
+}
 </style>
 </head>
 <body>
@@ -1132,6 +1187,13 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
 <button class="btn btn-primary" id="btn-fill-same" aria-label="全て同じ石で埋める">全て同じ石で埋める</button>
 <button class="btn btn-danger btn-sm" id="btn-reset" aria-label="リセット">リセット</button>
 </div>
+</section>
+
+<section class="fortune-meter-section">
+  <h3 class="section-title">✧ 運気メーター ✧</h3>
+  <div class="fortune-meter" id="fortune-meter">
+    <!-- bars will be rendered by JS -->
+  </div>
 </section>
 
 <!-- Size Selector -->
@@ -1459,6 +1521,7 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
   <div class="order-form-group">
     <label>郵便番号<span class="required">*</span></label>
     <input type="text" id="order-postal" placeholder="000-0000" maxlength="8" required>
+    <span id="postal-status" style="font-size:0.75rem;color:#999;margin-top:2px;display:block;"></span>
   </div>
   <div class="order-form-group">
     <label>都道府県<span class="required">*</span></label>
@@ -1490,6 +1553,18 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
     <label>メールアドレス<span class="required">*</span></label>
     <input type="email" id="order-email" placeholder="example@mail.com" required>
   </div>
+</div>
+<div class="order-agreement" style="margin:1rem 0;padding:1rem;background:rgba(126,192,236,0.08);border-radius:8px;border:1px solid rgba(126,192,236,0.2);">
+  <p style="font-size:0.85rem;color:#5a6a7a;margin-bottom:0.8rem;line-height:1.6;">
+    ■ ブレスレットは注文後に素材を取り寄せ、組み合わせて浄化を行ったうえで発送いたします<br>
+    ■ 到着まで2週間〜4週間程度かかる場合がございます<br>
+    ■ 発送は代引きのみとなります<br>
+    ■ 天然石のため、色味や模様に個体差がございます
+  </p>
+  <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.9rem;color:#3a4a5a;">
+    <input type="checkbox" id="order-agreement-check" style="width:18px;height:18px;accent-color:#7ec0ec;">
+    上記の内容に同意します
+  </label>
 </div>
 <div class="order-error-msg" id="order-error"></div>
 <div class="order-modal-actions">
@@ -1534,182 +1609,182 @@ animation:horizon-pulse 6s ease-in-out infinite alternate;
    DATA - Stone Database
    ============================================================ */
 const STONES = [
-  {id:'rose_quartz',ja:'ローズクォーツ',en:'Rose Quartz',color:'#f0a0b0',grad:['#f4b8c4','#d4808e'],desc:'愛と優しさを象徴する石。恋愛運を高めます',price:300,wishes:['love'],colors:['pink']},
-  {id:'rhodonite',ja:'ロードナイト',en:'Rhodonite',color:'#c46080',grad:['#d4708a','#a04060'],desc:'深い愛情と思いやりを育む石',price:350,wishes:['love'],colors:['pink']},
-  {id:'garnet',ja:'ガーネット',en:'Garnet',color:'#8b1a1a',grad:['#a02020','#601010'],desc:'情熱と活力の石。実りをもたらします',price:450,wishes:['love'],colors:['red']},
-  {id:'moonstone',ja:'ムーンストーン',en:'Moonstone',color:'#d0d8e8',grad:['#e8eef8','#b0b8d0'],desc:'月の力を宿し、直感力と女性性を高める',price:400,wishes:['love'],colors:['white']},
-  {id:'inca_rose',ja:'インカローズ',en:'Inca Rose',color:'#e06080',grad:['#f07090','#c04060'],desc:'情熱的な愛を呼び込むバラ色の石',price:650,wishes:['love'],colors:['red','pink']},
-  {id:'citrine',ja:'シトリン',en:'Citrine',color:'#e8c040',grad:['#f0d060','#c8a020'],desc:'太陽の力を持つ金運・商売繁盛の石',price:350,wishes:['wealth'],colors:['yellow']},
-  {id:'tiger_eye',ja:'タイガーアイ',en:'Tiger Eye',color:'#a07020',grad:['#c09030','#806010'],desc:'洞察力と決断力を高め、金運を招く',price:300,wishes:['wealth'],colors:['yellow']},
-  {id:'rutile_quartz',ja:'ルチルクォーツ',en:'Rutilated Quartz',color:'#d4b060',grad:['#e8c878','#b09040'],desc:'金色の針が入った最強の金運石',price:800,wishes:['wealth'],colors:['yellow']},
-  {id:'pyrite',ja:'パイライト',en:'Pyrite',color:'#b0a870',grad:['#c8c090','#908850'],desc:'黄金色に輝く繁栄と富の石',price:300,wishes:['wealth'],colors:['yellow']},
-  {id:'goldstone',ja:'ゴールドストーン',en:'Goldstone',color:'#b87020',grad:['#d08830','#905810'],desc:'きらめく輝きで金運を強力に引き寄せる',price:250,wishes:['wealth'],colors:['yellow']},
-  {id:'lapis_lazuli',ja:'ラピスラズリ',en:'Lapis Lazuli',color:'#1a3a8a',grad:['#2050a0','#0a2060'],desc:'幸運を呼ぶ聖なる石。知恵と判断力を授ける',price:550,wishes:['career','study'],colors:['blue']},
-  {id:'sodalite',ja:'ソーダライト',en:'Sodalite',color:'#2a4a80',grad:['#3a5a90','#1a3060'],desc:'冷静な判断力と理性をもたらす知の石',price:300,wishes:['career','study'],colors:['blue']},
-  {id:'fluorite',ja:'フローライト',en:'Fluorite',color:'#70a0c0',grad:['#80c0d8','#5080a0'],desc:'天才の石。集中力と明晰な思考を高める',price:350,wishes:['career','study'],colors:['purple','blue']},
-  {id:'kyanite',ja:'カイヤナイト',en:'Kyanite',color:'#4060a0',grad:['#5070b0','#304080'],desc:'独立心と探究心を高め、道を切り開く',price:450,wishes:['career'],colors:['blue']},
-  {id:'blue_topaz',ja:'ブルートパーズ',en:'Blue Topaz',color:'#60b0e0',grad:['#80c8f0','#4098c8'],desc:'知性とコミュニケーション力を高める',price:500,wishes:['career'],colors:['blue']},
-  {id:'green_aventurine',ja:'グリーンアベンチュリン',en:'Green Aventurine',color:'#508050',grad:['#609860','#407040'],desc:'心身のバランスを整え、健康を維持する',price:250,wishes:['health'],colors:['green']},
-  {id:'malachite',ja:'マラカイト',en:'Malachite',color:'#208040',grad:['#30a050','#106030'],desc:'持ち主の体調変化を察知する健康の守護石',price:400,wishes:['health'],colors:['green']},
-  {id:'prehnite',ja:'プレナイト',en:'Prehnite',color:'#a0c880',grad:['#b0d890','#80b060'],desc:'不要なものを手放し、心身を整える',price:350,wishes:['health'],colors:['green']},
-  {id:'jade',ja:'ジェイド',en:'Jade',color:'#408040',grad:['#509850','#307030'],desc:'東洋で最も尊ばれる健康と長寿の石',price:500,wishes:['health'],colors:['green']},
-  {id:'unakite',ja:'ユナカイト',en:'Unakite',color:'#808050',grad:['#989860','#607040'],desc:'心身の調和をもたらすヒーリングストーン',price:250,wishes:['health'],colors:['green']},
-  {id:'amethyst',ja:'アメジスト',en:'Amethyst',color:'#7030a0',grad:['#8840b0','#582080'],desc:'精神の安定と高貴さをもたらす紫水晶',price:350,wishes:['healing','study'],colors:['purple']},
-  {id:'lepidolite',ja:'レピドライト',en:'Lepidolite',color:'#9070a0',grad:['#a080b0','#705880'],desc:'不安やストレスを癒すリチウムの石',price:350,wishes:['healing'],colors:['purple']},
-  {id:'sugilite',ja:'スギライト',en:'Sugilite',color:'#602080',grad:['#783098','#481060'],desc:'世界三大ヒーリングストーンの一つ',price:750,wishes:['healing'],colors:['purple']},
-  {id:'charoite',ja:'チャロアイト',en:'Charoite',color:'#6840a0',grad:['#7850b0','#503080'],desc:'恐怖や不安を克服し、精神を浄化する',price:600,wishes:['healing'],colors:['purple']},
-  {id:'larimar',ja:'ラリマー',en:'Larimar',color:'#70b0d0',grad:['#88c8e0','#5898b8'],desc:'愛と平和の石。カリブ海の癒しを持つ',price:700,wishes:['healing'],colors:['blue']},
-  {id:'onyx',ja:'オニキス',en:'Onyx',color:'#1a1a1a',grad:['#303030','#080808'],desc:'持ち主を守る最強の魔除け・厄除けの石',price:250,wishes:['protection'],colors:['black']},
-  {id:'hematite',ja:'ヘマタイト',en:'Hematite',color:'#404050',grad:['#505060','#2a2a38'],desc:'鋼のような強さで邪気を跳ね返す',price:200,wishes:['protection'],colors:['black']},
-  {id:'morion',ja:'モリオン',en:'Morion',color:'#101010',grad:['#202020','#000000'],desc:'最強の邪気払い。あらゆる悪から身を守る',price:500,wishes:['protection'],colors:['black']},
-  {id:'smoky_quartz',ja:'スモーキークォーツ',en:'Smoky Quartz',color:'#605040',grad:['#706050','#504030'],desc:'大地のエネルギーで心を安定させる',price:300,wishes:['protection'],colors:['black']},
-  {id:'obsidian',ja:'オブシディアン',en:'Obsidian',color:'#181818',grad:['#282828','#080808'],desc:'真実を映し出す鏡。邪念を断ち切る',price:250,wishes:['protection'],colors:['black']},
-  {id:'aquamarine',ja:'アクアマリン',en:'Aquamarine',color:'#60b0d0',grad:['#78c8e0','#4898b0'],desc:'幸せな結婚をもたらす海の宝石',price:500,wishes:['relationships'],colors:['blue']},
-  {id:'blue_lace_agate',ja:'ブルーレースアゲート',en:'Blue Lace Agate',color:'#90b8d0',grad:['#a8d0e0','#78a0b8'],desc:'穏やかなコミュニケーションを促す',price:350,wishes:['relationships'],colors:['blue']},
-  {id:'celestite',ja:'セレスタイト',en:'Celestite',color:'#a0c0e0',grad:['#b8d0f0','#88a8c8'],desc:'天使の石。平和と調和の波動を持つ',price:450,wishes:['relationships'],colors:['blue']},
-  {id:'amazonite',ja:'アマゾナイト',en:'Amazonite',color:'#50a090',grad:['#60b8a8','#408878'],desc:'希望の石。対人関係を円滑にする',price:350,wishes:['relationships'],colors:['green']},
-  {id:'turquoise',ja:'ターコイズ',en:'Turquoise',color:'#30a0a0',grad:['#40b8b0','#208888'],desc:'旅のお守り。友情と人の絆を深める',price:500,wishes:['relationships'],colors:['blue']},
-  {id:'crystal',ja:'クリスタル（水晶）',en:'Clear Quartz',color:'#e8e8f0',grad:['#f4f4ff','#d0d0e0'],desc:'万能の石。あらゆるパワーを増幅する',price:200,wishes:['study'],colors:['white']},
-  {id:'carnelian',ja:'カーネリアン',en:'Carnelian',color:'#c05020',grad:['#d86030','#a04010'],desc:'行動力と勇気を与える太陽の石',price:300,wishes:['career','health'],colors:['red']},
-  {id:'red_jasper',ja:'レッドジャスパー',en:'Red Jasper',color:'#a03020',grad:['#b84030','#802010'],desc:'大地の力強さで体力と精神力を高める',price:250,wishes:['health','protection'],colors:['red']},
-  {id:'pink_opal',ja:'ピンクオパール',en:'Pink Opal',color:'#f0b8c0',grad:['#f8d0d4','#e0a0a8'],desc:'優しさと包容力を高めるキューピッドの石',price:400,wishes:['love','relationships'],colors:['pink']},
-  {id:'howlite',ja:'ハウライト',en:'Howlite',color:'#e8e4e0',grad:['#f0ece8','#d8d0cc'],desc:'心を落ち着かせ、純粋さを保つ白い石',price:200,wishes:['healing'],colors:['white']},
-  {id:'selenite',ja:'セレナイト',en:'Selenite',color:'#f0ece8',grad:['#f8f4f0','#e0dcd4'],desc:'浄化力に優れた月の女神の石',price:350,wishes:['healing','protection'],colors:['white']},
+  {id:'rose_quartz',ja:'ローズクォーツ',en:'Rose Quartz',color:'#f0a0b0',grad:['#f4b8c4','#d4808e'],desc:'愛と優しさを象徴する石。恋愛運を高めます',price:900,wishes:['love','relationships'],colors:['pink']},
+  {id:'rhodonite',ja:'ロードナイト',en:'Rhodonite',color:'#c46080',grad:['#d4708a','#a04060'],desc:'深い愛情と思いやりを育む石',price:1050,wishes:['love','healing'],colors:['pink']},
+  {id:'garnet',ja:'ガーネット',en:'Garnet',color:'#8b1a1a',grad:['#a02020','#601010'],desc:'情熱と活力の石。実りをもたらします',price:1350,wishes:['love','career'],colors:['red']},
+  {id:'moonstone',ja:'ムーンストーン',en:'Moonstone',color:'#d0d8e8',grad:['#e8eef8','#b0b8d0'],desc:'月の力を宿し、直感力と女性性を高める',price:1200,wishes:['love','healing'],colors:['white']},
+  {id:'inca_rose',ja:'インカローズ',en:'Inca Rose',color:'#e06080',grad:['#f07090','#c04060'],desc:'情熱的な愛を呼び込むバラ色の石',price:1950,wishes:['love'],colors:['red','pink']},
+  {id:'citrine',ja:'シトリン',en:'Citrine',color:'#e8c040',grad:['#f0d060','#c8a020'],desc:'太陽の力を持つ金運・商売繁盛の石',price:1050,wishes:['wealth','career'],colors:['yellow']},
+  {id:'tiger_eye',ja:'タイガーアイ',en:'Tiger Eye',color:'#a07020',grad:['#c09030','#806010'],desc:'洞察力と決断力を高め、金運を招く',price:900,wishes:['wealth','career','protection'],colors:['yellow']},
+  {id:'rutile_quartz',ja:'ルチルクォーツ',en:'Rutilated Quartz',color:'#d4b060',grad:['#e8c878','#b09040'],desc:'金色の針が入った最強の金運石',price:2400,wishes:['wealth'],colors:['yellow']},
+  {id:'pyrite',ja:'パイライト',en:'Pyrite',color:'#b0a870',grad:['#c8c090','#908850'],desc:'黄金色に輝く繁栄と富の石',price:900,wishes:['wealth','protection'],colors:['yellow']},
+  {id:'goldstone',ja:'ゴールドストーン',en:'Goldstone',color:'#b87020',grad:['#d08830','#905810'],desc:'きらめく輝きで金運を強力に引き寄せる',price:750,wishes:['wealth'],colors:['yellow']},
+  {id:'lapis_lazuli',ja:'ラピスラズリ',en:'Lapis Lazuli',color:'#1a3a8a',grad:['#2050a0','#0a2060'],desc:'幸運を呼ぶ聖なる石。知恵と判断力を授ける',price:1650,wishes:['career','study','protection'],colors:['blue']},
+  {id:'sodalite',ja:'ソーダライト',en:'Sodalite',color:'#2a4a80',grad:['#3a5a90','#1a3060'],desc:'冷静な判断力と理性をもたらす知の石',price:900,wishes:['career','study'],colors:['blue']},
+  {id:'fluorite',ja:'フローライト',en:'Fluorite',color:'#70a0c0',grad:['#80c0d8','#5080a0'],desc:'天才の石。集中力と明晰な思考を高める',price:1050,wishes:['study','healing'],colors:['purple','blue']},
+  {id:'kyanite',ja:'カイヤナイト',en:'Kyanite',color:'#4060a0',grad:['#5070b0','#304080'],desc:'独立心と探究心を高め、道を切り開く',price:1350,wishes:['career','study'],colors:['blue']},
+  {id:'blue_topaz',ja:'ブルートパーズ',en:'Blue Topaz',color:'#60b0e0',grad:['#80c8f0','#4098c8'],desc:'知性とコミュニケーション力を高める',price:1500,wishes:['career','relationships'],colors:['blue']},
+  {id:'green_aventurine',ja:'グリーンアベンチュリン',en:'Green Aventurine',color:'#508050',grad:['#609860','#407040'],desc:'心身のバランスを整え、健康を維持する',price:750,wishes:['health','healing'],colors:['green']},
+  {id:'malachite',ja:'マラカイト',en:'Malachite',color:'#208040',grad:['#30a050','#106030'],desc:'持ち主の体調変化を察知する健康の守護石',price:1200,wishes:['health','protection'],colors:['green']},
+  {id:'prehnite',ja:'プレナイト',en:'Prehnite',color:'#a0c880',grad:['#b0d890','#80b060'],desc:'不要なものを手放し、心身を整える',price:1050,wishes:['health','healing'],colors:['green']},
+  {id:'jade',ja:'ジェイド',en:'Jade',color:'#408040',grad:['#509850','#307030'],desc:'東洋で最も尊ばれる健康と長寿の石',price:1500,wishes:['health','wealth'],colors:['green']},
+  {id:'unakite',ja:'ユナカイト',en:'Unakite',color:'#808050',grad:['#989860','#607040'],desc:'心身の調和をもたらすヒーリングストーン',price:750,wishes:['health','healing'],colors:['green']},
+  {id:'amethyst',ja:'アメジスト',en:'Amethyst',color:'#7030a0',grad:['#8840b0','#582080'],desc:'精神の安定と高貴さをもたらす紫水晶',price:1050,wishes:['healing','study','protection'],colors:['purple']},
+  {id:'lepidolite',ja:'レピドライト',en:'Lepidolite',color:'#9070a0',grad:['#a080b0','#705880'],desc:'不安やストレスを癒すリチウムの石',price:1050,wishes:['healing','relationships'],colors:['purple']},
+  {id:'sugilite',ja:'スギライト',en:'Sugilite',color:'#602080',grad:['#783098','#481060'],desc:'世界三大ヒーリングストーンの一つ',price:2250,wishes:['healing','protection'],colors:['purple']},
+  {id:'charoite',ja:'チャロアイト',en:'Charoite',color:'#6840a0',grad:['#7850b0','#503080'],desc:'恐怖や不安を克服し、精神を浄化する',price:1800,wishes:['healing','protection'],colors:['purple']},
+  {id:'larimar',ja:'ラリマー',en:'Larimar',color:'#70b0d0',grad:['#88c8e0','#5898b8'],desc:'愛と平和の石。カリブ海の癒しを持つ',price:2100,wishes:['healing','relationships','love'],colors:['blue']},
+  {id:'onyx',ja:'オニキス',en:'Onyx',color:'#1a1a1a',grad:['#303030','#080808'],desc:'持ち主を守る最強の魔除け・厄除けの石',price:750,wishes:['protection'],colors:['black']},
+  {id:'hematite',ja:'ヘマタイト',en:'Hematite',color:'#404050',grad:['#505060','#2a2a38'],desc:'鋼のような強さで邪気を跳ね返す',price:600,wishes:['protection','health'],colors:['black']},
+  {id:'morion',ja:'モリオン',en:'Morion',color:'#101010',grad:['#202020','#000000'],desc:'最強の邪気払い。あらゆる悪から身を守る',price:1500,wishes:['protection'],colors:['black']},
+  {id:'smoky_quartz',ja:'スモーキークォーツ',en:'Smoky Quartz',color:'#605040',grad:['#706050','#504030'],desc:'大地のエネルギーで心を安定させる',price:900,wishes:['protection','healing'],colors:['black']},
+  {id:'obsidian',ja:'オブシディアン',en:'Obsidian',color:'#181818',grad:['#282828','#080808'],desc:'真実を映し出す鏡。邪念を断ち切る',price:750,wishes:['protection'],colors:['black']},
+  {id:'aquamarine',ja:'アクアマリン',en:'Aquamarine',color:'#60b0d0',grad:['#78c8e0','#4898b0'],desc:'幸せな結婚をもたらす海の宝石',price:1500,wishes:['relationships','love'],colors:['blue']},
+  {id:'blue_lace_agate',ja:'ブルーレースアゲート',en:'Blue Lace Agate',color:'#90b8d0',grad:['#a8d0e0','#78a0b8'],desc:'穏やかなコミュニケーションを促す',price:1050,wishes:['relationships','healing'],colors:['blue']},
+  {id:'celestite',ja:'セレスタイト',en:'Celestite',color:'#a0c0e0',grad:['#b8d0f0','#88a8c8'],desc:'天使の石。平和と調和の波動を持つ',price:1350,wishes:['relationships','healing'],colors:['blue']},
+  {id:'amazonite',ja:'アマゾナイト',en:'Amazonite',color:'#50a090',grad:['#60b8a8','#408878'],desc:'希望の石。対人関係を円滑にする',price:1050,wishes:['relationships','career'],colors:['green']},
+  {id:'turquoise',ja:'ターコイズ',en:'Turquoise',color:'#30a0a0',grad:['#40b8b0','#208888'],desc:'旅のお守り。友情と人の絆を深める',price:1500,wishes:['relationships','protection'],colors:['blue']},
+  {id:'crystal',ja:'クリスタル（水晶）',en:'Clear Quartz',color:'#e8e8f0',grad:['#f4f4ff','#d0d0e0'],desc:'万能の石。あらゆるパワーを増幅する',price:600,wishes:['study','healing','protection'],colors:['white']},
+  {id:'carnelian',ja:'カーネリアン',en:'Carnelian',color:'#c05020',grad:['#d86030','#a04010'],desc:'行動力と勇気を与える太陽の石',price:900,wishes:['career','health'],colors:['red']},
+  {id:'red_jasper',ja:'レッドジャスパー',en:'Red Jasper',color:'#a03020',grad:['#b84030','#802010'],desc:'大地の力強さで体力と精神力を高める',price:750,wishes:['health','protection'],colors:['red']},
+  {id:'pink_opal',ja:'ピンクオパール',en:'Pink Opal',color:'#f0b8c0',grad:['#f8d0d4','#e0a0a8'],desc:'優しさと包容力を高めるキューピッドの石',price:1200,wishes:['love','relationships'],colors:['pink']},
+  {id:'howlite',ja:'ハウライト',en:'Howlite',color:'#e8e4e0',grad:['#f0ece8','#d8d0cc'],desc:'心を落ち着かせ、純粋さを保つ白い石',price:600,wishes:['healing','study'],colors:['white']},
+  {id:'selenite',ja:'セレナイト',en:'Selenite',color:'#f0ece8',grad:['#f8f4f0','#e0dcd4'],desc:'浄化力に優れた月の女神の石',price:1050,wishes:['healing','protection'],colors:['white']},
   // --- 追加石 ---
-  {id:'sunstone',ja:'サンストーン',en:'Sunstone',color:'#d08040',grad:['#e09858','#b06828'],desc:'太陽の輝きを宿し、自信とリーダーシップを与える',price:450,wishes:['career'],colors:['yellow']},
-  {id:'peridot',ja:'ペリドット',en:'Peridot',color:'#80b030',grad:['#98c848','#609020'],desc:'太陽の宝石。ポジティブなエネルギーで前向きに',price:500,wishes:['health','healing'],colors:['green']},
-  {id:'tanzanite',ja:'タンザナイト',en:'Tanzanite',color:'#4838a0',grad:['#5848b8','#302880'],desc:'高い霊性と知性を授ける希少な青紫の石',price:800,wishes:['career','study'],colors:['purple','blue']},
-  {id:'kunzite',ja:'クンツァイト',en:'Kunzite',color:'#d898c0',grad:['#e8a8d0','#c080a8'],desc:'無条件の愛と慈悲の心を育む淡いピンクの石',price:550,wishes:['love','healing'],colors:['pink']},
-  {id:'apatite',ja:'アパタイト',en:'Apatite',color:'#2888b0',grad:['#3898c0','#187898'],desc:'絆を深め、コミュニケーション能力を高める',price:400,wishes:['relationships'],colors:['blue']},
-  {id:'chrysocolla',ja:'クリソコラ',en:'Chrysocolla',color:'#308880',grad:['#40a098','#206860'],desc:'地球の石。心に平和と安定をもたらす',price:400,wishes:['healing','relationships'],colors:['green','blue']},
-  {id:'rhodochrosite',ja:'ロードクロサイト',en:'Rhodochrosite',color:'#e06878',grad:['#f07888','#c85060'],desc:'薔薇色の人生を導く情熱の石',price:700,wishes:['love'],colors:['pink','red']},
-  {id:'serpentine',ja:'サーペンティン',en:'Serpentine',color:'#608838',grad:['#78a048','#487028'],desc:'再生とデトックスの力で心身を清める',price:250,wishes:['health'],colors:['green']},
-  {id:'black_tourmaline',ja:'ブラックトルマリン',en:'Black Tourmaline',color:'#141414',grad:['#242424','#040404'],desc:'最強クラスの浄化・邪気払いの守護石',price:350,wishes:['protection'],colors:['black']},
-  {id:'pink_tourmaline',ja:'ピンクトルマリン',en:'Pink Tourmaline',color:'#d870a0',grad:['#e880b0','#c06088'],desc:'愛の電気石。恋愛運と女性の魅力を高める',price:600,wishes:['love'],colors:['pink']},
-  {id:'green_tourmaline',ja:'グリーントルマリン',en:'Green Tourmaline',color:'#309048',grad:['#40a858','#207838'],desc:'生命力を活性化させる緑の電気石',price:550,wishes:['health'],colors:['green']},
-  {id:'watermelon_tourmaline',ja:'ウォーターメロントルマリン',en:'Watermelon Tourmaline',color:'#90c070',grad:['#a0d080','#70a050'],desc:'ピンクと緑の調和で心のバランスを整える',price:750,wishes:['healing','love'],colors:['green','pink']},
-  {id:'labradorite',ja:'ラブラドライト',en:'Labradorite',color:'#405868',grad:['#506878','#304050'],desc:'虹色の閃光を放つ直感力と創造性の石',price:450,wishes:['career','study'],colors:['blue','black']},
-  {id:'alexandrite',ja:'アレキサンドライト',en:'Alexandrite',color:'#508068',grad:['#609878','#406050'],desc:'変色する奇跡の石。変化と適応力を高める',price:900,wishes:['career'],colors:['green','purple']},
-  {id:'iolite',ja:'アイオライト',en:'Iolite',color:'#3040a0',grad:['#4050b0','#203088'],desc:'ビジョンの石。人生の方向性を示す羅針盤',price:450,wishes:['career','study'],colors:['blue','purple']},
-  {id:'amber',ja:'アンバー（琥珀）',en:'Amber',color:'#c88020',grad:['#e09830','#a06810'],desc:'古代の生命力を封じ込めた太古の樹脂化石',price:500,wishes:['health','protection'],colors:['yellow']},
-  {id:'coral',ja:'コーラル（珊瑚）',en:'Coral',color:'#e05040',grad:['#f06050','#c03830'],desc:'海の生命力を宿す子宝と長寿の石',price:600,wishes:['health','love'],colors:['red']},
-  {id:'pearl',ja:'パール（真珠）',en:'Pearl',color:'#e8e0d8',grad:['#f0e8e0','#d0c8c0'],desc:'月と海の恵み。女性の美と品格を高める',price:550,wishes:['love','relationships'],colors:['white']},
-  {id:'opal',ja:'オパール',en:'Opal',color:'#d0d8e0',grad:['#e0e8f0','#b8c0d0'],desc:'虹色の遊色が美しい希望と創造性の石',price:700,wishes:['love','career'],colors:['white']},
-  {id:'sapphire',ja:'サファイア',en:'Sapphire',color:'#1830a0',grad:['#2840b8','#102080'],desc:'誠実と知恵の象徴。集中力と直感力を授ける',price:900,wishes:['career','study'],colors:['blue']},
-  {id:'ruby',ja:'ルビー',en:'Ruby',color:'#a01030',grad:['#c01840','#801020'],desc:'情熱と勝利の石。不滅のエネルギーをもたらす',price:900,wishes:['love','career'],colors:['red']},
-  {id:'emerald',ja:'エメラルド',en:'Emerald',color:'#108050',grad:['#189860','#006840'],desc:'叡智と安らぎの石。愛と富を引き寄せる',price:850,wishes:['love','wealth'],colors:['green']},
-  {id:'topaz',ja:'トパーズ',en:'Imperial Topaz',color:'#d8a040',grad:['#e8b858','#c08828'],desc:'希望と友愛の石。誠実さと豊かさを象徴する',price:600,wishes:['wealth','relationships'],colors:['yellow']},
-  {id:'spinel',ja:'スピネル',en:'Spinel',color:'#901838',grad:['#a82848','#782028'],desc:'活力と再生の石。新しい挑戦への勇気を与える',price:700,wishes:['career'],colors:['red']},
-  {id:'zoisite',ja:'ゾイサイト',en:'Zoisite',color:'#408030',grad:['#509840','#306820'],desc:'成長と変容を促す緑のヒーリングストーン',price:350,wishes:['health','healing'],colors:['green']},
-  {id:'hawk_eye',ja:'ホークスアイ',en:"Hawk's Eye",color:'#304868',grad:['#405878','#203850'],desc:'鷹の目。先見の明と洞察力を授ける',price:350,wishes:['career','protection'],colors:['blue','black']},
-  {id:'azurite',ja:'アズライト',en:'Azurite',color:'#183898',grad:['#2848a8','#102878'],desc:'第三の目を開く深い青の石。直感力を高める',price:500,wishes:['study'],colors:['blue']},
-  {id:'chrysoprase',ja:'クリソプレーズ',en:'Chrysoprase',color:'#60b868',grad:['#78d080','#48a050'],desc:'希望の緑。隠れた才能を引き出す',price:450,wishes:['career','healing'],colors:['green']},
-  {id:'dumortierite',ja:'デュモルチェライト',en:'Dumortierite',color:'#304080',grad:['#405090','#203068'],desc:'忍耐と秩序の石。困難を乗り越える力を授ける',price:300,wishes:['career','study'],colors:['blue']},
-  {id:'bronzite',ja:'ブロンザイト',en:'Bronzite',color:'#706040',grad:['#887850','#585030'],desc:'ブロンズの輝き。決断力と自信をもたらす',price:250,wishes:['protection','career'],colors:['yellow','black']},
-  {id:'bloodstone',ja:'ブラッドストーン',en:'Bloodstone',color:'#305828',grad:['#407038','#204018'],desc:'戦士の石。困難に立ち向かう勇気を与える',price:300,wishes:['health','protection'],colors:['green']},
-  {id:'angel_aura',ja:'エンジェルオーラ',en:'Angel Aura Quartz',color:'#d0d8f0',grad:['#e0e8ff','#b8c0e0'],desc:'天使の虹色に輝く浄化と癒しの水晶',price:450,wishes:['healing'],colors:['white']},
-  {id:'strawberry_quartz',ja:'ストロベリークォーツ',en:'Strawberry Quartz',color:'#e08890',grad:['#f098a0','#c87078'],desc:'愛と美を高める苺色のキュートな水晶',price:500,wishes:['love'],colors:['pink']},
-  {id:'black_spinel',ja:'ブラックスピネル',en:'Black Spinel',color:'#0c0c0c',grad:['#1c1c1c','#000000'],desc:'漆黒の輝き。強い意志と自立心を育む',price:400,wishes:['protection'],colors:['black']},
-  {id:'moss_agate',ja:'モスアゲート',en:'Moss Agate',color:'#688848',grad:['#80a058','#507038'],desc:'大地と植物の力で富と繁栄をもたらす',price:250,wishes:['wealth','health'],colors:['green']},
-  {id:'blue_calcite',ja:'ブルーカルサイト',en:'Blue Calcite',color:'#80b0d0',grad:['#98c8e0','#6898b8'],desc:'心を鎮め、穏やかな癒しをもたらす水色の石',price:300,wishes:['healing','relationships'],colors:['blue']},
-  {id:'red_agate',ja:'レッドアゲート',en:'Red Agate',color:'#b03020',grad:['#c84030','#901810'],desc:'生命力を活性化し、健康と長寿を授ける',price:250,wishes:['health'],colors:['red']},
-  {id:'white_jade',ja:'ホワイトジェイド',en:'White Jade',color:'#e8e4dc',grad:['#f0ece4','#d8d4cc'],desc:'純粋さと平和の象徴。心を穏やかにする',price:350,wishes:['healing','relationships'],colors:['white']},
-  {id:'lemon_quartz',ja:'レモンクォーツ',en:'Lemon Quartz',color:'#e8d860',grad:['#f0e878','#d0c040'],desc:'明るい黄色が希望と楽観をもたらす',price:300,wishes:['wealth','healing'],colors:['yellow']},
+  {id:'sunstone',ja:'サンストーン',en:'Sunstone',color:'#d08040',grad:['#e09858','#b06828'],desc:'太陽の輝きを宿し、自信とリーダーシップを与える',price:1350,wishes:['career','health'],colors:['yellow']},
+  {id:'peridot',ja:'ペリドット',en:'Peridot',color:'#80b030',grad:['#98c848','#609020'],desc:'太陽の宝石。ポジティブなエネルギーで前向きに',price:1500,wishes:['health','healing'],colors:['green']},
+  {id:'tanzanite',ja:'タンザナイト',en:'Tanzanite',color:'#4838a0',grad:['#5848b8','#302880'],desc:'高い霊性と知性を授ける希少な青紫の石',price:2400,wishes:['career','study'],colors:['purple','blue']},
+  {id:'kunzite',ja:'クンツァイト',en:'Kunzite',color:'#d898c0',grad:['#e8a8d0','#c080a8'],desc:'無条件の愛と慈悲の心を育む淡いピンクの石',price:1650,wishes:['love','healing'],colors:['pink']},
+  {id:'apatite',ja:'アパタイト',en:'Apatite',color:'#2888b0',grad:['#3898c0','#187898'],desc:'絆を深め、コミュニケーション能力を高める',price:1200,wishes:['relationships','study'],colors:['blue']},
+  {id:'chrysocolla',ja:'クリソコラ',en:'Chrysocolla',color:'#308880',grad:['#40a098','#206860'],desc:'地球の石。心に平和と安定をもたらす',price:1200,wishes:['healing','relationships'],colors:['green','blue']},
+  {id:'rhodochrosite',ja:'ロードクロサイト',en:'Rhodochrosite',color:'#e06878',grad:['#f07888','#c85060'],desc:'薔薇色の人生を導く情熱の石',price:2100,wishes:['love'],colors:['pink','red']},
+  {id:'serpentine',ja:'サーペンティン',en:'Serpentine',color:'#608838',grad:['#78a048','#487028'],desc:'再生とデトックスの力で心身を清める',price:750,wishes:['health','healing'],colors:['green']},
+  {id:'black_tourmaline',ja:'ブラックトルマリン',en:'Black Tourmaline',color:'#141414',grad:['#242424','#040404'],desc:'最強クラスの浄化・邪気払いの守護石',price:1050,wishes:['protection'],colors:['black']},
+  {id:'pink_tourmaline',ja:'ピンクトルマリン',en:'Pink Tourmaline',color:'#d870a0',grad:['#e880b0','#c06088'],desc:'愛の電気石。恋愛運と女性の魅力を高める',price:1800,wishes:['love','relationships'],colors:['pink']},
+  {id:'green_tourmaline',ja:'グリーントルマリン',en:'Green Tourmaline',color:'#309048',grad:['#40a858','#207838'],desc:'生命力を活性化させる緑の電気石',price:1650,wishes:['health'],colors:['green']},
+  {id:'watermelon_tourmaline',ja:'ウォーターメロントルマリン',en:'Watermelon Tourmaline',color:'#90c070',grad:['#a0d080','#70a050'],desc:'ピンクと緑の調和で心のバランスを整える',price:2250,wishes:['healing','love'],colors:['green','pink']},
+  {id:'labradorite',ja:'ラブラドライト',en:'Labradorite',color:'#405868',grad:['#506878','#304050'],desc:'虹色の閃光を放つ直感力と創造性の石',price:1350,wishes:['career','study'],colors:['blue','black']},
+  {id:'alexandrite',ja:'アレキサンドライト',en:'Alexandrite',color:'#508068',grad:['#609878','#406050'],desc:'変色する奇跡の石。変化と適応力を高める',price:2700,wishes:['career'],colors:['green','purple']},
+  {id:'iolite',ja:'アイオライト',en:'Iolite',color:'#3040a0',grad:['#4050b0','#203088'],desc:'ビジョンの石。人生の方向性を示す羅針盤',price:1350,wishes:['career','study'],colors:['blue','purple']},
+  {id:'amber',ja:'アンバー（琥珀）',en:'Amber',color:'#c88020',grad:['#e09830','#a06810'],desc:'古代の生命力を封じ込めた太古の樹脂化石',price:1500,wishes:['health','protection'],colors:['yellow']},
+  {id:'coral',ja:'コーラル（珊瑚）',en:'Coral',color:'#e05040',grad:['#f06050','#c03830'],desc:'海の生命力を宿す子宝と長寿の石',price:1800,wishes:['health','love'],colors:['red']},
+  {id:'pearl',ja:'パール（真珠）',en:'Pearl',color:'#e8e0d8',grad:['#f0e8e0','#d0c8c0'],desc:'月と海の恵み。女性の美と品格を高める',price:1650,wishes:['love','relationships'],colors:['white']},
+  {id:'opal',ja:'オパール',en:'Opal',color:'#d0d8e0',grad:['#e0e8f0','#b8c0d0'],desc:'虹色の遊色が美しい希望と創造性の石',price:2100,wishes:['love','career'],colors:['white']},
+  {id:'sapphire',ja:'サファイア',en:'Sapphire',color:'#1830a0',grad:['#2840b8','#102080'],desc:'誠実と知恵の象徴。集中力と直感力を授ける',price:2700,wishes:['career','study'],colors:['blue']},
+  {id:'ruby',ja:'ルビー',en:'Ruby',color:'#a01030',grad:['#c01840','#801020'],desc:'情熱と勝利の石。不滅のエネルギーをもたらす',price:2700,wishes:['love','career'],colors:['red']},
+  {id:'emerald',ja:'エメラルド',en:'Emerald',color:'#108050',grad:['#189860','#006840'],desc:'叡智と安らぎの石。愛と富を引き寄せる',price:2550,wishes:['love','wealth'],colors:['green']},
+  {id:'topaz',ja:'トパーズ',en:'Imperial Topaz',color:'#d8a040',grad:['#e8b858','#c08828'],desc:'希望と友愛の石。誠実さと豊かさを象徴する',price:1800,wishes:['wealth','relationships'],colors:['yellow']},
+  {id:'spinel',ja:'スピネル',en:'Spinel',color:'#901838',grad:['#a82848','#782028'],desc:'活力と再生の石。新しい挑戦への勇気を与える',price:2100,wishes:['career'],colors:['red']},
+  {id:'zoisite',ja:'ゾイサイト',en:'Zoisite',color:'#408030',grad:['#509840','#306820'],desc:'成長と変容を促す緑のヒーリングストーン',price:1050,wishes:['health','healing'],colors:['green']},
+  {id:'hawk_eye',ja:'ホークスアイ',en:"Hawk's Eye",color:'#304868',grad:['#405878','#203850'],desc:'鷹の目。先見の明と洞察力を授ける',price:1050,wishes:['career','protection'],colors:['blue','black']},
+  {id:'azurite',ja:'アズライト',en:'Azurite',color:'#183898',grad:['#2848a8','#102878'],desc:'第三の目を開く深い青の石。直感力を高める',price:1500,wishes:['study'],colors:['blue']},
+  {id:'chrysoprase',ja:'クリソプレーズ',en:'Chrysoprase',color:'#60b868',grad:['#78d080','#48a050'],desc:'希望の緑。隠れた才能を引き出す',price:1350,wishes:['career','healing'],colors:['green']},
+  {id:'dumortierite',ja:'デュモルチェライト',en:'Dumortierite',color:'#304080',grad:['#405090','#203068'],desc:'忍耐と秩序の石。困難を乗り越える力を授ける',price:900,wishes:['career','study'],colors:['blue']},
+  {id:'bronzite',ja:'ブロンザイト',en:'Bronzite',color:'#706040',grad:['#887850','#585030'],desc:'ブロンズの輝き。決断力と自信をもたらす',price:750,wishes:['protection','career'],colors:['yellow','black']},
+  {id:'bloodstone',ja:'ブラッドストーン',en:'Bloodstone',color:'#305828',grad:['#407038','#204018'],desc:'戦士の石。困難に立ち向かう勇気を与える',price:900,wishes:['health','protection'],colors:['green']},
+  {id:'angel_aura',ja:'エンジェルオーラ',en:'Angel Aura Quartz',color:'#d0d8f0',grad:['#e0e8ff','#b8c0e0'],desc:'天使の虹色に輝く浄化と癒しの水晶',price:1350,wishes:['healing'],colors:['white']},
+  {id:'strawberry_quartz',ja:'ストロベリークォーツ',en:'Strawberry Quartz',color:'#e08890',grad:['#f098a0','#c87078'],desc:'愛と美を高める苺色のキュートな水晶',price:1500,wishes:['love'],colors:['pink']},
+  {id:'black_spinel',ja:'ブラックスピネル',en:'Black Spinel',color:'#0c0c0c',grad:['#1c1c1c','#000000'],desc:'漆黒の輝き。強い意志と自立心を育む',price:1200,wishes:['protection'],colors:['black']},
+  {id:'moss_agate',ja:'モスアゲート',en:'Moss Agate',color:'#688848',grad:['#80a058','#507038'],desc:'大地と植物の力で富と繁栄をもたらす',price:750,wishes:['wealth','health'],colors:['green']},
+  {id:'blue_calcite',ja:'ブルーカルサイト',en:'Blue Calcite',color:'#80b0d0',grad:['#98c8e0','#6898b8'],desc:'心を鎮め、穏やかな癒しをもたらす水色の石',price:900,wishes:['healing','relationships'],colors:['blue']},
+  {id:'red_agate',ja:'レッドアゲート',en:'Red Agate',color:'#b03020',grad:['#c84030','#901810'],desc:'生命力を活性化し、健康と長寿を授ける',price:750,wishes:['health'],colors:['red']},
+  {id:'white_jade',ja:'ホワイトジェイド',en:'White Jade',color:'#e8e4dc',grad:['#f0ece4','#d8d4cc'],desc:'純粋さと平和の象徴。心を穏やかにする',price:1050,wishes:['healing','relationships'],colors:['white']},
+  {id:'lemon_quartz',ja:'レモンクォーツ',en:'Lemon Quartz',color:'#e8d860',grad:['#f0e878','#d0c040'],desc:'明るい黄色が希望と楽観をもたらす',price:900,wishes:['wealth','healing'],colors:['yellow']},
   // --- 金運・wealth 強化 ---
-  {id:'green_jade',ja:'グリーンジェイド',en:'Green Jade',color:'#409040',grad:['#50a850','#307830'],desc:'東洋の富と繁栄の象徴。商売繁盛に',price:500,wishes:['wealth'],colors:['green']},
-  {id:'prasiolite',ja:'プラシオライト',en:'Prasiolite',color:'#88b880',grad:['#a0d098','#70a068'],desc:'繁栄の緑アメジスト。富と豊かさを引き寄せる',price:400,wishes:['wealth'],colors:['green']},
-  {id:'yellow_jasper',ja:'イエロージャスパー',en:'Yellow Jasper',color:'#c8a048',grad:['#d8b060','#b08838'],desc:'大地の安定した金運をもたらす黄色い碧玉',price:250,wishes:['wealth'],colors:['yellow']},
-  {id:'cinnabar',ja:'シナバー',en:'Cinnabar',color:'#c02020',grad:['#d83030','#a01010'],desc:'朱砂の赤が強力な商売繁盛と富を招く',price:350,wishes:['wealth'],colors:['red']},
-  {id:'aventurine_yellow',ja:'イエローアベンチュリン',en:'Yellow Aventurine',color:'#c8b050',grad:['#d8c068','#b09838'],desc:'金色の輝きで決断力と金運を同時に高める',price:300,wishes:['wealth','career'],colors:['yellow']},
-  {id:'cats_eye',ja:'キャッツアイ',en:"Cat's Eye",color:'#a09030',grad:['#b8a848','#887820'],desc:'猫目石。邪気を払い財運を守る',price:550,wishes:['wealth','protection'],colors:['yellow']},
+  {id:'green_jade',ja:'グリーンジェイド',en:'Green Jade',color:'#409040',grad:['#50a850','#307830'],desc:'東洋の富と繁栄の象徴。商売繁盛に',price:1500,wishes:['wealth'],colors:['green']},
+  {id:'prasiolite',ja:'プラシオライト',en:'Prasiolite',color:'#88b880',grad:['#a0d098','#70a068'],desc:'繁栄の緑アメジスト。富と豊かさを引き寄せる',price:1200,wishes:['wealth'],colors:['green']},
+  {id:'yellow_jasper',ja:'イエロージャスパー',en:'Yellow Jasper',color:'#c8a048',grad:['#d8b060','#b08838'],desc:'大地の安定した金運をもたらす黄色い碧玉',price:750,wishes:['wealth'],colors:['yellow']},
+  {id:'cinnabar',ja:'シナバー',en:'Cinnabar',color:'#c02020',grad:['#d83030','#a01010'],desc:'朱砂の赤が強力な商売繁盛と富を招く',price:1050,wishes:['wealth'],colors:['red']},
+  {id:'aventurine_yellow',ja:'イエローアベンチュリン',en:'Yellow Aventurine',color:'#c8b050',grad:['#d8c068','#b09838'],desc:'金色の輝きで決断力と金運を同時に高める',price:900,wishes:['wealth','career'],colors:['yellow']},
+  {id:'cats_eye',ja:'キャッツアイ',en:"Cat's Eye",color:'#a09030',grad:['#b8a848','#887820'],desc:'猫目石。邪気を払い財運を守る',price:1650,wishes:['wealth','protection'],colors:['yellow']},
   // --- 紫系 強化 ---
-  {id:'purple_fluorite',ja:'パープルフローライト',en:'Purple Fluorite',color:'#7040a8',grad:['#8050b8','#603090'],desc:'知性と直感を結ぶ紫の蛍石。集中力を高める',price:350,wishes:['study'],colors:['purple']},
-  {id:'ametrine',ja:'アメトリン',en:'Ametrine',color:'#9860a0',grad:['#a870b0','#804888'],desc:'アメジストとシトリンの融合。知恵と富を兼ね備える',price:600,wishes:['wealth','study'],colors:['purple','yellow']},
-  {id:'phantom_quartz',ja:'ファントムクォーツ',en:'Phantom Quartz',color:'#8068a0',grad:['#9078b0','#685088'],desc:'成長の証を内包する幻影水晶。困難を乗り越える',price:500,wishes:['career','healing'],colors:['purple']},
-  {id:'purple_jade',ja:'パープルジェイド',en:'Purple Jade',color:'#7050a0',grad:['#8060b0','#604088'],desc:'夢の実現を助ける紫翡翠。精神性を高める',price:450,wishes:['healing','study'],colors:['purple']},
-  {id:'grape_agate',ja:'グレープアゲート',en:'Grape Agate',color:'#6848a0',grad:['#7858b0','#583888'],desc:'葡萄のような結晶が直感力と安らぎを与える',price:500,wishes:['healing'],colors:['purple']},
+  {id:'purple_fluorite',ja:'パープルフローライト',en:'Purple Fluorite',color:'#7040a8',grad:['#8050b8','#603090'],desc:'知性と直感を結ぶ紫の蛍石。集中力を高める',price:1050,wishes:['study'],colors:['purple']},
+  {id:'ametrine',ja:'アメトリン',en:'Ametrine',color:'#9860a0',grad:['#a870b0','#804888'],desc:'アメジストとシトリンの融合。知恵と富を兼ね備える',price:1800,wishes:['wealth','study'],colors:['purple','yellow']},
+  {id:'phantom_quartz',ja:'ファントムクォーツ',en:'Phantom Quartz',color:'#8068a0',grad:['#9078b0','#685088'],desc:'成長の証を内包する幻影水晶。困難を乗り越える',price:1500,wishes:['career','healing'],colors:['purple']},
+  {id:'purple_jade',ja:'パープルジェイド',en:'Purple Jade',color:'#7050a0',grad:['#8060b0','#604088'],desc:'夢の実現を助ける紫翡翠。精神性を高める',price:1350,wishes:['healing','study'],colors:['purple']},
+  {id:'grape_agate',ja:'グレープアゲート',en:'Grape Agate',color:'#6848a0',grad:['#7858b0','#583888'],desc:'葡萄のような結晶が直感力と安らぎを与える',price:1500,wishes:['healing'],colors:['purple']},
   // --- 白系 強化 ---
-  {id:'milky_quartz',ja:'ミルキークォーツ',en:'Milky Quartz',color:'#e8e0e0',grad:['#f0e8e8','#d8d0d0'],desc:'母性と優しさの乳白色水晶。心を包み込む',price:200,wishes:['healing','love'],colors:['white']},
-  {id:'white_agate',ja:'ホワイトアゲート',en:'White Agate',color:'#ece8e4',grad:['#f4f0ec','#dcd8d4'],desc:'純白の瑪瑙。心身のバランスを整える',price:200,wishes:['healing'],colors:['white']},
-  {id:'rainbow_moonstone',ja:'レインボームーンストーン',en:'Rainbow Moonstone',color:'#dce0e8',grad:['#e8ecf4','#c8ccd8'],desc:'虹の閃光を放つ月の石。直感とインスピレーションを高める',price:500,wishes:['love','study'],colors:['white']},
-  {id:'white_topaz',ja:'ホワイトトパーズ',en:'White Topaz',color:'#eae8e4',grad:['#f2f0ec','#dad8d4'],desc:'透明な輝きで思考を明晰にし、目標達成を助ける',price:400,wishes:['career','study'],colors:['white']},
-  {id:'magnesite',ja:'マグネサイト',en:'Magnesite',color:'#e4e0dc',grad:['#ecece4','#d4d0cc'],desc:'リラクゼーションの石。深い瞑想状態へ導く',price:200,wishes:['healing'],colors:['white']},
+  {id:'milky_quartz',ja:'ミルキークォーツ',en:'Milky Quartz',color:'#e8e0e0',grad:['#f0e8e8','#d8d0d0'],desc:'母性と優しさの乳白色水晶。心を包み込む',price:600,wishes:['healing','love'],colors:['white']},
+  {id:'white_agate',ja:'ホワイトアゲート',en:'White Agate',color:'#ece8e4',grad:['#f4f0ec','#dcd8d4'],desc:'純白の瑪瑙。心身のバランスを整える',price:600,wishes:['healing'],colors:['white']},
+  {id:'rainbow_moonstone',ja:'レインボームーンストーン',en:'Rainbow Moonstone',color:'#dce0e8',grad:['#e8ecf4','#c8ccd8'],desc:'虹の閃光を放つ月の石。直感とインスピレーションを高める',price:1500,wishes:['love','study'],colors:['white']},
+  {id:'white_topaz',ja:'ホワイトトパーズ',en:'White Topaz',color:'#eae8e4',grad:['#f2f0ec','#dad8d4'],desc:'透明な輝きで思考を明晰にし、目標達成を助ける',price:1200,wishes:['career','study'],colors:['white']},
+  {id:'magnesite',ja:'マグネサイト',en:'Magnesite',color:'#e4e0dc',grad:['#ecece4','#d4d0cc'],desc:'リラクゼーションの石。深い瞑想状態へ導く',price:600,wishes:['healing'],colors:['white']},
   // --- 赤系 強化 ---
-  {id:'red_tiger_eye',ja:'レッドタイガーアイ',en:'Red Tiger Eye',color:'#903020',grad:['#a84030','#782010'],desc:'情熱の虎目石。やる気と行動力を奮い立たせる',price:350,wishes:['career'],colors:['red']},
-  {id:'rhodolite',ja:'ロードライトガーネット',en:'Rhodolite Garnet',color:'#a02050',grad:['#b83060','#882040'],desc:'友愛のガーネット。愛情と信頼の絆を強める',price:550,wishes:['love','relationships'],colors:['red','pink']},
-  {id:'fire_agate',ja:'ファイアーアゲート',en:'Fire Agate',color:'#a04820',grad:['#b85828','#884018'],desc:'炎のような虹色が内なる情熱と勇気を燃やす',price:400,wishes:['career','protection'],colors:['red']},
-  {id:'red_coral',ja:'レッドコーラル',en:'Red Coral',color:'#c83030',grad:['#e04040','#a82020'],desc:'生命の海から生まれた赤珊瑚。活力と長寿の象徴',price:600,wishes:['health'],colors:['red']},
+  {id:'red_tiger_eye',ja:'レッドタイガーアイ',en:'Red Tiger Eye',color:'#903020',grad:['#a84030','#782010'],desc:'情熱の虎目石。やる気と行動力を奮い立たせる',price:1050,wishes:['career'],colors:['red']},
+  {id:'rhodolite',ja:'ロードライトガーネット',en:'Rhodolite Garnet',color:'#a02050',grad:['#b83060','#882040'],desc:'友愛のガーネット。愛情と信頼の絆を強める',price:1650,wishes:['love','relationships'],colors:['red','pink']},
+  {id:'fire_agate',ja:'ファイアーアゲート',en:'Fire Agate',color:'#a04820',grad:['#b85828','#884018'],desc:'炎のような虹色が内なる情熱と勇気を燃やす',price:1200,wishes:['career','protection'],colors:['red']},
+  {id:'red_coral',ja:'レッドコーラル',en:'Red Coral',color:'#c83030',grad:['#e04040','#a82020'],desc:'生命の海から生まれた赤珊瑚。活力と長寿の象徴',price:1800,wishes:['health'],colors:['red']},
   // --- ピンク系 強化 ---
-  {id:'morganite',ja:'モルガナイト',en:'Morganite',color:'#e8a8b8',grad:['#f0b8c8','#d890a0'],desc:'天使のピンク。愛と癒しのエネルギーに満ちた石',price:650,wishes:['love','healing'],colors:['pink']},
-  {id:'pink_sapphire',ja:'ピンクサファイア',en:'Pink Sapphire',color:'#d870a8',grad:['#e880b8','#c06090'],desc:'高貴なピンク。誠実な愛と幸福を引き寄せる',price:800,wishes:['love'],colors:['pink']},
-  {id:'pink_calcite',ja:'ピンクカルサイト',en:'Pink Calcite',color:'#e8b0b8',grad:['#f0c0c8','#d8a0a8'],desc:'優しいピンクが心の傷を癒し、自己肯定感を高める',price:250,wishes:['healing','love'],colors:['pink']},
-  {id:'cherry_quartz',ja:'チェリークォーツ',en:'Cherry Quartz',color:'#d07080',grad:['#e08090','#c06070'],desc:'桜色に輝く水晶。恋愛成就と女性の魅力を高める',price:300,wishes:['love'],colors:['pink']},
+  {id:'morganite',ja:'モルガナイト',en:'Morganite',color:'#e8a8b8',grad:['#f0b8c8','#d890a0'],desc:'天使のピンク。愛と癒しのエネルギーに満ちた石',price:1950,wishes:['love','healing'],colors:['pink']},
+  {id:'pink_sapphire',ja:'ピンクサファイア',en:'Pink Sapphire',color:'#d870a8',grad:['#e880b8','#c06090'],desc:'高貴なピンク。誠実な愛と幸福を引き寄せる',price:2400,wishes:['love'],colors:['pink']},
+  {id:'pink_calcite',ja:'ピンクカルサイト',en:'Pink Calcite',color:'#e8b0b8',grad:['#f0c0c8','#d8a0a8'],desc:'優しいピンクが心の傷を癒し、自己肯定感を高める',price:750,wishes:['healing','love'],colors:['pink']},
+  {id:'cherry_quartz',ja:'チェリークォーツ',en:'Cherry Quartz',color:'#d07080',grad:['#e08090','#c06070'],desc:'桜色に輝く水晶。恋愛成就と女性の魅力を高める',price:900,wishes:['love'],colors:['pink']},
   // --- 黒系 強化 ---
-  {id:'jet',ja:'ジェット',en:'Jet',color:'#101010',grad:['#1a1a1a','#000000'],desc:'古代より伝わる漆黒の守護石。悲しみを癒し邪を払う',price:350,wishes:['protection','healing'],colors:['black']},
-  {id:'black_onyx_matte',ja:'マットオニキス',en:'Matte Onyx',color:'#202020',grad:['#303030','#101010'],desc:'艶消しの漆黒。男性的な強さと忍耐力を象徴',price:250,wishes:['protection','career'],colors:['black']},
-  {id:'nuummite',ja:'ヌーミット',en:'Nuummite',color:'#181820',grad:['#282830','#080810'],desc:'30億年前の最古の鉱物。深い保護と根源的な力',price:700,wishes:['protection'],colors:['black']},
-  {id:'shungite',ja:'シュンガイト',en:'Shungite',color:'#141418',grad:['#242428','#040408'],desc:'電磁波から身を守る古代カーボンの石',price:400,wishes:['protection','health'],colors:['black']},
-  {id:'lava_stone',ja:'ラバストーン',en:'Lava Stone',color:'#282828',grad:['#383838','#181818'],desc:'火山のエネルギーを宿す溶岩石。グラウンディングに',price:200,wishes:['protection'],colors:['black']},
+  {id:'jet',ja:'ジェット',en:'Jet',color:'#101010',grad:['#1a1a1a','#000000'],desc:'古代より伝わる漆黒の守護石。悲しみを癒し邪を払う',price:1050,wishes:['protection','healing'],colors:['black']},
+  {id:'black_onyx_matte',ja:'マットオニキス',en:'Matte Onyx',color:'#202020',grad:['#303030','#101010'],desc:'艶消しの漆黒。男性的な強さと忍耐力を象徴',price:750,wishes:['protection','career'],colors:['black']},
+  {id:'nuummite',ja:'ヌーミット',en:'Nuummite',color:'#181820',grad:['#282830','#080810'],desc:'30億年前の最古の鉱物。深い保護と根源的な力',price:2100,wishes:['protection'],colors:['black']},
+  {id:'shungite',ja:'シュンガイト',en:'Shungite',color:'#141418',grad:['#242428','#040408'],desc:'電磁波から身を守る古代カーボンの石',price:1200,wishes:['protection','health'],colors:['black']},
+  {id:'lava_stone',ja:'ラバストーン',en:'Lava Stone',color:'#282828',grad:['#383838','#181818'],desc:'火山のエネルギーを宿す溶岩石。グラウンディングに',price:600,wishes:['protection'],colors:['black']},
   // --- 人間関係 強化 ---
-  {id:'angel_stone',ja:'エンジェライト',en:'Angelite',color:'#90a8c8',grad:['#a0b8d8','#7898b0'],desc:'天使の石。穏やかなコミュニケーションと共感を促す',price:400,wishes:['relationships','healing'],colors:['blue']},
-  {id:'hemimorphite',ja:'ヘミモルファイト',en:'Hemimorphite',color:'#70b8d0',grad:['#88d0e0','#58a0b8'],desc:'自己表現力を高め、対人関係を円滑にする',price:450,wishes:['relationships'],colors:['blue']},
-  {id:'green_calcite',ja:'グリーンカルサイト',en:'Green Calcite',color:'#70a870',grad:['#88c088','#589058'],desc:'心のわだかまりを解放し、人間関係を癒す',price:250,wishes:['relationships','healing'],colors:['green']},
-  {id:'pink_kunzite',ja:'ピンクダンビュライト',en:'Pink Danburite',color:'#e0a8c0',grad:['#e8b8d0','#d098a8'],desc:'無条件の愛と許しで人間関係を修復する',price:550,wishes:['relationships','love'],colors:['pink']},
+  {id:'angel_stone',ja:'エンジェライト',en:'Angelite',color:'#90a8c8',grad:['#a0b8d8','#7898b0'],desc:'天使の石。穏やかなコミュニケーションと共感を促す',price:1200,wishes:['relationships','healing'],colors:['blue']},
+  {id:'hemimorphite',ja:'ヘミモルファイト',en:'Hemimorphite',color:'#70b8d0',grad:['#88d0e0','#58a0b8'],desc:'自己表現力を高め、対人関係を円滑にする',price:1350,wishes:['relationships'],colors:['blue']},
+  {id:'green_calcite',ja:'グリーンカルサイト',en:'Green Calcite',color:'#70a870',grad:['#88c088','#589058'],desc:'心のわだかまりを解放し、人間関係を癒す',price:750,wishes:['relationships','healing'],colors:['green']},
+  {id:'pink_kunzite',ja:'ピンクダンビュライト',en:'Pink Danburite',color:'#e0a8c0',grad:['#e8b8d0','#d098a8'],desc:'無条件の愛と許しで人間関係を修復する',price:1650,wishes:['relationships','love'],colors:['pink']},
   // --- 学業 強化 ---
-  {id:'blue_apatite',ja:'ブルーアパタイト',en:'Blue Apatite',color:'#2080a8',grad:['#3090b8','#107090'],desc:'知識の吸収力を高め、学習効率をアップさせる',price:400,wishes:['study'],colors:['blue']},
-  {id:'clear_fluorite',ja:'クリアフローライト',en:'Clear Fluorite',color:'#d8e0e8',grad:['#e8f0f4','#c0c8d0'],desc:'透明な蛍石。雑念を払い、明晰な思考を促す',price:300,wishes:['study'],colors:['white']},
-  {id:'tiger_iron',ja:'タイガーアイアン',en:'Tiger Iron',color:'#685040',grad:['#806850','#504030'],desc:'虎目石と赤鉄鉱の融合。集中力と体力を同時に高める',price:350,wishes:['study','health'],colors:['yellow','red']},
-  {id:'yellow_fluorite',ja:'イエローフローライト',en:'Yellow Fluorite',color:'#d8c060',grad:['#e8d078','#c0a848'],desc:'知的好奇心を刺激する黄色い蛍石。創造力も高める',price:350,wishes:['study','career'],colors:['yellow']},
-  {id:'blue_goldstone',ja:'ブルーゴールドストーン',en:'Blue Goldstone',color:'#182848',grad:['#283858','#081838'],desc:'星空のような輝き。学問と知恵の象徴',price:250,wishes:['study'],colors:['blue','black']},
+  {id:'blue_apatite',ja:'ブルーアパタイト',en:'Blue Apatite',color:'#2080a8',grad:['#3090b8','#107090'],desc:'知識の吸収力を高め、学習効率をアップさせる',price:1200,wishes:['study'],colors:['blue']},
+  {id:'clear_fluorite',ja:'クリアフローライト',en:'Clear Fluorite',color:'#d8e0e8',grad:['#e8f0f4','#c0c8d0'],desc:'透明な蛍石。雑念を払い、明晰な思考を促す',price:900,wishes:['study'],colors:['white']},
+  {id:'tiger_iron',ja:'タイガーアイアン',en:'Tiger Iron',color:'#685040',grad:['#806850','#504030'],desc:'虎目石と赤鉄鉱の融合。集中力と体力を同時に高める',price:1050,wishes:['study','health'],colors:['yellow','red']},
+  {id:'yellow_fluorite',ja:'イエローフローライト',en:'Yellow Fluorite',color:'#d8c060',grad:['#e8d078','#c0a848'],desc:'知的好奇心を刺激する黄色い蛍石。創造力も高める',price:1050,wishes:['study','career'],colors:['yellow']},
+  {id:'blue_goldstone',ja:'ブルーゴールドストーン',en:'Blue Goldstone',color:'#182848',grad:['#283858','#081838'],desc:'星空のような輝き。学問と知恵の象徴',price:750,wishes:['study'],colors:['blue','black']},
   // --- 恋愛 追加 ---
-  {id:'pink_rhodochrosite',ja:'ピンクロードクロサイト',en:'Pink Rhodochrosite',color:'#e87898',grad:['#f088a8','#d06888'],desc:'情熱的な愛を引き寄せ、自己愛を深める薔薇色の石',price:700,wishes:['love'],colors:['pink']},
-  {id:'thulite',ja:'チューライト',en:'Thulite',color:'#c85878',grad:['#d86888','#b84868'],desc:'心を開き、愛情表現を豊かにするピンクの鉱物',price:450,wishes:['love','relationships'],colors:['pink']},
-  {id:'danburite',ja:'ダンビュライト',en:'Danburite',color:'#f0e0e8',grad:['#f8f0f4','#e0d0d8'],desc:'純粋な愛と慈悲の心を育む透明感ある石',price:600,wishes:['love','healing'],colors:['white','pink']},
-  {id:'scolecite',ja:'スコレサイト',en:'Scolecite',color:'#e8e0d8',grad:['#f0ece8','#d8d0c8'],desc:'深い愛と内なる平和をもたらす繊細な結晶',price:500,wishes:['love','healing'],colors:['white']},
-  {id:'rubellite',ja:'ルベライト',en:'Rubellite',color:'#c03060',grad:['#d04070','#a82050'],desc:'赤いトルマリン。情熱と献身的な愛を象徴する',price:800,wishes:['love'],colors:['red','pink']},
+  {id:'pink_rhodochrosite',ja:'ピンクロードクロサイト',en:'Pink Rhodochrosite',color:'#e87898',grad:['#f088a8','#d06888'],desc:'情熱的な愛を引き寄せ、自己愛を深める薔薇色の石',price:2100,wishes:['love'],colors:['pink']},
+  {id:'thulite',ja:'チューライト',en:'Thulite',color:'#c85878',grad:['#d86888','#b84868'],desc:'心を開き、愛情表現を豊かにするピンクの鉱物',price:1350,wishes:['love','relationships'],colors:['pink']},
+  {id:'danburite',ja:'ダンビュライト',en:'Danburite',color:'#f0e0e8',grad:['#f8f0f4','#e0d0d8'],desc:'純粋な愛と慈悲の心を育む透明感ある石',price:1800,wishes:['love','healing'],colors:['white','pink']},
+  {id:'scolecite',ja:'スコレサイト',en:'Scolecite',color:'#e8e0d8',grad:['#f0ece8','#d8d0c8'],desc:'深い愛と内なる平和をもたらす繊細な結晶',price:1500,wishes:['love','healing'],colors:['white']},
+  {id:'rubellite',ja:'ルベライト',en:'Rubellite',color:'#c03060',grad:['#d04070','#a82050'],desc:'赤いトルマリン。情熱と献身的な愛を象徴する',price:2400,wishes:['love'],colors:['red','pink']},
   // --- 金運 追加 ---
-  {id:'golden_beryl',ja:'ゴールデンベリル',en:'Golden Beryl',color:'#d0a830',grad:['#e0b840','#c09820'],desc:'太陽の恵み。富と成功を引き寄せる黄金の輝き',price:650,wishes:['wealth'],colors:['yellow']},
-  {id:'yellow_sapphire',ja:'イエローサファイア',en:'Yellow Sapphire',color:'#d8b030',grad:['#e8c040','#c8a020'],desc:'繁栄と知恵をもたらす高貴な黄色の宝石',price:850,wishes:['wealth','career'],colors:['yellow']},
-  {id:'green_garnet',ja:'グリーンガーネット',en:'Green Garnet',color:'#408038',grad:['#509048','#306828'],desc:'豊穣と成長の象徴。ビジネスの成功を導く緑の石榴石',price:700,wishes:['wealth'],colors:['green']},
-  {id:'golden_tiger_eye',ja:'ゴールデンタイガーアイ',en:'Golden Tiger Eye',color:'#b89030',grad:['#c8a040','#a88020'],desc:'黄金の虎目が財運を強力に引き寄せる',price:400,wishes:['wealth','career'],colors:['yellow']},
-  {id:'heliodor',ja:'ヘリオドール',en:'Heliodor',color:'#c8b040',grad:['#d8c050','#b8a030'],desc:'太陽神の贈り物。自信と経済的繁栄を授ける',price:600,wishes:['wealth'],colors:['yellow']},
-  {id:'imperial_topaz',ja:'インペリアルトパーズ',en:'Imperial Topaz',color:'#d89040',grad:['#e8a050','#c88030'],desc:'王者の風格。最高の金運と成功を象徴する宝石',price:900,wishes:['wealth'],colors:['yellow','red']},
+  {id:'golden_beryl',ja:'ゴールデンベリル',en:'Golden Beryl',color:'#d0a830',grad:['#e0b840','#c09820'],desc:'太陽の恵み。富と成功を引き寄せる黄金の輝き',price:1950,wishes:['wealth'],colors:['yellow']},
+  {id:'yellow_sapphire',ja:'イエローサファイア',en:'Yellow Sapphire',color:'#d8b030',grad:['#e8c040','#c8a020'],desc:'繁栄と知恵をもたらす高貴な黄色の宝石',price:2550,wishes:['wealth','career'],colors:['yellow']},
+  {id:'green_garnet',ja:'グリーンガーネット',en:'Green Garnet',color:'#408038',grad:['#509048','#306828'],desc:'豊穣と成長の象徴。ビジネスの成功を導く緑の石榴石',price:2100,wishes:['wealth'],colors:['green']},
+  {id:'golden_tiger_eye',ja:'ゴールデンタイガーアイ',en:'Golden Tiger Eye',color:'#b89030',grad:['#c8a040','#a88020'],desc:'黄金の虎目が財運を強力に引き寄せる',price:1200,wishes:['wealth','career'],colors:['yellow']},
+  {id:'heliodor',ja:'ヘリオドール',en:'Heliodor',color:'#c8b040',grad:['#d8c050','#b8a030'],desc:'太陽神の贈り物。自信と経済的繁栄を授ける',price:1800,wishes:['wealth'],colors:['yellow']},
+  {id:'imperial_topaz',ja:'インペリアルトパーズ',en:'Imperial Topaz',color:'#d89040',grad:['#e8a050','#c88030'],desc:'王者の風格。最高の金運と成功を象徴する宝石',price:2700,wishes:['wealth'],colors:['yellow','red']},
   // --- 健康 追加 ---
-  {id:'red_garnet',ja:'レッドガーネット',en:'Red Garnet',color:'#882030',grad:['#a03040','#701020'],desc:'生命力を高め、血液循環を促進する深紅の石',price:500,wishes:['health'],colors:['red']},
-  {id:'ocean_jasper',ja:'オーシャンジャスパー',en:'Ocean Jasper',color:'#78a088',grad:['#88b098','#689078'],desc:'海の力で心身のバランスを整え、活力を取り戻す',price:350,wishes:['health','healing'],colors:['green']},
-  {id:'seraphinite',ja:'セラフィナイト',en:'Seraphinite',color:'#3a6838',grad:['#4a7848','#2a5828'],desc:'天使の羽のような模様。自然治癒力を高める深緑の石',price:550,wishes:['health','healing'],colors:['green']},
-  {id:'picture_jasper',ja:'ピクチャージャスパー',en:'Picture Jasper',color:'#a08060',grad:['#b09070','#907050'],desc:'大地のエネルギーで体を安定させ、免疫力を高める',price:250,wishes:['health'],colors:['yellow']},
+  {id:'red_garnet',ja:'レッドガーネット',en:'Red Garnet',color:'#882030',grad:['#a03040','#701020'],desc:'生命力を高め、血液循環を促進する深紅の石',price:1500,wishes:['health'],colors:['red']},
+  {id:'ocean_jasper',ja:'オーシャンジャスパー',en:'Ocean Jasper',color:'#78a088',grad:['#88b098','#689078'],desc:'海の力で心身のバランスを整え、活力を取り戻す',price:1050,wishes:['health','healing'],colors:['green']},
+  {id:'seraphinite',ja:'セラフィナイト',en:'Seraphinite',color:'#3a6838',grad:['#4a7848','#2a5828'],desc:'天使の羽のような模様。自然治癒力を高める深緑の石',price:1650,wishes:['health','healing'],colors:['green']},
+  {id:'picture_jasper',ja:'ピクチャージャスパー',en:'Picture Jasper',color:'#a08060',grad:['#b09070','#907050'],desc:'大地のエネルギーで体を安定させ、免疫力を高める',price:750,wishes:['health'],colors:['yellow']},
   // --- 人間関係 追加 ---
-  {id:'blue_chalcedony',ja:'ブルーカルセドニー',en:'Blue Chalcedony',color:'#88b0d0',grad:['#98c0e0','#78a0c0'],desc:'穏やかなコミュニケーションを促し、良縁を結ぶ',price:350,wishes:['relationships'],colors:['blue']},
-  {id:'stilbite',ja:'スティルバイト',en:'Stilbite',color:'#e0b8b0',grad:['#f0c8c0','#d0a8a0'],desc:'人間関係の摩擦を和らげ、信頼を深める優しい石',price:400,wishes:['relationships','healing'],colors:['pink']},
-  {id:'blue_kyanite',ja:'ブルーカイヤナイト',en:'Blue Kyanite',color:'#3868a0',grad:['#4878b0','#285890'],desc:'誠実なコミュニケーションを促進し、誤解を解く',price:450,wishes:['relationships'],colors:['blue']},
-  {id:'apache_tear',ja:'アパッチティアー',en:'Apache Tear',color:'#282828',grad:['#383838','#181818'],desc:'悲しみを癒し、人との絆を再構築する涙の形の黒曜石',price:300,wishes:['relationships','protection'],colors:['black']},
-  {id:'mangano_calcite',ja:'マンガノカルサイト',en:'Mangano Calcite',color:'#e8b0c0',grad:['#f0c0d0','#d8a0b0'],desc:'無条件の受容で対人関係を円滑にするピンクの方解石',price:350,wishes:['relationships','love'],colors:['pink']},
+  {id:'blue_chalcedony',ja:'ブルーカルセドニー',en:'Blue Chalcedony',color:'#88b0d0',grad:['#98c0e0','#78a0c0'],desc:'穏やかなコミュニケーションを促し、良縁を結ぶ',price:1050,wishes:['relationships'],colors:['blue']},
+  {id:'stilbite',ja:'スティルバイト',en:'Stilbite',color:'#e0b8b0',grad:['#f0c8c0','#d0a8a0'],desc:'人間関係の摩擦を和らげ、信頼を深める優しい石',price:1200,wishes:['relationships','healing'],colors:['pink']},
+  {id:'blue_kyanite',ja:'ブルーカイヤナイト',en:'Blue Kyanite',color:'#3868a0',grad:['#4878b0','#285890'],desc:'誠実なコミュニケーションを促進し、誤解を解く',price:1350,wishes:['relationships'],colors:['blue']},
+  {id:'apache_tear',ja:'アパッチティアー',en:'Apache Tear',color:'#282828',grad:['#383838','#181818'],desc:'悲しみを癒し、人との絆を再構築する涙の形の黒曜石',price:900,wishes:['relationships','protection'],colors:['black']},
+  {id:'mangano_calcite',ja:'マンガノカルサイト',en:'Mangano Calcite',color:'#e8b0c0',grad:['#f0c0d0','#d8a0b0'],desc:'無条件の受容で対人関係を円滑にするピンクの方解石',price:1050,wishes:['relationships','love'],colors:['pink']},
   // --- 学業 追加 ---
-  {id:'azurite_malachite',ja:'アズロマラカイト',en:'Azurite Malachite',color:'#285878',grad:['#386888','#184868'],desc:'知性と直感の融合。深い理解力と洞察力を授ける',price:500,wishes:['study'],colors:['blue','green']},
-  {id:'spectrolite',ja:'スペクトロライト',en:'Spectrolite',color:'#384858',grad:['#485868','#283848'],desc:'虹色の閃光が知的探究心を刺激し学問の幅を広げる',price:600,wishes:['study'],colors:['blue','purple']},
-  {id:'blue_sodalite',ja:'ブルーソーダライト',en:'Blue Sodalite',color:'#283878',grad:['#384888','#182868'],desc:'論理的思考力を強化し、試験での集中力を高める',price:300,wishes:['study'],colors:['blue']},
-  {id:'white_howlite',ja:'ホワイトハウライト',en:'White Howlite',color:'#e8e4e0',grad:['#f0ece8','#d8d4d0'],desc:'心を静め、記憶力と学習の定着を助ける白い石',price:200,wishes:['study'],colors:['white']},
-  {id:'blue_tigers_eye',ja:'ブルータイガーアイ',en:'Blue Tiger Eye',color:'#304868',grad:['#405878','#203858'],desc:'冷静な判断力と集中力を高め、学業成績を向上させる',price:400,wishes:['study','career'],colors:['blue']},
+  {id:'azurite_malachite',ja:'アズロマラカイト',en:'Azurite Malachite',color:'#285878',grad:['#386888','#184868'],desc:'知性と直感の融合。深い理解力と洞察力を授ける',price:1500,wishes:['study'],colors:['blue','green']},
+  {id:'spectrolite',ja:'スペクトロライト',en:'Spectrolite',color:'#384858',grad:['#485868','#283848'],desc:'虹色の閃光が知的探究心を刺激し学問の幅を広げる',price:1800,wishes:['study'],colors:['blue','purple']},
+  {id:'blue_sodalite',ja:'ブルーソーダライト',en:'Blue Sodalite',color:'#283878',grad:['#384888','#182868'],desc:'論理的思考力を強化し、試験での集中力を高める',price:900,wishes:['study'],colors:['blue']},
+  {id:'white_howlite',ja:'ホワイトハウライト',en:'White Howlite',color:'#e8e4e0',grad:['#f0ece8','#d8d4d0'],desc:'心を静め、記憶力と学習の定着を助ける白い石',price:600,wishes:['study'],colors:['white']},
+  {id:'blue_tigers_eye',ja:'ブルータイガーアイ',en:'Blue Tiger Eye',color:'#304868',grad:['#405878','#203858'],desc:'冷静な判断力と集中力を高め、学業成績を向上させる',price:1200,wishes:['study','career'],colors:['blue']},
   // --- キャリア 追加 ---
-  {id:'fire_opal',ja:'ファイアオパール',en:'Fire Opal',color:'#d86020',grad:['#e87030','#c85010'],desc:'情熱と行動力で新しいキャリアの扉を開く炎の宝石',price:700,wishes:['career'],colors:['red','yellow']},
-  {id:'golden_labradorite',ja:'ゴールデンラブラドライト',en:'Golden Labradorite',color:'#b89848',grad:['#c8a858','#a88838'],desc:'リーダーシップと決断力を高め、昇進を引き寄せる',price:550,wishes:['career'],colors:['yellow']},
-  {id:'pietersite',ja:'ピーターサイト',en:'Pietersite',color:'#586068',grad:['#687078','#485058'],desc:'嵐の石。困難を乗り越え、キャリアの転機をつかむ',price:650,wishes:['career','protection'],colors:['blue','yellow']},
-  {id:'zircon',ja:'ジルコン',en:'Zircon',color:'#c0a880',grad:['#d0b890','#b09870'],desc:'知恵と繁栄の象徴。ビジネスでの成功と名誉を導く',price:600,wishes:['career','wealth'],colors:['yellow']},
+  {id:'fire_opal',ja:'ファイアオパール',en:'Fire Opal',color:'#d86020',grad:['#e87030','#c85010'],desc:'情熱と行動力で新しいキャリアの扉を開く炎の宝石',price:2100,wishes:['career'],colors:['red','yellow']},
+  {id:'golden_labradorite',ja:'ゴールデンラブラドライト',en:'Golden Labradorite',color:'#b89848',grad:['#c8a858','#a88838'],desc:'リーダーシップと決断力を高め、昇進を引き寄せる',price:1650,wishes:['career'],colors:['yellow']},
+  {id:'pietersite',ja:'ピーターサイト',en:'Pietersite',color:'#586068',grad:['#687078','#485058'],desc:'嵐の石。困難を乗り越え、キャリアの転機をつかむ',price:1950,wishes:['career','protection'],colors:['blue','yellow']},
+  {id:'zircon',ja:'ジルコン',en:'Zircon',color:'#c0a880',grad:['#d0b890','#b09870'],desc:'知恵と繁栄の象徴。ビジネスでの成功と名誉を導く',price:1800,wishes:['career','wealth'],colors:['yellow']},
   // --- ヒーリング 追加 ---
-  {id:'chrysanthemum_stone',ja:'菊花石',en:'Chrysanthemum Stone',color:'#484848',grad:['#585858','#383838'],desc:'花のような模様が心の傷を癒し、新たな始まりを促す',price:450,wishes:['healing'],colors:['black','white']},
-  {id:'pink_halite',ja:'ピンクハライト',en:'Pink Halite',color:'#e8a0b8',grad:['#f0b0c8','#d890a8'],desc:'ネガティブなエネルギーを浄化し、心を軽やかにする岩塩',price:350,wishes:['healing'],colors:['pink']},
-  {id:'cavansite',ja:'カバンサイト',en:'Cavansite',color:'#2070a8',grad:['#3080b8','#106098'],desc:'深い青が精神的な疲労を癒し、直感力を回復させる',price:700,wishes:['healing','study'],colors:['blue']},
+  {id:'chrysanthemum_stone',ja:'菊花石',en:'Chrysanthemum Stone',color:'#484848',grad:['#585858','#383838'],desc:'花のような模様が心の傷を癒し、新たな始まりを促す',price:1350,wishes:['healing'],colors:['black','white']},
+  {id:'pink_halite',ja:'ピンクハライト',en:'Pink Halite',color:'#e8a0b8',grad:['#f0b0c8','#d890a8'],desc:'ネガティブなエネルギーを浄化し、心を軽やかにする岩塩',price:1050,wishes:['healing'],colors:['pink']},
+  {id:'cavansite',ja:'カバンサイト',en:'Cavansite',color:'#2070a8',grad:['#3080b8','#106098'],desc:'深い青が精神的な疲労を癒し、直感力を回復させる',price:2100,wishes:['healing','study'],colors:['blue']},
   // --- 保護 追加 ---
-  {id:'rainbow_obsidian',ja:'レインボーオブシディアン',en:'Rainbow Obsidian',color:'#202020',grad:['#303030','#101010'],desc:'虹を秘めた黒曜石。強力な魔除けと心の保護',price:400,wishes:['protection'],colors:['black']},
-  {id:'aegirine',ja:'エジリン',en:'Aegirine',color:'#1a3020',grad:['#2a4030','#0a2010'],desc:'最強の保護石。ネガティブエネルギーを完全に遮断する',price:550,wishes:['protection'],colors:['black','green']},
-  {id:'staurolite',ja:'スタウロライト',en:'Staurolite',color:'#604830',grad:['#705840','#503820'],desc:'十字石。古来より魔除けの護符として崇められた石',price:500,wishes:['protection'],colors:['red']},
+  {id:'rainbow_obsidian',ja:'レインボーオブシディアン',en:'Rainbow Obsidian',color:'#202020',grad:['#303030','#101010'],desc:'虹を秘めた黒曜石。強力な魔除けと心の保護',price:1200,wishes:['protection'],colors:['black']},
+  {id:'aegirine',ja:'エジリン',en:'Aegirine',color:'#1a3020',grad:['#2a4030','#0a2010'],desc:'最強の保護石。ネガティブエネルギーを完全に遮断する',price:1650,wishes:['protection'],colors:['black','green']},
+  {id:'staurolite',ja:'スタウロライト',en:'Staurolite',color:'#604830',grad:['#705840','#503820'],desc:'十字石。古来より魔除けの護符として崇められた石',price:1500,wishes:['protection'],colors:['red']},
   // --- 複合カテゴリ 追加 ---
-  {id:'moldavite',ja:'モルダバイト',en:'Moldavite',color:'#487030',grad:['#588040','#386020'],desc:'隕石の衝突で生まれた奇跡の石。変容と覚醒を促す',price:900,wishes:['healing','protection','career'],colors:['green']},
-  {id:'andalusite',ja:'アンダリュサイト',en:'Andalusite',color:'#887050',grad:['#988060','#786040'],desc:'多色性を持つ石。バランスと調和を全方位にもたらす',price:500,wishes:['health','relationships'],colors:['yellow','red']},
-  {id:'vesuvianite',ja:'ベスビアナイト',en:'Vesuvianite',color:'#508838',grad:['#609848','#407828'],desc:'心の束縛を解放し、本来の自分を取り戻す緑の石',price:450,wishes:['healing','love'],colors:['green']},
-  {id:'sardonyx',ja:'サードオニキス',en:'Sardonyx',color:'#a06030',grad:['#b07040','#904020'],desc:'夫婦和合と家庭円満の象徴。幸福な人間関係を築く',price:300,wishes:['relationships','protection'],colors:['red','white']},
-  {id:'scheelite',ja:'シェーライト',en:'Scheelite',color:'#d8c078',grad:['#e8d088','#c8b068'],desc:'精神と物質の調和。創造性と繁栄を同時にもたらす',price:650,wishes:['wealth','study','career'],colors:['yellow']},
+  {id:'moldavite',ja:'モルダバイト',en:'Moldavite',color:'#487030',grad:['#588040','#386020'],desc:'隕石の衝突で生まれた奇跡の石。変容と覚醒を促す',price:2700,wishes:['healing','protection','career'],colors:['green']},
+  {id:'andalusite',ja:'アンダリュサイト',en:'Andalusite',color:'#887050',grad:['#988060','#786040'],desc:'多色性を持つ石。バランスと調和を全方位にもたらす',price:1500,wishes:['health','relationships'],colors:['yellow','red']},
+  {id:'vesuvianite',ja:'ベスビアナイト',en:'Vesuvianite',color:'#508838',grad:['#609848','#407828'],desc:'心の束縛を解放し、本来の自分を取り戻す緑の石',price:1350,wishes:['healing','love'],colors:['green']},
+  {id:'sardonyx',ja:'サードオニキス',en:'Sardonyx',color:'#a06030',grad:['#b07040','#904020'],desc:'夫婦和合と家庭円満の象徴。幸福な人間関係を築く',price:900,wishes:['relationships','protection'],colors:['red','white']},
+  {id:'scheelite',ja:'シェーライト',en:'Scheelite',color:'#d8c078',grad:['#e8d088','#c8b068'],desc:'精神と物質の調和。創造性と繁栄を同時にもたらす',price:1950,wishes:['wealth','study','career'],colors:['yellow']},
 ];
 
 const WISH_CATEGORIES = [
@@ -1916,6 +1991,52 @@ function renderBracelet() {
 
   bindSlotEvents();
   checkCompletion();
+  renderFortuneMeter();
+}
+
+const FORTUNE_COLORS = {
+  love: '#f4b8c4',
+  wealth: '#f0d88c',
+  career: '#a8c8f0',
+  health: '#a8e0a8',
+  healing: '#d0b8e8',
+  protection: '#b8b8c8',
+  relationships: '#b8e8e0',
+  study: '#f0c8a0'
+};
+
+function renderFortuneMeter() {
+  var container = document.getElementById('fortune-meter');
+  if (!container) return;
+
+  var counts = {};
+  WISH_CATEGORIES.forEach(function(cat) { counts[cat.id] = 0; });
+
+  var filledCount = state.slots.filter(function(s) { return s !== null; }).length;
+
+  state.slots.forEach(function(stoneId) {
+    if (!stoneId) return;
+    var stone = STONES.find(function(s) { return s.id === stoneId; });
+    if (!stone) return;
+    stone.wishes.forEach(function(w) {
+      if (counts[w] !== undefined) counts[w]++;
+    });
+  });
+
+  var maxCount = Math.max(state.beadCount, 1);
+
+  container.innerHTML = WISH_CATEGORIES.map(function(cat) {
+    var count = counts[cat.id] || 0;
+    var pct = Math.min(Math.round((count / maxCount) * 100), 100);
+    var color = FORTUNE_COLORS[cat.id] || '#ccc';
+    return '<div class="fortune-bar-row">' +
+      '<span class="fortune-bar-label">' + cat.icon + ' ' + cat.label + '</span>' +
+      '<div class="fortune-bar-track">' +
+        '<div class="fortune-bar-fill" style="width:' + pct + '%;background:' + color + '"></div>' +
+      '</div>' +
+      '<span class="fortune-bar-value">' + pct + '%</span>' +
+    '</div>';
+  }).join('');
 }
 
 function bindSlotEvents() {
@@ -2801,6 +2922,12 @@ function validateOrderForm() {
     missing.push('メールアドレスの形式');
     valid = false;
   }
+  /* Agreement checkbox check */
+  const agreementCheck = document.getElementById('order-agreement-check');
+  if (!agreementCheck.checked) {
+    missing.push('同意チェック');
+    valid = false;
+  }
   if (!valid) {
     orderError.textContent = `入力内容を確認してください: ${missing.join('、')}`;
     orderError.classList.add('show');
@@ -2876,9 +3003,8 @@ async function submitOrder() {
     window.open(mailtoUrl, '_blank');
   }
 
-  /* Show success */
-  orderFormSection.style.display = 'none';
-  orderSuccessSection.style.display = '';
+  /* Redirect to thanks page */
+  window.location.href = 'thanks.html';
 
   /* Reset form fields */
   document.getElementById('order-name').value = '';
@@ -2887,6 +3013,7 @@ async function submitOrder() {
   document.getElementById('order-address').value = '';
   document.getElementById('order-phone').value = '';
   document.getElementById('order-email').value = '';
+  document.getElementById('order-agreement-check').checked = false;
 }
 
 /* --- Event Listeners --- */
@@ -3932,6 +4059,57 @@ function initHoroscope() {
 /* END HOROSCOPE SYSTEM */
 
 /* ============================================================
+   POSTAL CODE AUTO-FILL
+   ============================================================ */
+function setupPostalAutoFill() {
+  const postalInput = document.getElementById('order-postal');
+  const prefectureSelect = document.getElementById('order-prefecture');
+  const addressInput = document.getElementById('order-address');
+  const statusEl = document.getElementById('postal-status');
+
+  let debounceTimer = null;
+
+  postalInput.addEventListener('input', function() {
+    const raw = this.value.replace(/[^0-9]/g, '');
+
+    if (raw.length >= 3 && raw.length <= 7 && !this.value.includes('-')) {
+      this.value = raw.slice(0, 3) + (raw.length > 3 ? '-' + raw.slice(3) : '');
+    }
+
+    if (debounceTimer) clearTimeout(debounceTimer);
+
+    if (raw.length === 7) {
+      statusEl.textContent = '検索中...';
+      statusEl.style.color = '#999';
+      debounceTimer = setTimeout(function() { fetchAddress(raw); }, 300);
+    } else {
+      statusEl.textContent = '';
+    }
+  });
+
+  function fetchAddress(zipcode) {
+    fetch('https://zipcloud.ibsnet.co.jp/api/search?zipcode=' + zipcode)
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.results && data.results.length > 0) {
+          const result = data.results[0];
+          prefectureSelect.value = result.address1;
+          addressInput.value = result.address2 + result.address3;
+          statusEl.textContent = '';
+          addressInput.focus();
+        } else {
+          statusEl.textContent = '該当する住所が見つかりません';
+          statusEl.style.color = '#e74c3c';
+        }
+      })
+      .catch(function() {
+        statusEl.textContent = '検索に失敗しました';
+        statusEl.style.color = '#e74c3c';
+      });
+  }
+}
+
+/* ============================================================
    INITIALIZE
    ============================================================ */
 function init() {
@@ -3943,7 +4121,9 @@ function init() {
   renderAllStones();
   renderSavedDesigns();
   updateOrderSummary();
+  renderFortuneMeter();
   initHoroscope();
+  setupPostalAutoFill();
 
   /* Add floating star decorations */
   const braceletSection = document.querySelector('.bracelet-section');
